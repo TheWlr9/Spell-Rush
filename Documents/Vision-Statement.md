@@ -25,3 +25,46 @@ Our team will consider this project a success if we recieve a "C" or better.
 
 #Summary
 
+---
+
+# VIsion Statement
+
+
+
+## purpose
+
+
+
+- **A Game**
+
+  - Player uses magic to defeat bosses in a boss rush
+
+    - By drawing spells
+
+  - Players gain new abilities/spells through progression
+
+
+
+## Who
+
+
+
+- **Users are;**
+
+  - Casual gaming audience
+
+
+
+## Why
+
+
+
+- **Value**
+
+  - Enetertainment
+
+    - **Through an engaging combat system , ..., ...** (todo)
+
+  - Build Motor Skills
+
+  - Social (people talking about it)
