@@ -4,9 +4,11 @@ We put the "1100 0000 1101 1110" in "encode"!
 
 # "Spell Rush"  Vision Statement
 
+Spell Rush is an action game with a focus on an innovative battle system that uses gesture recognition. 
+
 ### Project Description
 
-Spell Rush is an action game with a focus on an innovative battle system that uses gesture recognition. Players will draw symbols on their screen to perform actions such as attacks and defenses to battle simple AI enemies. Players will need to make quick decisions in real time, with more powerful actions requiring more drawing complexity. Throughout the game, players will strategize their actions based on incoming attacks, their current defenses, health, and learned attack gestures. Players will be rewarded with scores that reflect their competence in battle as well as new actions and/or powerups. These scores can be submitted to a local leaderboard. 
+Players will draw symbols on their screen to perform actions such as attacks and defenses to battle simple AI enemies. Players will need to make quick decisions in real time, with more powerful actions requiring more drawing complexity. Throughout the game, players will strategize their actions based on incoming attacks, their current defenses, health, and learned attack gestures. Players will be rewarded with scores that reflect their competence in battle as well as new actions and/or powerups. These scores can be submitted to a local leaderboard. 
 
 ### Who Our Users Are
 
