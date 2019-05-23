@@ -6,9 +6,7 @@ We put the "1100 0000 1101 1110" in "encode"!
 
 ### Project Description
 
-We are building a game with a focus on an innovative battle system. Players
-will draw symbols on their screen to perfom actions such as attacks and
-defenses to battle simple AI enemies. Players will be need to make quick decisions
+Spell Rush is an action game with a focus on an innovative battle system that uses gesture recognition. Players will draw symbols on their screen to perfom actions such as attacks and defenses to battle simple AI enemies. Players will be need to make quick decisions
 in real time, with more powerful actions requiring more drawing complexity. Throughout the game, players will strategize their actions based on incoming attacks, their curent defenses, health, and learned attack gestures. Players will be rewarded with scores that reflect their competence in battle as well as new actions and/or powerups. These scores can be submitted to a local leaderboard. 
 
 ### Who Our Users Are
@@ -23,15 +21,4 @@ Our app provides entertainment. Users will exercise their problem solving skills
 
 ~~Our team will consider this project a success if we recieve a "C" or better~~.
 
-* rate of return (50% of users or something)
-* rate of retry (players"retry" the game an average of 2 times on thier first-time session)
-* In-app "Rate our game" feature, and the results are 3.5 stars out of 5
-* Our player base reaches atleast 10 active daily users sometime during its 1 month initial release window
-
-
-
-
-
-
-
-### Summary
+Our team will consider this project a success if the following atleast two of the following four critera are met. Firstly, 50% of players will return to the app after their first session. Secondly, our players will play until a "game over" atleast thrice during their first play session. Thirdly, our  player base reaches atleast 8 unique daily users sometime during its 1 month initial release window.  Lastly, players rate our application atleast an average of 3.5 out of 5 stars on our in-app rating system.
