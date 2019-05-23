@@ -1,7 +1,11 @@
-Vision Statement
-=
+# 0xC0DE - 12
+
+We put the "1100 0000 1101 1110" in "encode"!
+
+# "Spell Rush"  Vision Statement
 
 # Project Description
+
 We are building a game with a focus on an interesting battle system. Players
 will draw symbols on their screen to perfom actions such as attacks and
 defenses against an AI system. Players will be challenged to make decisions
