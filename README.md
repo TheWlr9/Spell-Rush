@@ -21,3 +21,52 @@ Our app provides entertainment. Users will exercise their problem-solving skills
 ### Project Success Criteria
 
 Our team will consider this project a success if the following at least two of the following four criteria are met. Firstly, 50% of the players will return to the app after their first session. Secondly, our players will play until a "game over" at least thrice during their first play session. Thirdly, our player base reaches at least 8 unique daily users sometime during its 1-month initial release window.  Lastly, players rate our application at least an average of 3.5 out of 5 stars on our in-app rating system.
+
+# Programming Practices
+
+## Methods, Classes, Etc.
+
+- Method / Function names should always use an action verb
+
+- Use camel case for naming in all `.java` code.`
+
+- bracket goes on right
+
+-  Put an `//end` comment on the end brackets of substaintial code blocks
+
+- No classes larger than 500 lines -> try to keep it under 250.
+
+- Methods under ~50 lines.
+
+  - if it's longer, you can refactor things.
+
+  **Example:**
+
+  ```
+  public void doTheThing() {
+  
+  } // end doTheThing()
+  ```
+
+## Testing
+
+- Use the provdided JUnit unit testing library
+  - Write Unit tests for your task as you're implementing your task, *and after*
+  - Normal cases, edge cases, etc.
+  - Follow course guidelines on testing
+
+## Merging, etc
+
+- Create a new branch and pull request for each user story.
+  - must have approval (by atleast 2 people? exact number depends on size of user story)
+    - Merge request creator must make the post-review changes, barring extreme 'crunch time'
+  - Put the name of the gitlab ticket, and link to gitlab issue in the PR
+- **Squash and merge**
+- Try to use good commit messages
+
+- Small hotfixes onto develop are OK
+  - just bring up in slack what yer doin'
+
+## Architecture
+
+- 3-tier architecture, seperated into packages
