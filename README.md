@@ -1,3 +1,5 @@
+[![pipeline status](https://code.cs.umanitoba.ca/comp3350-summer2019/0xc0de---12/badges/develop/pipeline.svg)](https://code.cs.umanitoba.ca/comp3350-summer2019/0xc0de---12/commits/develop)
+
 # 0xC0DE - 12
 
 We put the "1100 0000 1101 1110" in "encode"!
