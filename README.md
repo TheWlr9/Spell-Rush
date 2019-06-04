@@ -2,6 +2,8 @@
 
 We put the "1100 0000 1101 1110" in "encode"!
 
+example change
+
 # "Spell Rush"  Vision Statement
 
 Spell Rush is an action game with a focus on an innovative battle system that uses gesture recognition. 
