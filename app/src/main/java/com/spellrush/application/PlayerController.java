@@ -18,7 +18,23 @@ public class PlayerController {
         return this.hp;
     }
 
-    public void update(){
+    public int loseHP(int amt) {
+        if( amt > 0 ) {
+            hp -= amt;
+        }
+        return hp;
+    } /* Todo, tests */
 
+    public int addHP( int amt) {
+        if( amt > 0 ) {
+            hp += amt;
+        }
+        if(hp > MAX_HP){
+            hp = MAX_HP;
+        }
+        return hp;
+    } /* Todo, tests */
+
+    public void update(){
     }
 }
