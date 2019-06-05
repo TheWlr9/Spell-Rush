@@ -1,4 +1,4 @@
-package com.spellrush.presentation.GameUI;
+package com.spellrush.presentation.Components;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,11 +13,11 @@ public class HealthBar {
     private int width;
     private int height;
 
-    public HealthBar(int xpos, int ypos, int r_width, int r_height){
+    public HealthBar(int xpos, int ypos, int width, int height){
         x = xpos;
         y = ypos;
-        width = r_width;
-        height = r_height;
+        this.width = width;
+        this.height = height;
     }
 
     public void drawHealthBar(Canvas canvas, int playerMaxHP, int playerHP) {
@@ -26,12 +26,10 @@ public class HealthBar {
     }
 
     private void onDraw(Canvas canvas, int innerWidth) {
-
-
         Paint myPaint = new Paint();
         myPaint.setColor(Color.BLACK);
         canvas.drawRect(x-border_size,y-border_size,x+width+border_size,y+height+border_size,myPaint);
         myPaint.setColor(Color.GREEN);
-        canvas.drawRect(x,y,x+hpWidth,y+height,myPaint);
+        canvas.drawRect(x,y,x+innerWidth,y+height,myPaint);
     }
 }

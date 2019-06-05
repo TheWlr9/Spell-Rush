@@ -13,4 +13,12 @@ public class PlayerController {
     public PlayerController() {
         hp = MAX_HP;
     }
+
+    public int getHP(){
+        return this.hp;
+    }
+
+    public void update(){
+
+    }
 }
