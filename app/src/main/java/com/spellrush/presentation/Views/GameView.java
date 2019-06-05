@@ -1,4 +1,4 @@
-package com.spellrush.presentation;
+package com.spellrush.presentation.Views;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,22 +7,18 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.spellrush.application.GameThread;
-import com.spellrush.application.PlayerController;
-import com.spellrush.presentation.Components.HealthBar;
 
-public class GameUIView extends SurfaceView implements SurfaceHolder.Callback
+
+public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
-    private PlayerController player;
-    private HealthBar hpUI;
+    private GameUIView gameUiView;
 
     private GameThread thread;
 
-    public GameUIView(Context context){
+    public GameView(Context context){
         super(context);
 
-
-        player = new PlayerController();
-        hpUI = new HealthBar(20,100,900,50, 15);
+        gameUiView = new GameUIView(context);
 
         getHolder().addCallback(this);
 
@@ -32,15 +28,13 @@ public class GameUIView extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void update(){
-        player.update();
+        gameUiView.update();
     }
 
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
-        if(canvas != null) {
-            hpUI.drawHealthBar(canvas, player.MAX_HP, player.getHP());
-        }
+        gameUiView.draw(canvas);
     }
 
     @Override

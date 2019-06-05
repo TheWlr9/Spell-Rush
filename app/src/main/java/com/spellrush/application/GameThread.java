@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
-import com.spellrush.presentation.GameUIView;
+import com.spellrush.presentation.Views.GameView;
 
 import static android.content.ContentValues.TAG;
 
@@ -12,15 +12,15 @@ import static android.content.ContentValues.TAG;
 public class GameThread extends Thread {
 
     private SurfaceHolder surfaceHolder;
-    private GameUIView gameUiView;
+    private GameView gameView;
     private boolean isRunning;
 
     public static Canvas canvas;
 
-    public GameThread(SurfaceHolder surfaceHolder, GameUIView gameUiView){
+    public GameThread(SurfaceHolder surfaceHolder, GameView gameView){
         super();
         this.surfaceHolder = surfaceHolder;
-        this.gameUiView = gameUiView;
+        this.gameView = gameView;
     }
 
     @Override
@@ -30,8 +30,8 @@ public class GameThread extends Thread {
             try{
                 canvas = surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder){
-                    this.gameUiView.update();
-                    this.gameUiView.draw(canvas);
+                    this.gameView.update();
+                    this.gameView.draw(canvas);
                 }
             } catch(Exception e){
                 Log.e(TAG, "run: ",e);
