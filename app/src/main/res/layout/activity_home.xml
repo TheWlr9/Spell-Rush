@@ -1,9 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context="comp3350.srsys.presentation.HomeActivity">
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin">
+
 
     <TextView
         android:id="@+id/textTitle"
@@ -13,12 +18,28 @@
         android:textAlignment="center"
         android:textSize="36sp" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/startBtn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignWithParentIfMissing="false"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerInParent="true"
+        android:text="Start" />
+
+    <Button
+        android:id="@+id/settingsBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/startBtn"
+        android:layout_centerHorizontal="true"
+        android:text="Settings" />
+
+    <Button
+        android:id="@+id/leaderBoardBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/settingsBtn"
+        android:layout_centerHorizontal="true"
+        android:text="Leader Board" />
+
 
 </RelativeLayout>
