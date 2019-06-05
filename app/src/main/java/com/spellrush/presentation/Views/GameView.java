@@ -11,14 +11,14 @@ import com.spellrush.application.GameThread;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
-    private GameUIView gameUiView;
+    private GameHUDView gameHUDView;
 
     private GameThread thread;
 
     public GameView(Context context){
         super(context);
 
-        gameUiView = new GameUIView(context);
+        gameHUDView = new GameHUDView(context);
 
         getHolder().addCallback(this);
 
@@ -28,13 +28,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void update(){
-        gameUiView.update();
+        gameHUDView.update();
     }
 
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
-        gameUiView.draw(canvas);
+        gameHUDView.draw(canvas);
     }
 
     @Override

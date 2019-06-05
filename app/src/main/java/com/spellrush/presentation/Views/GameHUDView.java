@@ -8,13 +8,13 @@ import android.view.SurfaceView;
 import com.spellrush.application.PlayerController;
 import com.spellrush.presentation.Views.Components.HealthBar;
 
-public class GameUIView extends SurfaceView implements SurfaceHolder.Callback
+public class GameHUDView extends SurfaceView implements SurfaceHolder.Callback
 {
     private PlayerController player;
     private HealthBar hpUI;
 
 
-    public GameUIView(Context context){
+    public GameHUDView(Context context){
         super(context);
 
 
