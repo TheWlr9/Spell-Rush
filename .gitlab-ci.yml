@@ -26,13 +26,13 @@ image: openjdk:8-jdk
 #  - set -o pipefail
 
 stages:
-  - build
+#  - build
   - test
 
-lintDebug:
-  stage: build
-  script:
-    - gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+#lintDebug:
+#  stage: build
+#  script:
+#    - gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
 #assembleDebug:
 #  stage: build
