@@ -6,13 +6,13 @@ import android.graphics.Paint;
 
 public class HealthBar {
 
-    private static int border_size = 15;
-
     private int x;
     private int y;
     private int width;
     private int height;
     private int borderWidth;
+
+    private Paint myPaint;
 
     public HealthBar(int xpos, int ypos, int width, int height, int borderWidth){
         x = xpos;
@@ -20,6 +20,8 @@ public class HealthBar {
         this.width = width;
         this.height = height;
         this.borderWidth = borderWidth;
+
+        myPaint = new Paint();
     }
 
     public void drawHealthBar(Canvas canvas, int playerMaxHP, int playerHP) {
@@ -28,7 +30,6 @@ public class HealthBar {
     }
 
     private void onDraw(Canvas canvas, int innerWidth) {
-        Paint myPaint = new Paint();
 
         myPaint.setTextSize(64);
         myPaint.setColor(Color.BLACK);
