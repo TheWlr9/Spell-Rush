@@ -9,7 +9,12 @@ import com.spellrush.presentation.Views.GameView;
 import static android.content.ContentValues.TAG;
 
 
+
 public class GameThread extends Thread {
+
+
+    public static final int FRAMES_PER_SECOND = 30;
+    public static final int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
 
     private SurfaceHolder surfaceHolder;
     private GameView gameView;
@@ -25,28 +30,73 @@ public class GameThread extends Thread {
 
     @Override
     public void run(){
+        long startTime;
+        long timeMillis;
+        long waitTime;
+        long totalTime = 0;
+        int frameCount = 0;
+
         while (isRunning){
-            canvas = null;
-            try{
-                canvas = surfaceHolder.lockCanvas();
-                synchronized (surfaceHolder){
-                    this.gameView.update();
-                    this.gameView.draw(canvas);
-                }
-            } catch(Exception e){
-                Log.e(TAG, "run: ",e);
+            startTime = System.nanoTime();
+            this.runGameFrame();
+
+            timeMillis = (System.nanoTime() - startTime) / 1000000;
+            waitTime = SKIP_TICKS - timeMillis;
+
+            sleepUntilNextFrame(waitTime);
+
+            totalTime += System.nanoTime() - startTime;
+            frameCount++;
+
+            if (frameCount == FRAMES_PER_SECOND) {
+                frameCount = 0;
+                totalTime = 0;
             }
-            finally {
-                if (canvas != null){
-                    try {
-                        surfaceHolder.unlockCanvasAndPost(canvas);
-                    } catch(Exception e) {
-                        Log.e("ERROR", "run: ",e);
-                        e.printStackTrace();
-                    }
+        }
+    }
+
+    private void sleepUntilNextFrame(long time){
+        if(time >= 0){
+            try{
+                sleep(time);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else {
+            // Running behind schedule, oh no!
+        }
+    }
+
+    private void runGameFrame(){
+        canvas = null;
+        try{
+            canvas = surfaceHolder.lockCanvas();
+            synchronized (surfaceHolder){
+                this.updateGame();
+                this.displayGame(canvas);
+            }
+        } catch(Exception e){
+            Log.e(TAG, "run: ",e);
+        }
+        finally {
+            if (canvas != null){
+                try {
+                    surfaceHolder.unlockCanvasAndPost(canvas);
+                } catch(Exception e) {
+                    Log.e("ERROR", "run: ",e);
+                    e.printStackTrace();
                 }
             }
         }
+    }
+
+    private void updateGame(){
+        this.gameView.update();
+    }
+
+    private void displayGame(Canvas canvas){
+        this.gameView.draw(canvas);
     }
 
     public void setRunning(boolean isRunning){
