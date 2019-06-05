@@ -25,6 +25,7 @@ public class HomeActivity extends Activity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(),"Start Button clicked", Toast.LENGTH_SHORT).show();
             }
+
         });
 
         Button settingsButton = (Button) findViewById(R.id.settingsBtn);
