@@ -22,6 +22,9 @@ public class PlayerController {
         if( amt > 0 ) {
             hp -= amt;
         }
+        if(hp < 0){
+            hp = 0;
+        }
         return hp;
     } /* Todo, tests */
 
@@ -36,5 +39,6 @@ public class PlayerController {
     } /* Todo, tests */
 
     public void update(){
+        this.loseHP(1);
     }
 }
