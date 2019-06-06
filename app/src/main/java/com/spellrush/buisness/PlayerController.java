@@ -19,12 +19,12 @@ public class PlayerController {
     }
 
     public int loseHP(int amt) {
-        hp = (hp - amt) > 0 ? hp - amt: 0;
+        hp = (hp - amt) < 0 ? 0: hp - amt;
         return hp;
     }
 
     public int addHP( int amt) {
-        hp = (hp + amt) > MAX_HP ? hp + amt: MAX_HP;
+        hp = (hp + amt) > MAX_HP ? MAX_HP: hp + amt;
         return hp;
     }
 
