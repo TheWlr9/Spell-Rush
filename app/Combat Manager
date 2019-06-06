@@ -1,0 +1,71 @@
+//Can't even compile or build this. 
+
+/**
+ * Class manages game logic while user is in combat
+ *
+ * so far class has been made without any deep knowledge of android
+ * Also made without consideration of other classes (so far)
+ *
+ * Have failed to even build/compile this.
+ */
+public static class CombatManager{
+
+    /**
+     * This would be attached to a timer.
+     */
+    private const int minimumTickLength = 10; //milliseconds
+
+    //future: change Object type to an object of type Enemy (whenever class made)
+    private const List<Object> enemyList= new List<Object>();
+
+    //future: change Object type to Attack type
+    // Attack can have two subclasses: PlayerAttack and EnemyAttack
+    // Enemy and player attacks are in the same list to avoid bias in evaluation
+    private const List<Object> allAttacks = new List<Object>();
+
+    /**
+     * Not sure what this should return
+     * Could return some GameState object detailing the results of the match
+     * Could just return which menu to display next.
+     */
+    public int EnterCombat(){
+        boolean inCombat = true;
+        int gameState = 0;  //change to a GameState type
+        int continueState = -1; // change to a GameState type
+
+        //loop iterates until end of combat
+        while(true){
+
+            ApplyTickChanges();
+            gameState = CheckGameOver();
+            if(gameState != continueState){
+                return gameState;
+
+            }
+
+        }
+        //after combat loop ends, show some pop up menu?
+    }
+
+    //Apply all positional tick changes.
+    //Apply all health changes.
+    //Need a fair evaluation system - shouldn't be biased in any direction.
+    private void ApplyTickChanges(){
+        for(Object attack : attackList){ //foreach
+            //update positions
+            //attack.UpdatePosition();
+
+            //check if it's reached the end. If so, apply health changes to characters
+            //attack object can check collisions between both the player and all enemies.
+            //attack.CheckCollision(enemyList).
+
+
+        }
+    }
+
+    private bool CheckGameOver(){
+        //if all enemy health below 0 or player health below zero
+    }
+
+
+}
