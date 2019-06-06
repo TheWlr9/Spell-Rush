@@ -8,36 +8,54 @@ import android.view.SurfaceView;
 
 import com.spellrush.buisness.GameThread;
 
+import java.util.ArrayList;
+
 /*******************************************************
 * GameView
 *
-* The View displayed on the GameActivity (Game) Screen.
+* The View displayed in the GameActivity (Game Screen).
 *******************************************************/
 public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
-    private GameViewHUDLayer gameViewHUDLayer;
+    private ArrayList<GameViewLayer> ViewLayers;
     private GameThread thread;
 
+    // GameView Constructor. Create the View Layers and Create the main game thread.
     public GameView(Context context){
         super(context);
-        gameViewHUDLayer = new GameViewHUDLayer(context);
+        ViewLayers = createGameViewLayers(context);
+
         getHolder().addCallback(this);
         thread = new GameThread(getHolder(), this);
         setFocusable(true);
     } // end constructor method
 
-    public void update(){
-        gameViewHUDLayer.update();
+    // Create all the layers of the game view.
+    private ArrayList<GameViewLayer> createGameViewLayers(Context context){
+        ArrayList<GameViewLayer> newLayers = new ArrayList<GameViewLayer>();
+        newLayers.add(new GameViewHUDLayer(context));
+        return newLayers;
     }
+
+    public void update(){
+        // Update each of the GameViewLayer objects.
+        for (GameViewLayer layer : ViewLayers) {
+            layer.update();
+        }
+    } // end update()
 
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
-        gameViewHUDLayer.draw(canvas);
+        // Draw each of the GameViewLayer objects.
+        for (GameViewLayer layer : ViewLayers) {
+            layer.draw(canvas);
+        }
     } // end draw()
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        // Start the main game loop.
         thread.setRunning(true);
         thread.start();
     } // end surfaceCreated()
@@ -48,6 +66,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        // Stop the main game thread.
         try {
             thread.setRunning(false);
             thread.join();
