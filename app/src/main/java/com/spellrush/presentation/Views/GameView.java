@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.spellrush.application.GameThread;
+import com.spellrush.buisness.GameThread;
 
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback

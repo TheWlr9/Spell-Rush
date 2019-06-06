@@ -1,4 +1,4 @@
-package com.spellrush.application;
+package com.spellrush.buisness;
 
 public class Main
 {

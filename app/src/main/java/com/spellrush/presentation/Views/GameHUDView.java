@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.spellrush.application.PlayerController;
+import com.spellrush.buisness.PlayerController;
 import com.spellrush.presentation.Views.Components.HealthBar;
 
 public class GameHUDView extends SurfaceView implements SurfaceHolder.Callback
