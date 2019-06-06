@@ -26,7 +26,7 @@ public class PlayerController {
             hp = 0;
         }
         return hp;
-    } /* Todo, tests */
+    }
 
     public int addHP( int amt) {
         if( amt > 0 ) {
@@ -36,7 +36,7 @@ public class PlayerController {
             hp = MAX_HP;
         }
         return hp;
-    } /* Todo, tests */
+    }
 
     public void update(){
         this.loseHP(1);

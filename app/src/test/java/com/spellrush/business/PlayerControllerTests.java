@@ -18,7 +18,7 @@ public class PlayerControllerTests extends TestCase {
     }
 
     @Test
-    public void addHp_should_notExceedMaxHP() {
+    public void test_addHp_should_notExceedMaxHP() {
         System.out.println(strPrintStart + "addHp_should_notExceedMaxHP");
 
         testPlayer.addHP(testPlayer.MAX_HP);
@@ -31,29 +31,7 @@ public class PlayerControllerTests extends TestCase {
     }
 
     @Test
-    public void loseHP_should_decrementHP() {
-        System.out.println(strPrintStart + "loseHP_should_decrementHP");
-
-        int before = testPlayer.getHP();
-        testPlayer.loseHP(15);
-        assertEquals(testPlayer.getHP(), before - 15);
-
-        System.out.println(strPrintFinish + "loseHP_should_decrementHP");
-    }
-
-    @Test
-    public void addHp_should_incrementHP(){
-        System.out.println(strPrintStart + "addHp_should_incrementHP");
-
-        int before = testPlayer.getHP();
-        testPlayer.loseHP(5);
-        assertEquals(testPlayer.getHP(), before + 5);
-
-        System.out.println(strPrintFinish + "addHp_should_incrementHP");
-    }
-
-    @Test
-    public void loseHP_should_notGoLowerThanZero() {
+    public void test_loseHP_should_notGoLowerThanZero() {
         System.out.println(strPrintStart + "loseHP_should_notGoLowerThanZero");
 
         testPlayer.loseHP(testPlayer.MAX_HP);
@@ -63,5 +41,33 @@ public class PlayerControllerTests extends TestCase {
         assertEquals(0, testPlayer.getHP());
 
         System.out.println(strPrintFinish + "loseHP_should_notGoLowerThanZero");
+    }
+
+    @Test
+    public void test_loseHP_should_decrementHP() {
+        System.out.println(strPrintStart + "loseHP_should_decrementHP");
+
+        // Add HP first
+        testPlayer.addHP(5);
+
+        int before = testPlayer.getHP();
+        testPlayer.loseHP(5);
+        assertEquals(testPlayer.getHP(), before - 5);
+
+        System.out.println(strPrintFinish + "loseHP_should_decrementHP");
+    }
+
+    @Test
+    public void test_addHp_should_incrementHP(){
+        System.out.println(strPrintStart + "addHp_should_incrementHP");
+
+        // Lose HP first
+        testPlayer.loseHP(5);
+
+        int before = testPlayer.getHP();
+        testPlayer.addHP(5);
+        assertEquals(testPlayer.getHP(), before + 5);
+
+        System.out.println(strPrintFinish + "addHp_should_incrementHP");
     }
 }
