@@ -13,22 +13,17 @@ public class GameHUDView extends SurfaceView implements SurfaceHolder.Callback
     private PlayerController player;
     private HealthBar hpUI;
 
-
     public GameHUDView(Context context){
         super(context);
-
-
         player = new PlayerController();
         hpUI = new HealthBar(20,100,900,50, 15);
-
         getHolder().addCallback(this);
         setFocusable(true);
-
-    }
+    } // end constructor method
 
     public void update(){
         player.update();
-    }
+    } // end update()
 
     @Override
     public void draw(Canvas canvas){
@@ -36,20 +31,17 @@ public class GameHUDView extends SurfaceView implements SurfaceHolder.Callback
         if(canvas != null) {
             hpUI.drawHealthBar(canvas, player.MAX_HP, player.getHP());
         }
-    }
+    } // end draw()
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
     }
-}
+} // end GameHudView class

@@ -26,7 +26,7 @@ public class PlayerController {
             hp = 0;
         }
         return hp;
-    }
+    } // end loseHP()
 
     public int addHP( int amt) {
         if( amt > 0 ) {
@@ -36,9 +36,9 @@ public class PlayerController {
             hp = MAX_HP;
         }
         return hp;
-    }
+    } // end addHP()
 
     public void update(){
-        this.loseHP(1);
-    }
-}
+    } // end update()
+
+} // end PlayerController class

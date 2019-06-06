@@ -8,10 +8,14 @@ import com.spellrush.presentation.Views.GameView;
 
 import static android.content.ContentValues.TAG;
 
-
-
+/*******************************************
+ * GameThread
+ *
+ * The thread that runs the game,
+ * Calls the update function for all game objects,
+ * Calls the draw function of the GameView
+ * *****************************************/
 public class GameThread extends Thread {
-
 
     public static final int FRAMES_PER_SECOND = 30;
     public static final int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
@@ -48,12 +52,12 @@ public class GameThread extends Thread {
             totalTime += System.nanoTime() - startTime;
             frameCount++;
 
-            if (frameCount == FRAMES_PER_SECOND) {
+            if (frameCount >= FRAMES_PER_SECOND) {
                 frameCount = 0;
                 totalTime = 0;
             }
         }
-    }
+    } // end run()
 
     private void sleepUntilNextFrame(long time){
         if(time >= 0){
@@ -66,7 +70,7 @@ public class GameThread extends Thread {
         else {
             // Running behind schedule, oh no!
         }
-    }
+    } // end sleepUntilNextFrame()
 
     private void runGameFrame(){
         canvas = null;
@@ -89,7 +93,7 @@ public class GameThread extends Thread {
                 }
             }
         }
-    }
+    } // end runGameFrame()
 
     private void updateGame(){
         this.gameView.update();
@@ -104,4 +108,4 @@ public class GameThread extends Thread {
     }
 
 
-}
+} // end GameThread class
