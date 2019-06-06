@@ -41,11 +41,13 @@ public class GameThread extends Thread {
 
         // MAIN GAME LOOP - Iterating once per frame
         while (isRunning){
+            // Get current program time before running frame
             timeAtFrameStart = System.nanoTime();
 
+            // Do all game updates once per frame.
             this.runGameFrame();
 
-            // Sleep until the next frame
+            // Calculate time until next frame and sleep until then
             timeAtFrameEndInMs = (System.nanoTime() - timeAtFrameStart) / 1000000;
             waitTime = SKIP_TICKS - timeAtFrameEndInMs;
             sleepUntilNextFrame(waitTime);
@@ -71,7 +73,7 @@ public class GameThread extends Thread {
     private void runGameFrame(){
         canvas = null;
         try{
-            // Lock the canvas and surface holder before this thread uses them. (See COMP 3430)
+            // Lock the canvas and surface holder to this Thread to ensure concurrency. (See COMP 3430)
             canvas = surfaceHolder.lockCanvas();
             synchronized (surfaceHolder){
                 this.updateGame();
