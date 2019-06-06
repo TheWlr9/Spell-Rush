@@ -4,6 +4,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f0f3f5"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -14,16 +15,21 @@
         android:id="@+id/textTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/main_menu"
+        android:layout_centerHorizontal="true"
+        android:background="#0b7a75"
+        android:padding="20dp"
+        android:text="@string/Spell_Rush"
         android:textAlignment="center"
-        android:textSize="36sp" />
+        android:textColor="#BFFFFFFF"
+        android:textSize="36sp"
+        android:typeface="monospace" />
 
     <Button
         android:id="@+id/startBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Start" />
+        android:text="@string/Start" />
 
     <Button
         android:id="@+id/settingsBtn"
@@ -31,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/startBtn"
         android:layout_centerHorizontal="true"
-        android:text="Settings" />
+        android:text="@string/Settings" />
 
     <Button
         android:id="@+id/leaderBoardBtn"
@@ -39,7 +45,72 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/settingsBtn"
         android:layout_centerHorizontal="true"
-        android:text="Leader Board" />
+        android:text="@string/Leader_Board" />
+
+    <LinearLayout
+        android:layout_width="577dp"
+        android:layout_height="255dp"
+        android:layout_above="@id/startBtn"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:labelFor="@id/willName"
+            android:id="@+id/willName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textAlignment="center"
+            android:inputType="textPersonName"
+            android:text="@string/Will_Ritchie" />
+
+        <EditText
+            android:labelFor="@id/earlName"
+            android:id="@+id/earlName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textAlignment="center"
+            android:inputType="textPersonName"
+            android:text="@string/Earl_John_Placido" />
+
+        <EditText
+            android:labelFor="@id/nathanName"
+            android:id="@+id/nathanName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textAlignment="center"
+            android:inputType="textPersonName"
+            android:text="@string/Nathan_Carrier" />
+
+        <EditText
+            android:labelFor="@id/chadName"
+            android:id="@+id/chadName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textAlignment="center"
+            android:inputType="textPersonName"
+            android:text="@string/Chad_Hillary" />
+
+        <EditText
+            android:labelFor="@id/mikeName"
+            android:id="@+id/mikeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textAlignment="center"
+            android:inputType="textPersonName"
+            android:text="@string/Mike_Winkler" />
+    </LinearLayout>
+
+
 
 
 </RelativeLayout>
