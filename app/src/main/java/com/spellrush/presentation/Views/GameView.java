@@ -8,27 +8,32 @@ import android.view.SurfaceView;
 
 import com.spellrush.buisness.GameThread;
 
+/*******************************************************
+* GameView
+*
+* The View displayed on the GameActivity (Game) Screen.
+*******************************************************/
 public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
-    private GameHUDView gameHUDView;
+    private GameViewHUDLayer gameViewHUDLayer;
     private GameThread thread;
 
     public GameView(Context context){
         super(context);
-        gameHUDView = new GameHUDView(context);
+        gameViewHUDLayer = new GameViewHUDLayer(context);
         getHolder().addCallback(this);
         thread = new GameThread(getHolder(), this);
         setFocusable(true);
     } // end constructor method
 
     public void update(){
-        gameHUDView.update();
+        gameViewHUDLayer.update();
     }
 
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
-        gameHUDView.draw(canvas);
+        gameViewHUDLayer.draw(canvas);
     } // end draw()
 
     @Override

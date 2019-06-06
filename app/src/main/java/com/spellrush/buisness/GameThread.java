@@ -32,38 +32,33 @@ public class GameThread extends Thread {
         this.gameView = gameView;
     }
 
+    // run - Manage the game loop. Ensure the loop iterates once per frame (According to FPS).
     @Override
     public void run(){
-        long startTime;
-        long timeMillis;
+        long timeAtFrameStart;
+        long timeAtFrameEndInMs;
         long waitTime;
-        long totalTime = 0;
-        int frameCount = 0;
 
+        // MAIN GAME LOOP - Iterating once per frame
         while (isRunning){
-            startTime = System.nanoTime();
+            timeAtFrameStart = System.nanoTime();
+
             this.runGameFrame();
 
-            timeMillis = (System.nanoTime() - startTime) / 1000000;
-            waitTime = SKIP_TICKS - timeMillis;
-
+            // Sleep until the next frame
+            timeAtFrameEndInMs = (System.nanoTime() - timeAtFrameStart) / 1000000;
+            waitTime = SKIP_TICKS - timeAtFrameEndInMs;
             sleepUntilNextFrame(waitTime);
-
-            totalTime += System.nanoTime() - startTime;
-            frameCount++;
-
-            if (frameCount >= FRAMES_PER_SECOND) {
-                frameCount = 0;
-                totalTime = 0;
-            }
         }
     } // end run()
 
+    // sleepUntilNextFrame - Put the thread to sleep until it's time for the next frame.
     private void sleepUntilNextFrame(long time){
         if(time >= 0){
             try{
                 sleep(time);
-            } catch (Exception e){
+            }
+            catch (Exception e){
                 e.printStackTrace();
             }
         }
@@ -72,9 +67,11 @@ public class GameThread extends Thread {
         }
     } // end sleepUntilNextFrame()
 
+    // runGameFrame - Called once per frame. Update all game objects, and draw the canvas.
     private void runGameFrame(){
         canvas = null;
         try{
+            // Lock the canvas and surface holder before this thread uses them. (See COMP 3430)
             canvas = surfaceHolder.lockCanvas();
             synchronized (surfaceHolder){
                 this.updateGame();
@@ -86,6 +83,7 @@ public class GameThread extends Thread {
         finally {
             if (canvas != null){
                 try {
+                    // Unlock (free) the canvas after this thread is done with them.
                     surfaceHolder.unlockCanvasAndPost(canvas);
                 } catch(Exception e) {
                     Log.e("ERROR", "run: ",e);
@@ -95,17 +93,19 @@ public class GameThread extends Thread {
         }
     } // end runGameFrame()
 
+    // updateGame - Call on all game objects to update.
     private void updateGame(){
         this.gameView.update();
     }
 
+    // displayGame - Call on all view objects to draw.
     private void displayGame(Canvas canvas){
         this.gameView.draw(canvas);
     }
 
+    // setRunning(true) will enable the main loop in the run() method.
     public void setRunning(boolean isRunning){
         this.isRunning = isRunning;
     }
-
 
 } // end GameThread class

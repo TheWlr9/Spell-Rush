@@ -2,35 +2,25 @@ package com.spellrush.presentation.Views;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.SurfaceHolder;
 
 import com.spellrush.buisness.PlayerController;
 import com.spellrush.presentation.Views.Components.HealthBar;
 
-public class GameHUDView extends SurfaceView implements SurfaceHolder.Callback
-{
-    private PlayerController player;
-    private HealthBar hpUI;
+public abstract class GameViewLayer extends SurfaceView implements SurfaceHolder.Callback {
 
-    public GameHUDView(Context context){
+    public GameViewLayer(Context context){
         super(context);
-        player = new PlayerController();
-        hpUI = new HealthBar(20,100,900,50, 15);
         getHolder().addCallback(this);
         setFocusable(true);
     } // end constructor method
 
-    public void update(){
-        player.update();
-    } // end update()
+    public abstract void update();
 
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
-        if(canvas != null) {
-            hpUI.drawHealthBar(canvas, player.MAX_HP, player.getHP());
-        }
     } // end draw()
 
     @Override
@@ -44,4 +34,4 @@ public class GameHUDView extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
     }
-} // end GameHudView class
+}

@@ -26,10 +26,10 @@ public class HealthBar {
 
     public void drawHealthBar(Canvas canvas, int playerMaxHP, int playerHP) {
         int innerWidth = (int) Math.round(width * ((double) playerHP / playerMaxHP));
-        onDraw(canvas, innerWidth);
+        draw(canvas, innerWidth);
     }
 
-    private void onDraw(Canvas canvas, int innerWidth) {
+    private void draw(Canvas canvas, int innerWidth) {
 
         myPaint.setTextSize(64);
         myPaint.setColor(Color.BLACK);
