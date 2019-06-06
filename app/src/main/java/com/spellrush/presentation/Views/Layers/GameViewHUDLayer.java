@@ -1,9 +1,7 @@
-package com.spellrush.presentation.Views;
+package com.spellrush.presentation.Views.Layers;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 
 import com.spellrush.buisness.PlayerController;
 import com.spellrush.presentation.Views.Components.HealthBar;

@@ -1,4 +1,4 @@
-package com.spellrush.presentation.Views;
+package com.spellrush.presentation.Views.Layers;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,6 +8,11 @@ import android.view.SurfaceHolder;
 import com.spellrush.buisness.PlayerController;
 import com.spellrush.presentation.Views.Components.HealthBar;
 
+/**
+ * GameView Layer
+ *
+ * Abstract class for layers on top of the GameView
+ */
 public abstract class GameViewLayer extends SurfaceView implements SurfaceHolder.Callback {
 
     public GameViewLayer(Context context){

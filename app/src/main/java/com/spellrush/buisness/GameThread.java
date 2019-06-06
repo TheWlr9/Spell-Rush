@@ -20,7 +20,7 @@ public class GameThread extends Thread {
     public static final int FRAMES_PER_SECOND = 30;
     public static final int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
 
-    private SurfaceHolder surfaceHolder;
+    private SurfaceHolder surfaceHolder; // Holds the GameView SurfaceView object
     private GameView gameView;
     private boolean isRunning;
 

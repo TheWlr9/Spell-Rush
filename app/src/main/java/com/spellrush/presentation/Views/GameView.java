@@ -7,6 +7,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.spellrush.buisness.GameThread;
+import com.spellrush.presentation.Views.Layers.GameViewHUDLayer;
+import com.spellrush.presentation.Views.Layers.GameViewLayer;
 
 import java.util.ArrayList;
 
