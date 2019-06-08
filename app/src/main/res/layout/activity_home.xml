@@ -54,7 +54,7 @@
         android:orientation="vertical">
 
 
-        <EditText
+        <TextView
             android:labelFor="@id/willName"
             android:id="@+id/willName"
             android:layout_width="wrap_content"
@@ -62,10 +62,9 @@
             android:layout_gravity="center"
             android:ems="10"
             android:textAlignment="center"
-            android:inputType="textPersonName"
             android:text="@string/Will_Ritchie" />
 
-        <EditText
+        <TextView
             android:labelFor="@id/earlName"
             android:id="@+id/earlName"
             android:layout_width="wrap_content"
@@ -73,10 +72,9 @@
             android:layout_gravity="center"
             android:ems="10"
             android:textAlignment="center"
-            android:inputType="textPersonName"
             android:text="@string/Earl_John_Placido" />
 
-        <EditText
+        <TextView
             android:labelFor="@id/nathanName"
             android:id="@+id/nathanName"
             android:layout_width="wrap_content"
@@ -84,10 +82,9 @@
             android:layout_gravity="center"
             android:ems="10"
             android:textAlignment="center"
-            android:inputType="textPersonName"
             android:text="@string/Nathan_Carrier" />
 
-        <EditText
+        <TextView
             android:labelFor="@id/chadName"
             android:id="@+id/chadName"
             android:layout_width="wrap_content"
@@ -95,10 +92,9 @@
             android:layout_gravity="center"
             android:ems="10"
             android:textAlignment="center"
-            android:inputType="textPersonName"
             android:text="@string/Chad_Hillary" />
 
-        <EditText
+        <TextView
             android:labelFor="@id/mikeName"
             android:id="@+id/mikeName"
             android:layout_width="wrap_content"
@@ -106,7 +102,6 @@
             android:layout_gravity="center"
             android:ems="10"
             android:textAlignment="center"
-            android:inputType="textPersonName"
             android:text="@string/Mike_Winkler" />
     </LinearLayout>
 
