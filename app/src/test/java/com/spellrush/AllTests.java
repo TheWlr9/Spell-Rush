@@ -1,6 +1,5 @@
 package com.spellrush;
 
-public class AllTests
-{
+public class AllTests{
 
 }
