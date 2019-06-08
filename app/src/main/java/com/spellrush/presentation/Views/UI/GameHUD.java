@@ -1,22 +1,21 @@
-package com.spellrush.presentation.Views.Layers;
+package com.spellrush.presentation.Views.UI;
 
-import android.content.Context;
 import android.graphics.Canvas;
 
+import com.spellrush.application.GameObject;
 import com.spellrush.buisness.PlayerController;
 import com.spellrush.presentation.Views.Components.HealthBar;
 
-public class GameViewHUDLayer extends GameViewLayer
+public class GameHUD extends GameObject
 {
+    private static final int HUD_DEPTH = -100;
     private PlayerController player; //todo: Move Player somewhere logical, and pass in HP
     private HealthBar hpUI;
 
-    public GameViewHUDLayer(Context context){
-        super(context);
+    public GameHUD(){
+        super(HUD_DEPTH);
         player = new PlayerController();
         hpUI = new HealthBar(20,100,900,50, 15);
-        getHolder().addCallback(this);
-        setFocusable(true);
     } // end constructor method
 
     @Override
@@ -26,7 +25,6 @@ public class GameViewHUDLayer extends GameViewLayer
 
     @Override
     public void draw(Canvas canvas){
-        super.draw(canvas);
         if(canvas != null) {
             hpUI.drawHealthBar(canvas, player.MAX_HP, player.getHP());
         }

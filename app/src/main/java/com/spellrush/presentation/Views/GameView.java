@@ -2,15 +2,18 @@ package com.spellrush.presentation.Views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.spellrush.application.ExampleBall;
+import com.spellrush.application.GameObject;
 import com.spellrush.buisness.GameThread;
-import com.spellrush.presentation.Views.Layers.GameViewHUDLayer;
-import com.spellrush.presentation.Views.Layers.GameViewLayer;
+import com.spellrush.presentation.Views.UI.GameHUD;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /*******************************************************
 * GameView
@@ -19,30 +22,52 @@ import java.util.ArrayList;
 *******************************************************/
 public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
-    private ArrayList<GameViewLayer> ViewLayers;
+    private ArrayList<GameObject> GameObjects;
     private GameThread thread;
 
     // GameView Constructor. Create the View Layers and Create the main game thread.
     public GameView(Context context){
         super(context);
-        ViewLayers = createGameViewLayers(context);
-
+        // Setup the View
         getHolder().addCallback(this);
-        thread = new GameThread(getHolder(), this);
+        getHolder().setFormat(PixelFormat.TRANSPARENT);
+        setZOrderMediaOverlay(true);
         setFocusable(true);
+
+        // Create the game thread
+        thread = new GameThread(getHolder(), this);
+
+        // Initialize the GameObjects list
+        GameObjects = createStartupObjects();
     } // end constructor method
 
-    // Create all the layers of the game view.
-    private ArrayList<GameViewLayer> createGameViewLayers(Context context){
-        ArrayList<GameViewLayer> newLayers = new ArrayList<GameViewLayer>();
-        newLayers.add(new GameViewHUDLayer(context));
-        return newLayers;
+    // Create the game objects present at the game start
+    private ArrayList<GameObject> createStartupObjects(){
+        ArrayList<GameObject> newObjects = new ArrayList<GameObject>();
+
+        newObjects.add(new GameHUD());
+        newObjects.add(new ExampleBall());
+
+        Collections.sort(newObjects, Collections.reverseOrder()); // Set order based on depth
+        return newObjects;
+    }
+
+    // createObject
+    // Add new game object to list of game objects
+    public void createObject(GameObject newObject){
+        GameObjects.add(newObject.drawDepth, newObject);
+    }
+
+    // createObject
+    // Remove game object from list of game objects
+    public void destroyObject(GameObject oldObject){
+        GameObjects.remove(oldObject);
     }
 
     public void update(){
         // Update each of the GameViewLayer objects.
-        for (GameViewLayer layer : ViewLayers) {
-            layer.update();
+        for (GameObject object : GameObjects) {
+            object.update();
         }
     } // end update()
 
@@ -50,8 +75,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     public void draw(Canvas canvas){
         super.draw(canvas);
         // Draw each of the GameViewLayer objects.
-        for (GameViewLayer layer : ViewLayers) {
-            layer.draw(canvas);
+        for (GameObject object : GameObjects) {
+            object.draw(canvas);
         }
     } // end draw()
 
