@@ -3,10 +3,13 @@ package com.spellrush.presentation.Views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import com.spellrush.buisness.GameThread;
+import com.spellrush.presentation.Views.Layers.FingerPathLayer;
 import com.spellrush.presentation.Views.Layers.GameViewHUDLayer;
 import com.spellrush.presentation.Views.Layers.GameViewLayer;
 
@@ -21,10 +24,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
     private ArrayList<GameViewLayer> ViewLayers;
     private GameThread thread;
+    private FingerPathLayer fingerPathLayer;
 
     // GameView Constructor. Create the View Layers and Create the main game thread.
     public GameView(Context context){
         super(context);
+
+        fingerPathLayer = new FingerPathLayer(context);
         ViewLayers = createGameViewLayers(context);
 
         getHolder().addCallback(this);
@@ -35,7 +41,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     // Create all the layers of the game view.
     private ArrayList<GameViewLayer> createGameViewLayers(Context context){
         ArrayList<GameViewLayer> newLayers = new ArrayList<GameViewLayer>();
-        newLayers.add(new GameViewHUDLayer(context));
+        newLayers.add(fingerPathLayer);
+        //newLayers.add(new GameViewHUDLayer(context));
         return newLayers;
     }
 
@@ -77,4 +84,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             e.printStackTrace();
         }
     } // end surfaceDestroyed()
+
+    public boolean onTouchEvent(MotionEvent event){
+        boolean value = false;
+
+        value = fingerPathLayer.onTouchEvent(event);
+
+        return value;
+    } // end of onTouchEvent(event)
 }
