@@ -55,10 +55,10 @@ public class GameThread extends Thread {
     } // end run()
 
     // sleepUntilNextFrame - Put the thread to sleep until it's time for the next frame.
-    private void sleepUntilNextFrame(long time){
-        if(time >= 0){
+    private void sleepUntilNextFrame(long time_remaining){
+        if(time_remaining >= 0){
             try{
-                sleep(time);
+                sleep(time_remaining);
             }
             catch (Exception e){
                 e.printStackTrace();

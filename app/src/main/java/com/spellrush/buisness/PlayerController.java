@@ -1,5 +1,7 @@
 package com.spellrush.buisness;
 
+import java.lang.*;
+
 /*******************************************
  * Player Controller Class
  *
@@ -18,13 +20,27 @@ public class PlayerController {
         return this.hp;
     }
 
-    public int loseHP(int amt) {
-        hp = (hp - amt) < 0 ? 0: hp - amt;
+    //reduce player HP by amount
+    public int loseHP(int amount) {
+        if(amount < 0) {//edge case: amount is negative
+            hp = Math.Max(hp - amount, 0);
+        }
+        else{
+            //better solution: unsigned int parameter
+            assert(false);
+        }
         return hp;
     }
 
-    public int addHP( int amt) {
-        hp = (hp + amt) > MAX_HP ? MAX_HP: hp + amt;
+    //Increase player HP by amount
+    public int addHP( int amount) {
+        if(amount < 0) {//edge case: amount is negative
+            hp = Math.Min(hp + amount, MAX_HP);
+        }
+        else{
+            //better solution: unsigned int parameter
+            assert(false);
+        }
         return hp;
     }
 
