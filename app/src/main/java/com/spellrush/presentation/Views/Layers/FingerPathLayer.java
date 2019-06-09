@@ -2,51 +2,76 @@ package com.spellrush.presentation.Views.Layers;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Path;
 import android.graphics.Paint;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+import android.graphics.PointF;
+
+import java.util.ArrayList;
 
 public class FingerPathLayer extends GameViewLayer {
-    private static Paint MY_PAINT = new Paint();
-
-    private Path circlePath = new Path();
-
+    private ArrayList<PointF> path, lastPath;
+    private Paint paint;
+    private PointF point;
 
     public FingerPathLayer(Context context){
         super(context);
 
-        MY_PAINT.setColor(Color.CYAN);
-        MY_PAINT.setStrokeWidth(4f);
-
         getHolder().addCallback(this);
         setFocusable(true);
+
+        path = new ArrayList<>();
+        lastPath = new ArrayList<>();
+
+        setupPaint();
+    }
+
+    private void setupPaint(){
+        paint = new Paint();
+        paint.setColor(Color.CYAN);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(3);
+        paint.setAntiAlias(true);
     }
 
     @Override
     public void update() {
-
+        //DUMMY
     }
 
     @Override
     public void draw(Canvas canvas) {
+
         super.draw(canvas);
 
-        if(circlePath != null) {
-            canvas.drawPath(circlePath, MY_PAINT);
+        for(int i = 1; i < path.size(); i++){
+            canvas.drawLine(path.get(i-1).x, path.get(i-1).y, path.get(i).x, path.get(i).y, paint);
         }
     }
 
-    private void touchStart(float x, float y){
-        circlePath = new Path();
+    private void touchStart(){
+        point = new PointF(); //Clear the point
     }
 
     private void touchMove(float x, float y){
-        circlePath.addCircle(x, y, 30, Path.Direction.CW);
+        point.x = x;
+        point.y = y;
+
+        //Deep copy
+        PointF temp = new PointF(point.x, point.y);
+        path.add(temp);
     }
 
     private void touchEnd(){
-        circlePath.reset();
+        lastPath.clear();
+        
+        //Deep copy
+        for (int i = 0; i < path.size(); i++){
+            PointF temp = new PointF(path.get(i).x, path.get(i).y);
+            lastPath.add(temp);
+        }
+
+        path.clear();
     }
 
     @Override
@@ -56,19 +81,24 @@ public class FingerPathLayer extends GameViewLayer {
 
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
-                touchStart(x, y);
-                invalidate();
+                touchStart();
                 break;
             case MotionEvent.ACTION_MOVE :
                 touchMove(x, y);
-                invalidate();
                 break;
             case MotionEvent.ACTION_UP :
                 touchEnd();
-                invalidate();
                 break;
         }
 
         return true;
+    }
+
+    /**
+     * 
+     * @return The latest drawn path after the user raises thir finger from the screen.
+     */
+    public ArrayList<PointF> getPath(){
+        return lastPath;
     }
 }
