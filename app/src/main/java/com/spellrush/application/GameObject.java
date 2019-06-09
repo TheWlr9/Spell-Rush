@@ -3,9 +3,9 @@ package com.spellrush.application;
 import android.graphics.Canvas;
 
 /**
- * GameView Layer
+ * GameObject
  *
- * Abstract class for layers on top of the GameView
+ * Abstract class for any game object that needs to be updated and drawn to the screen
  */
 public abstract class GameObject implements Comparable<GameObject>{
     // Specifies the order in which elements are drawn to the screen
@@ -15,7 +15,10 @@ public abstract class GameObject implements Comparable<GameObject>{
         this.drawDepth = drawDepth;
     }
 
+    // Called once per frame by the GameView.
     public abstract void update();
+
+    // Draw to the canvas.
     public abstract void draw(Canvas canvas);
 
     @Override

@@ -1,4 +1,4 @@
-package com.spellrush.presentation.Views;
+package com.spellrush.buisness;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,7 +10,7 @@ import android.view.SurfaceView;
 import com.spellrush.application.ExampleBall;
 import com.spellrush.application.GameObject;
 import com.spellrush.buisness.GameThread;
-import com.spellrush.presentation.Views.UI.GameHUD;
+import com.spellrush.presentation.UI.GameHUD;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,13 +19,16 @@ import java.util.Collections;
 * GameView
 *
 * The View displayed in the GameActivity (Game Screen).
+ *
+ * Maintains all game objects within the view, and calls
+ * their update and draw methods once per frame.
 *******************************************************/
 public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
     private ArrayList<GameObject> GameObjects;
     private GameThread thread;
 
-    // GameView Constructor. Create the View Layers and Create the main game thread.
+    // GameView Constructor. Create the initial Game Objects and the main game thread.
     public GameView(Context context){
         super(context);
         // Setup the View
@@ -50,7 +53,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
         Collections.sort(newObjects, Collections.reverseOrder()); // Set order based on depth
         return newObjects;
-    }
+    } // end createStartupObjects()
 
     // createObject
     // Add new game object to list of game objects
@@ -58,7 +61,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         GameObjects.add(newObject.drawDepth, newObject);
     }
 
-    // createObject
+    // destroyObject
     // Remove game object from list of game objects
     public void destroyObject(GameObject oldObject){
         GameObjects.remove(oldObject);

@@ -1,10 +1,10 @@
-package com.spellrush.presentation.Views.UI;
+package com.spellrush.presentation.UI;
 
 import android.graphics.Canvas;
 
 import com.spellrush.application.GameObject;
 import com.spellrush.buisness.PlayerController;
-import com.spellrush.presentation.Views.Components.HealthBar;
+import com.spellrush.presentation.UI.Components.HealthBar;
 
 public class GameHUD extends GameObject
 {

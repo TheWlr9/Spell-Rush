@@ -1,4 +1,4 @@
-package com.spellrush.presentation.Views.Components;
+package com.spellrush.presentation.UI.Components;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
