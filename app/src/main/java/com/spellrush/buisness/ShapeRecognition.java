@@ -4,13 +4,6 @@ import android.graphics.PointF;
 
 import com.spellrush.presentation.Views.Layers.FingerPathLayer;
 
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-
-import java.lang.reflect.Array;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 public final class ShapeRecognition {

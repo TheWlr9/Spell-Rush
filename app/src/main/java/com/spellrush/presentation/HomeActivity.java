@@ -68,8 +68,10 @@ public class HomeActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /*
     static {
         //Loads the OpenCV library from main/jniLibs/
         System.loadLibrary("opencv_java3");
     }
+    */
 }
