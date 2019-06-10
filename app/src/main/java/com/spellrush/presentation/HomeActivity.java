@@ -41,7 +41,8 @@ public class HomeActivity extends Activity {
         leaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Leader Board Button clicked", Toast.LENGTH_SHORT).show();
+                Intent leaderboardIntent = new Intent(HomeActivity.this, LeaderboardActivity.class);
+                HomeActivity.this.startActivity((leaderboardIntent));
             }
         });
     }
@@ -54,7 +55,9 @@ public class HomeActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+
+        //THIS WAS MESSED UP IN THE MERGE #!7
+        //getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
 

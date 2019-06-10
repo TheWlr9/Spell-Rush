@@ -18,6 +18,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.LeaderboardActivity"
+            android:label="@string/title_activity_leaderboard">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.spellrush.presentation.LeaderboardActivity" />
+        </activity>
     </application>
 
 </manifest>
