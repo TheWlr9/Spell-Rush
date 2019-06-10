@@ -25,6 +25,15 @@ public class FingerPathLayer extends GameObject {
         setupPaint();
     }
 
+    public FingerPathLayer(boolean debug){
+        super(FINGER_PATH_DEPTH);
+
+        path = new ArrayList<>();
+        lastPath = new ArrayList<>();
+
+        paint = new Paint();
+    }
+
     private void setupPaint(){
         paint = new Paint();
         paint.setColor(Color.CYAN);

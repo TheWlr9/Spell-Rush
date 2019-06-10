@@ -64,22 +64,4 @@ public final class ShapeRecognition {
 
         return newList;
     }
-
-    /*
-    Point point = new Point(50, 50);
-
-    final int CV_32F = 5;
-
-    float[] yo = new float[20];
-
-    ByteBuffer byteBuf = ByteBuffer.allocateDirect(yo.length * 4); //4 bytes per float
-
-    private void Test(){
-        byteBuf.order(ByteOrder.nativeOrder());
-        FloatBuffer buffer = byteBuf.asFloatBuffer();
-        buffer.put(yo);
-        buffer.position(0);
-        Mat mat = new Mat(4, 4, CV_32F, byteBuf);
-    }
-    */
 }
