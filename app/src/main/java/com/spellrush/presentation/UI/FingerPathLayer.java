@@ -1,24 +1,23 @@
-package com.spellrush.presentation.Views.Layers;
+package com.spellrush.presentation.UI;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.graphics.PointF;
 
+import com.spellrush.application.GameObject;
+
 import java.util.ArrayList;
 
-public class FingerPathLayer extends GameViewLayer {
+public class FingerPathLayer extends GameObject {
+    private static final int FINGER_PATH_DEPTH = -50;
     private ArrayList<PointF> path, lastPath;
     private Paint paint;
     private PointF point;
 
-    public FingerPathLayer(Context context){
-        super(context);
-
-        getHolder().addCallback(this);
-        setFocusable(true);
+    public FingerPathLayer(){
+        super(FINGER_PATH_DEPTH);
 
         path = new ArrayList<>();
         lastPath = new ArrayList<>();
@@ -41,9 +40,6 @@ public class FingerPathLayer extends GameViewLayer {
 
     @Override
     public void draw(Canvas canvas) {
-
-        super.draw(canvas);
-
         for(int i = 1; i < path.size(); i++){
             canvas.drawLine(path.get(i-1).x, path.get(i-1).y, path.get(i).x, path.get(i).y, paint);
         }
@@ -74,7 +70,6 @@ public class FingerPathLayer extends GameViewLayer {
         path.clear();
     }
 
-    @Override
     public boolean onTouchEvent(MotionEvent event){
         float x = event.getX();
         float y = event.getY();

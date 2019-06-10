@@ -3,7 +3,7 @@ package com.spellrush.presentation;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.spellrush.presentation.Views.GameView;
+import com.spellrush.buisness.GameView;
 
 public class GameActivity extends Activity {
 

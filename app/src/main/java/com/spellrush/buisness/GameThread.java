@@ -4,8 +4,6 @@ import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
-import com.spellrush.presentation.Views.GameView;
-
 import static android.content.ContentValues.TAG;
 
 /*******************************************

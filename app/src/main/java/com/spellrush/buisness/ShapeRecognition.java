@@ -2,7 +2,7 @@ package com.spellrush.buisness;
 
 import android.graphics.PointF;
 
-import com.spellrush.presentation.Views.Layers.FingerPathLayer;
+import com.spellrush.presentation.UI.FingerPathLayer;
 
 import java.util.ArrayList;
 
@@ -54,7 +54,7 @@ public final class ShapeRecognition {
     }
 
     public void hasValidDrawnEvent(){
-        hasDrawnFire();
+        hasFireDrawnEvent();
     }
 
     private ArrayList getDeepCopy(ArrayList list){
