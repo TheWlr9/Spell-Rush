@@ -9,6 +9,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.spellrush.buisness.GameThread;
+import com.spellrush.buisness.ShapeRecognition;
 import com.spellrush.presentation.Views.Layers.FingerPathLayer;
 import com.spellrush.presentation.Views.Layers.GameViewHUDLayer;
 import com.spellrush.presentation.Views.Layers.GameViewLayer;
@@ -26,12 +27,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private GameThread thread;
     private FingerPathLayer fingerPathLayer;
 
+    private ShapeRecognition drawingAI;
+
     // GameView Constructor. Create the View Layers and Create the main game thread.
     public GameView(Context context){
         super(context);
 
         fingerPathLayer = new FingerPathLayer(context);
         ViewLayers = createGameViewLayers(context);
+        drawingAI = new ShapeRecognition(fingerPathLayer);
 
         getHolder().addCallback(this);
         thread = new GameThread(getHolder(), this);
@@ -50,6 +54,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         // Update each of the GameViewLayer objects.
         for (GameViewLayer layer : ViewLayers) {
             layer.update();
+            drawingAI.hasValidDrawnEvent();
         }
     } // end update()
 
