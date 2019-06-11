@@ -48,8 +48,8 @@ public class GameObjectTests extends TestCase {
         assertTrue( o1.compareTo(o2) < 0);
         assertTrue( o2.compareTo(o1) > 0);
         assertTrue( o1.compareTo(o1) == 0);
-        assertTrue( o1.compareTo(o3) == 0);
-        assertTrue( o3.compareTo(o1) == 0);
+        assertTrue( o1.compareTo(o3) < 0);
+        assertTrue( o3.compareTo(o1) > 0);
 
         System.out.println(strPrintFinish + "test_compareTo_should_compareNegativesCorrectly");
     }

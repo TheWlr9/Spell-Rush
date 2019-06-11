@@ -4,12 +4,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.spellrush.application.ExampleBall;
 import com.spellrush.application.GameObject;
-import com.spellrush.buisness.GameThread;
+import com.spellrush.presentation.UI.FingerPathLayer;
 import com.spellrush.presentation.UI.GameHUD;
 
 import java.util.ArrayList;
@@ -27,10 +28,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
     private ArrayList<GameObject> GameObjects;
     private GameThread thread;
+    private FingerPathLayer fingerPathLayer;
+    private ShapeRecognition drawingAI;
 
     // GameView Constructor. Create the initial Game Objects and the main game thread.
     public GameView(Context context){
         super(context);
+
+        fingerPathLayer = new FingerPathLayer();
+        drawingAI = new ShapeRecognition(fingerPathLayer);
+
         // Setup the View
         this.setupView();
 
@@ -52,7 +59,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private ArrayList<GameObject> createStartupObjects(){
         ArrayList<GameObject> newObjects = new ArrayList<GameObject>();
 
+
         newObjects.add(new GameHUD());
+        newObjects.add(fingerPathLayer);
         newObjects.add(new ExampleBall());
 
         Collections.sort(newObjects, Collections.reverseOrder()); // Set order based on depth
@@ -72,10 +81,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void update(){
-        // Update each of the GameViewLayer objects.
         for (GameObject object : GameObjects) {
             object.update();
         }
+
+        drawingAI.hasValidDrawnEvent();
     } // end update()
 
     @Override
@@ -109,4 +119,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             e.printStackTrace();
         }
     } // end surfaceDestroyed()
+
+    public boolean onTouchEvent(MotionEvent event){
+        boolean value = false;
+
+        value = fingerPathLayer.onTouchEvent(event);
+
+        return value;
+    } // end of onTouchEvent(event)
 }
