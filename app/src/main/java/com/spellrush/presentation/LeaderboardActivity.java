@@ -8,9 +8,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.spellrush.application.Services;
-import com.spellrush.buisness.LeaderboardController;
-import com.spellrush.objects.ScoreEntry;
+import com.spellrush.objects.Services;
+import com.spellrush.business.LeaderboardController;
+import com.spellrush.application.ScoreEntry;
 
 import java.util.List;
 import com.spellrush.R;

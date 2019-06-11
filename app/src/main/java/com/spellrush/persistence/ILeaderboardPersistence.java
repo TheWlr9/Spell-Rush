@@ -1,7 +1,7 @@
 package com.spellrush.persistence;
 import java.util.List;
 
-import com.spellrush.objects.ScoreEntry;
+import com.spellrush.application.ScoreEntry;
 
 public interface ILeaderboardPersistence {
     List<ScoreEntry> getAllScores();

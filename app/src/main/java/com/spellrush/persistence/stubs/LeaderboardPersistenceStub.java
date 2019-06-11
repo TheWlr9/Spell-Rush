@@ -1,6 +1,6 @@
 package com.spellrush.persistence.stubs;
 
-import com.spellrush.objects.ScoreEntry;
+import com.spellrush.application.ScoreEntry;
 import com.spellrush.persistence.ILeaderboardPersistence;
 
 import java.util.ArrayList;

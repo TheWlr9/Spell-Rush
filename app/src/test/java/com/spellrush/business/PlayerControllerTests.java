@@ -1,7 +1,5 @@
 package com.spellrush.business;
 
-import com.spellrush.buisness.PlayerController;
-
 import junit.framework.TestCase;
 
 import org.junit.Test;

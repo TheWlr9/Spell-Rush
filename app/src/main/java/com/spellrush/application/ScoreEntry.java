@@ -1,5 +1,5 @@
 //ScoreEntry object class that stores a player's name and score
-package com.spellrush.objects;
+package com.spellrush.application;
 
 public class ScoreEntry implements Comparable<ScoreEntry>{
     private final String playerName;

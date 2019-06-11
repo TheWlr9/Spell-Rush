@@ -1,4 +1,4 @@
-package com.spellrush.buisness;
+package com.spellrush.business;
 
 import android.graphics.Canvas;
 import android.util.Log;

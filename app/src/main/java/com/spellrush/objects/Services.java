@@ -1,4 +1,4 @@
-package com.spellrush.application;
+package com.spellrush.objects;
 
 import com.spellrush.persistence.ILeaderboardPersistence;
 import com.spellrush.persistence.stubs.LeaderboardPersistenceStub;

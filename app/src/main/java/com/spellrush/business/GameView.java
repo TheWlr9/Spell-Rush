@@ -1,4 +1,4 @@
-package com.spellrush.buisness;
+package com.spellrush.business;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,9 +7,8 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.spellrush.application.ExampleBall;
-import com.spellrush.application.GameObject;
-import com.spellrush.buisness.GameThread;
+import com.spellrush.objects.ExampleBall;
+import com.spellrush.objects.GameObject;
 import com.spellrush.presentation.UI.GameHUD;
 
 import java.util.ArrayList;

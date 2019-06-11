@@ -1,8 +1,7 @@
 package com.spellrush.business;
 
-import com.spellrush.application.Services;
-import com.spellrush.buisness.LeaderboardController;
-import com.spellrush.objects.ScoreEntry;
+import com.spellrush.objects.Services;
+import com.spellrush.application.ScoreEntry;
 import com.spellrush.persistence.ILeaderboardPersistence;
 
 import org.junit.Test;

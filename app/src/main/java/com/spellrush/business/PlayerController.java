@@ -1,4 +1,4 @@
-package com.spellrush.buisness;
+package com.spellrush.business;
 
 /*******************************************
  * Player Controller Class
