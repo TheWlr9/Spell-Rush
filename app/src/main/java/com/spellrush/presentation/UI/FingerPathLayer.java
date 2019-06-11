@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.graphics.PointF;
 
-import com.spellrush.application.GameObject;
+import com.spellrush.objects.GameObject;
 
 import java.util.ArrayList;
 
