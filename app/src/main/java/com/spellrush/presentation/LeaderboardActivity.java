@@ -20,6 +20,7 @@ public class LeaderboardActivity extends Activity {
     private LeaderboardController leaderboardController;
     private List<ScoreEntry> scoreEntries;
 
+    //MAYBE MORE COMMENTS???
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,7 @@ public class LeaderboardActivity extends Activity {
             int maxRows = (scoreEntries.size() < MAX_NUM_OF_ROWS) ? scoreEntries.size() : MAX_NUM_OF_ROWS;
 
             for(int i = 0; i < maxRows; i++){
+                //Small method here w/parameter for .get(i)
                 currName = scoreEntries.get(i).getPlayerName();
                 currScore = String.format("%d", scoreEntries.get(i).getPlayerScore());
                 currRow = populateRow(currName, currScore);
@@ -43,6 +45,7 @@ public class LeaderboardActivity extends Activity {
         }
 
         catch(Exception e){
+            //Display message method HERE
             AlertDialog.Builder message = new AlertDialog.Builder(this);
             message.setTitle("Leaderboard onCreate()");
             message.setMessage(e.getMessage());
