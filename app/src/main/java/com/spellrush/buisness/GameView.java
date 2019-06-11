@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.spellrush.application.Enemy;
 import com.spellrush.application.ExampleBall;
 import com.spellrush.application.GameObject;
 import com.spellrush.buisness.GameThread;
@@ -50,6 +51,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
         newObjects.add(new GameHUD());
         newObjects.add(new ExampleBall());
+        newObjects.add(new Enemy());
 
         Collections.sort(newObjects, Collections.reverseOrder()); // Set order based on depth
         return newObjects;

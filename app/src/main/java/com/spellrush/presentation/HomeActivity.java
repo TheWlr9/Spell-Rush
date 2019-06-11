@@ -22,7 +22,8 @@ public class HomeActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Start Button clicked", Toast.LENGTH_SHORT).show();
+                Intent startGameIntent = new Intent(HomeActivity.this, GameActivity.class);
+                HomeActivity.this.startActivity((startGameIntent));
             }
 
         });
