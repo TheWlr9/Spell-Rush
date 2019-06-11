@@ -9,6 +9,9 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        PlayerControllerTests.class,
+        GameObjectTests.class,
+        FingerPathTests.class,
         ScoreEntryTest.class,
         LeaderboardControllerTest.class,
         PlayerControllerTests.class
