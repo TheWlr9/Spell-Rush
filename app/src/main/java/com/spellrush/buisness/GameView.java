@@ -32,10 +32,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     public GameView(Context context){
         super(context);
         // Setup the View
-        getHolder().addCallback(this);
-        getHolder().setFormat(PixelFormat.TRANSPARENT);
-        setZOrderMediaOverlay(true);
-        setFocusable(true);
+        this.setupView();
 
         // Create the game thread
         thread = new GameThread(getHolder(), this);
@@ -43,6 +40,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         // Initialize the GameObjects list
         GameObjects = createStartupObjects();
     } // end constructor method
+
+    private void setupView(){
+        getHolder().addCallback(this); // TODO: explain what this does
+        getHolder().setFormat(PixelFormat.TRANSPARENT);
+        setZOrderMediaOverlay(true);
+        setFocusable(true);
+    }
 
     // Create the game objects present at the game start
     private ArrayList<GameObject> createStartupObjects(){
@@ -57,13 +61,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
     // createObject
     // Add new game object to list of game objects
-    public void createObject(GameObject newObject){
+    public void addObject(GameObject newObject){
         GameObjects.add(newObject.drawDepth, newObject);
     }
 
     // destroyObject
     // Remove game object from list of game objects
-    public void destroyObject(GameObject oldObject){
+    public void removeObject(GameObject oldObject){
         GameObjects.remove(oldObject);
     }
 
