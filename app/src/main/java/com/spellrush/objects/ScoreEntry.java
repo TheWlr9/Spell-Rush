@@ -25,7 +25,8 @@ public class ScoreEntry implements Comparable<ScoreEntry>{
 
     @Override
     public boolean equals(Object score) {
-        //Split up line / split up calls (cleaner somehow? Local variables in method??)
-        return (this.playerName.equals(((ScoreEntry)score).playerName) && (this.playerScore == (((ScoreEntry)score).playerScore)));
+        boolean hasSameName = this.playerName.equals(((ScoreEntry)score).playerName);
+        boolean hasEqualScore = this.playerScore == (((ScoreEntry)score).playerScore);
+        return hasSameName && hasEqualScore;
     } //end equals()
 }
