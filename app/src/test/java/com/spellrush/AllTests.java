@@ -16,7 +16,6 @@ import org.junit.runners.Suite;
         LeaderboardControllerTest.class,
         PlayerControllerTests.class,
         EnemyTest.class,
-        PlayerControllerTests.class,
         GameObjectTests.class,
         FingerPathTests.class
 
