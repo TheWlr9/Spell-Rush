@@ -18,34 +18,30 @@ public class Enemy extends GameObject {
     private int yPos;
     private int enemyHalfWidth=100;
     private int enemyHalfHeight=50;
-    private final int ATTACK_WAIT=5;
+    private int attackWait=30;//30FPS. So one second for every 30
     private int attackTimer;
-    //private boolean alive=true;
-    //private Paint myPaint;
-    //private int col;
+    private boolean alive=true;
+    private int col;
 
-    public Enemy(){
-        super(101);
-        xPos= 500;
-        yPos=250;
-        attackTimer= (int) (System.currentTimeMillis()/1000);
-        //myPaint.setColor(Color.BLUE);
-        //col=myPaint.getColor();
+    public Enemy(int x, int y, int depth , int framesBetweenAttacks){
+        super(depth);
+        xPos= x;
+        yPos=y;
+        attackWait=framesBetweenAttacks;
+        attackTimer= 0;
+
     }
     @Override
     public void update() {
-        if((System.currentTimeMillis()/1000)-attackTimer >=ATTACK_WAIT){
-            attackTimer=(int)(System.currentTimeMillis()/1000);
+        attackTimer+=1;
+        if(attackTimer >=attackWait){
+            attackTimer=0;
             this.doAttack();
         }
     }
 
     private void doAttack(){
-        //ExampleBall attack = new ExampleBall(xPos,yPos);
-        //GameView.createObject(attack);
-        //col=(col*2)%256;
-       // myPaint.setColor(col);
-
+        System.out.println("attack done");
     }
 
     public void getHit(){
@@ -56,13 +52,14 @@ public class Enemy extends GameObject {
     }
 
     private void destroy(){
-     //   alive=false;
+        alive=false;
     }
     @Override
     public void draw(Canvas canvas) {
         Paint myPaint = new Paint();
         myPaint.setColor(Color.BLUE);
-        canvas.drawRect(xPos-enemyHalfWidth,yPos-enemyHalfHeight,xPos+enemyHalfWidth,yPos+enemyHalfHeight,myPaint);
+        canvas.drawRect(xPos-enemyHalfWidth,yPos-enemyHalfHeight,
+                xPos+enemyHalfWidth,yPos+enemyHalfHeight,myPaint);
 
         }
     }

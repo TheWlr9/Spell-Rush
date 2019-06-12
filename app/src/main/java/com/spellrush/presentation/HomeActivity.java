@@ -22,11 +22,13 @@ public class HomeActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startGameIntent = new Intent(HomeActivity.this, GameActivity.class);
-                HomeActivity.this.startActivity((startGameIntent));
+                Intent gameIntent = new Intent(HomeActivity.this, GameActivity.class);
+                HomeActivity.this.startActivity(gameIntent);
             }
 
         });
+
+
 
         Button settingsButton = (Button) findViewById(R.id.settingsBtn);
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -46,8 +48,39 @@ public class HomeActivity extends Activity {
         });
     }
 
+
+   void buttonCreate(Button newButton, final Activity active){
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        //THIS WAS MESSED UP IN THE MERGE #!7
+        //getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*
+    static {
+        //Loads the OpenCV library from main/jniLibs/
+        System.loadLibrary("opencv_java3");
+    }
+    */
 }
