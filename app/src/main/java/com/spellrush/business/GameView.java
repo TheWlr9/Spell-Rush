@@ -4,12 +4,14 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.spellrush.application.Enemy;
 import com.spellrush.objects.ExampleBall;
 import com.spellrush.objects.GameObject;
+import com.spellrush.presentation.UI.FingerPathLayer;
 import com.spellrush.presentation.UI.GameHUD;
 
 import java.util.ArrayList;
@@ -27,11 +29,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
     private ArrayList<GameObject> GameObjects;
     private GameThread thread;
+    private FingerPathLayer fingerPathLayer;
+    private ShapeRecognition drawingAI;
 
     // GameView Constructor. Create the initial Game Objects and the main game thread.
     public GameView(Context context){
         super(context);
+
+        fingerPathLayer = new FingerPathLayer();
+        drawingAI = new ShapeRecognition(fingerPathLayer);
+
         // Setup the View
+        this.setupView();
         getHolder().addCallback(this);
         getHolder().setFormat(PixelFormat.TRANSPARENT);
         setZOrderMediaOverlay(true);
@@ -44,11 +53,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         GameObjects = createStartupObjects();
     } // end constructor method
 
+    private void setupView(){
+        getHolder().addCallback(this); // TODO: explain what this does
+        getHolder().setFormat(PixelFormat.TRANSPARENT);
+        setZOrderMediaOverlay(true);
+        setFocusable(true);
+    }
+
     // Create the game objects present at the game start
     private ArrayList<GameObject> createStartupObjects(){
         ArrayList<GameObject> newObjects = new ArrayList<GameObject>();
 
         newObjects.add(new GameHUD());
+        newObjects.add(fingerPathLayer);
         newObjects.add(new ExampleBall());
         newObjects.add(new Enemy(400,400,50,30));
 
@@ -58,13 +75,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
     // createObject
     // Add new game object to list of game objects
-    public void createObject(GameObject newObject){
+    public void addObject(GameObject newObject){
         GameObjects.add(newObject.drawDepth, newObject);
     }
 
     // destroyObject
     // Remove game object from list of game objects
-    public void destroyObject(GameObject oldObject){
+    public void removeObject(GameObject oldObject){
         GameObjects.remove(oldObject);
     }
 
@@ -73,6 +90,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         for (GameObject object : GameObjects) {
             object.update();
         }
+        drawingAI.hasValidDrawnEvent();
     } // end update()
 
     @Override
@@ -90,6 +108,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         thread.setRunning(true);
         thread.start();
     } // end surfaceCreated()
+
+    public boolean onTouchEvent(MotionEvent event){
+        boolean value = false;
+
+        value = fingerPathLayer.onTouchEvent(event);
+
+        return value;
+    } // end of onTouchEvent(event)
+
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {

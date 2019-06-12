@@ -19,7 +19,7 @@ public class GameThread extends Thread {
     public static final int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
 
     private SurfaceHolder surfaceHolder; // Holds the GameView SurfaceView object
-    private com.spellrush.business.GameView gameView;
+    private GameView gameView;
     private boolean isRunning;
 
     public static Canvas canvas;

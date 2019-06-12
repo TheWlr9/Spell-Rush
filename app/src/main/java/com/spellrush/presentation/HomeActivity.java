@@ -16,24 +16,25 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        makeStartButton();
-        //makeSettingsButton();
-        makeLeaderBoardButton();
+        createStartButton();
+        //createSettingsButton();
+        createLeaderboardButton();
+
     }
 
 
-    public void makeStartButton(){
+    public void createStartButton(){
         Button startButton = (Button) findViewById(R.id.startBtn);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent gameIntent = new Intent(HomeActivity.this, GameActivity.class);
-                HomeActivity.this.startActivity((gameIntent));
+                HomeActivity.this.startActivity(gameIntent);
             }
         });
     }
 
-    public void makeSettingsButton(){
+    public void createSettingsButton(){
         Button settingsButton = (Button) findViewById(R.id.settingsBtn);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +44,7 @@ public class HomeActivity extends Activity {
         });
     }
 
-    public void makeLeaderBoardButton(){
+    public void createLeaderboardButton(){
         Button leaderBoardButton = (Button) findViewById(R.id.leaderBoardBtn);
         leaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
