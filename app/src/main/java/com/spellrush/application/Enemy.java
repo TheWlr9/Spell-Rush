@@ -2,14 +2,9 @@ package com.spellrush.application;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import com.spellrush.buisness.GameView;
+import com.spellrush.objects.GameObject;
 
 public class Enemy extends GameObject {
 
@@ -65,6 +60,7 @@ public class Enemy extends GameObject {
     private void destroy(){
         alive=false;
     }
+
     @Override
     public void draw(Canvas canvas) {
         Paint myPaint = new Paint();

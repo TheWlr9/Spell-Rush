@@ -2,8 +2,8 @@ package com.spellrush.presentation.UI;
 
 import android.graphics.Canvas;
 
-import com.spellrush.application.GameObject;
-import com.spellrush.buisness.PlayerController;
+import com.spellrush.objects.GameObject;
+import com.spellrush.business.PlayerController;
 import com.spellrush.presentation.UI.Components.HealthBar;
 
 public class GameHUD extends GameObject

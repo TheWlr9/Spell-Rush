@@ -2,7 +2,7 @@ package com.spellrush.business;
 
 import android.graphics.Canvas;
 
-import com.spellrush.application.GameObject;
+import com.spellrush.objects.GameObject;
 
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -48,8 +48,8 @@ public class GameObjectTests extends TestCase {
         assertTrue( o1.compareTo(o2) < 0);
         assertTrue( o2.compareTo(o1) > 0);
         assertTrue( o1.compareTo(o1) == 0);
-        assertTrue( o1.compareTo(o3) == 0);
-        assertTrue( o3.compareTo(o1) == 0);
+        assertTrue( o1.compareTo(o3) < 0);
+        assertTrue( o3.compareTo(o1) > 0);
 
         System.out.println(strPrintFinish + "test_compareTo_should_compareNegativesCorrectly");
     }
