@@ -13,12 +13,13 @@ import com.spellrush.buisness.GameView;
 
 public class Enemy extends GameObject {
 
-    private int hp = 3; //magic for now. Decide on difficulty levels later
+    public final int MAX_HP=3;
+    private int hp = MAX_HP; //magic for now. Decide on difficulty levels later
     private int xPos;
     private int yPos;
     private int enemyHalfWidth=100;
     private int enemyHalfHeight=50;
-    private int attackWait=30;//30FPS. So one second for every 30
+    private int attackWait;//30FPS. So one second for every 30
     private int attackTimer;
     private boolean alive=true;
     private int col;
@@ -31,6 +32,11 @@ public class Enemy extends GameObject {
         attackTimer= 0;
 
     }
+
+    public int getHP(){
+        return this.hp;
+    }
+
     @Override
     public void update() {
         attackTimer+=1;
@@ -47,8 +53,13 @@ public class Enemy extends GameObject {
     public void getHit(){
         hp-=1;
         if(hp<=0){
+            hp=0;
             this.destroy();
         }
+    }
+
+    public boolean isAlive(){
+        return alive;
     }
 
     private void destroy(){
