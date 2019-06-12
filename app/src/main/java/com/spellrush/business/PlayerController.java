@@ -18,32 +18,23 @@ public class PlayerController {
         return this.hp;
     }
 
-    //reduce player HP by amount
+    // Reduce player HP by amount
     public int loseHP(int amount) {
-        if(amount < 0) {//edge case: amount is negative
-            hp = Math.Max(hp - amount, 0);
-        }
-        else{
-            //better solution: unsigned int parameter
-            assert(false);
+        if(amount > 0) { // edge case: amount is negative
+            hp = Math.max(hp - amount, 0);
         }
         return hp;
     }
 
 
-    //Increase player HP by amount
+    // Increase player HP by amount
     public int addHP( int amount) {
-        if(amount < 0) {//edge case: amount is negative
-            hp = Math.Min(hp + amount, MAX_HP);
-        }
-        else{
-            //better solution: unsigned int parameter
-            assert(false);
+        if(amount > 0) { // edge case: amount is negative
+            hp = Math.min(hp + amount, MAX_HP);
         }
         return hp;
     }
-
-
+    
     public void update(){
     }
 

@@ -1,5 +1,7 @@
 package com.spellrush;
 
+import com.spellrush.business.FingerPathTests;
+import com.spellrush.business.GameObjectTests;
 import com.spellrush.business.LeaderboardControllerTest;
 import com.spellrush.business.PlayerControllerTests;
 import com.spellrush.application.ScoreEntryTest;
