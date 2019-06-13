@@ -3,6 +3,7 @@ package com.spellrush.business;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -34,9 +35,26 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private ShapeRecognition drawingAI;
     private PlayerController player;
 
-    // GameView Constructor. Create the initial Game Objects and the main game thread.
+    /** Default Constructors Required by SurfaceView **/
+
     public GameView(Context context){
         super(context);
+        init();
+    }
+
+    public GameView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+    public GameView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init();
+    }
+
+    // GameView Constructor. Create the initial Game Objects and the main game thread.
+    private void init(){
+        fingerPathLayer = new FingerPathLayer();
+        drawingAI = new ShapeRecognition(fingerPathLayer);
 
         // Setup the View
         this.setupView();
@@ -46,7 +64,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
         // Initialize the GameObjects list
         GameObjects = createStartupObjects();
-    } // end constructor method
+    } // end init()
 
     private void setupView(){
         getHolder().addCallback(this); // TODO: explain what this does
@@ -95,10 +113,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void draw(Canvas canvas){
-        super.draw(canvas);
-        // Draw each of the GameViewLayer objects.
-        for (GameObject object : GameObjects) {
-            object.draw(canvas);
+        if(canvas != null) {
+            super.draw(canvas);
+            // Draw each of the GameViewLayer objects.
+            for (GameObject object : GameObjects) {
+                object.draw(canvas);
+            }
         }
     } // end draw()
 
