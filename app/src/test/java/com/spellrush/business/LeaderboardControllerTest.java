@@ -1,6 +1,6 @@
 package com.spellrush.business;
 
-import com.spellrush.objects.Services;
+import com.spellrush.services.Services;
 import com.spellrush.application.ScoreEntry;
 import com.spellrush.persistence.ILeaderboardPersistence;
 
