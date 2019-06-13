@@ -59,4 +59,9 @@ public class HomeActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    @Override
+    public void onBackPressed() {
+        // Ensure it does nothing...
+    }
 }

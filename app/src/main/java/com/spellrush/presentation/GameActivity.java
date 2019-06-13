@@ -22,6 +22,10 @@ public class GameActivity extends Activity {
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        // Ensure it does nothing...
+    }
 
     private void createMenuButton(){
         Button startButton = (Button) findViewById(R.id.menuBtn);
