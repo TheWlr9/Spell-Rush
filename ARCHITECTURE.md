@@ -10,21 +10,6 @@
 - the `objects` package contains classes that are used across the presentation and business layers of our architecture. Classes in this package will be represented on the screen, and will also have processing done within them to determine their actions.
 - the `application` package represents the domain layer of our architecture. Classes in this package contain responsibilities of all layers of our 3-layer architecture.
 
-|    Presentation     |       Business        |   Persistence (Data)   |
-| :-----------------: | :-------------------: | :--------------------: |
-|    GameActivity     |      GameThread       |                        |
-|    HomeActivity     |       GameView        |                        |
-| LeaderboardActivity | LeaderboardController | LeaderboardPersistence |
-|       GameHUD       |   PlayerController    |                        |
-|      HealthBar      |                       |                        |
-|    ScoreDisplay     |                       |                        |
-|                     |                       |                        |
 
-| Objects (Domain)  |
-| :---------------: |
-| GameObject, Enemy |
 
-| Application (Domain++) |
-| :--------------------: |
-|       ScoreEntry       |
-
+![Architecture Diagram](Architecture Diagram.svg)
