@@ -37,7 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/startBtn"
         android:layout_centerHorizontal="true"
-        android:text="@string/Settings" />
+        android:text="@string/Settings"
+        android:visibility="gone"
+        tools:visibility="gone" />
 
     <Button
         android:id="@+id/leaderBoardBtn"
