@@ -3,6 +3,7 @@ package com.spellrush.presentation.UI;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 
+import com.spellrush.business.GameView;
 import com.spellrush.objects.GameObject;
 import com.spellrush.business.PlayerController;
 import com.spellrush.presentation.UI.Components.HealthBar;
@@ -12,9 +13,11 @@ public class GameHUD extends GameObject {
     private static final int HUD_DEPTH = -100;
     private HealthBar hpUI;
     private ScoreDisplay score;
+    private PlayerController player;
 
-    public GameHUD() {
+    public GameHUD(PlayerController player) {
         super(HUD_DEPTH);
+        this.player = player;
 
         int deviceWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
         int deviceHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
@@ -30,7 +33,6 @@ public class GameHUD extends GameObject {
 
     @Override
     public void draw(Canvas canvas){
-        PlayerController player = PlayerController.getInstance();
         if(canvas != null) {
             hpUI.drawHealthBar(canvas, player.MAX_HP, player.getHP());
             score.drawScore(canvas, player.getScore());

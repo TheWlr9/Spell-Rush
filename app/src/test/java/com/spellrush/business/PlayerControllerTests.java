@@ -12,7 +12,7 @@ public class PlayerControllerTests extends TestCase {
 
     public PlayerControllerTests(String arg0){
         super(arg0);
-        testPlayer = PlayerController.getInstance();
+        testPlayer = new PlayerController();
     }
 
     @Test

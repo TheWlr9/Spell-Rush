@@ -62,6 +62,9 @@ public class GameThread extends Thread {
                 e.printStackTrace();
             }
         }
+        else {
+            // Running behind schedule, oh no!
+        }
     } // end sleepUntilNextFrame()
 
     // runGameFrame - Called once per frame. Update all game objects, and draw the canvas.

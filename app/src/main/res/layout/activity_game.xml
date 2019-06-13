@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#64767676"
-            android:text="@string/strQuit"
+            android:text="@string/str_quit"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="#74FFFFFF"
             android:textStyle="bold"

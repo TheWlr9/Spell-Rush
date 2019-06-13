@@ -11,22 +11,14 @@ import com.spellrush.objects.GameObject;
  * Learned spells, etc.
  * *****************************************/
 public class PlayerController extends GameObject {
-
-    // Follow Singleton design pattern
-    private static final PlayerController instance = new PlayerController();
-
     public static final int MAX_HP = 100;
     private int hp;
     private int score;
 
-    private PlayerController() {
+    public PlayerController() {
         super(0);
         hp = MAX_HP;
         score = 0;
-    }
-
-    public static PlayerController getInstance(){
-        return instance;
     }
 
     public int getHP(){

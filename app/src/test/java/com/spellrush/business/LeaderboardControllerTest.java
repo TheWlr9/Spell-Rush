@@ -11,7 +11,7 @@ import static junit.framework.Assert.*;
 public class LeaderboardControllerTest {
 
     @Test
-    public void test_verifyListIsSorted() {
+    public void verifyListIsSorted() {
         int initialCount, highestScore;
 
         System.out.println("Starting Test -  Leaderboard Controller Test - Verify that the returned list is sorted");
