@@ -29,15 +29,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
     private ArrayList<GameObject> GameObjects;
     private GameThread thread;
+
     private FingerPathLayer fingerPathLayer;
     private ShapeRecognition drawingAI;
+    private PlayerController player;
 
     // GameView Constructor. Create the initial Game Objects and the main game thread.
     public GameView(Context context){
         super(context);
-
-        fingerPathLayer = new FingerPathLayer();
-        drawingAI = new ShapeRecognition(fingerPathLayer);
 
         // Setup the View
         this.setupView();
@@ -60,12 +59,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private ArrayList<GameObject> createStartupObjects(){
         ArrayList<GameObject> newObjects = new ArrayList<GameObject>();
 
-        newObjects.add(new GameHUD());
+        player = new PlayerController();
+        fingerPathLayer = new FingerPathLayer();
+        drawingAI = new ShapeRecognition(fingerPathLayer);
+
+        newObjects.add(player);
+        newObjects.add(new GameHUD(player));
         newObjects.add(fingerPathLayer);
-        newObjects.add(new ExampleBall());
         newObjects.add(new Enemy(400,400,50,30));
 
         Collections.sort(newObjects, Collections.reverseOrder()); // Set order based on depth
+
         return newObjects;
     } // end createStartupObjects()
 

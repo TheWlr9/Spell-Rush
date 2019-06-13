@@ -73,10 +73,10 @@ public class GameThread extends Thread {
         try{
             // Lock the canvas and surface holder to this Thread to ensure concurrency. (See COMP 3430)
             canvas = surfaceHolder.lockCanvas();
-            synchronized (surfaceHolder) {
-                this.updateGame();
-                this.displayGame(canvas);
-            }
+
+            this.updateGame();
+            this.displayGame(canvas);
+
         } catch(Exception e) {
             Log.e(TAG, "run: ",e);
         }

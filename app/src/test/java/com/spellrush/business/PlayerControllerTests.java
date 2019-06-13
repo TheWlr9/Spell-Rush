@@ -29,6 +29,28 @@ public class PlayerControllerTests extends TestCase {
     }
 
     @Test
+    public void test_addHp_should_notAddNegativeHp() {
+        System.out.println(strPrintStart + "addHp_should_notAddNegativeHp");
+
+        int before = testPlayer.getHP();
+        testPlayer.addHP(-5);
+        assertEquals(testPlayer.getHP(), before);
+
+        System.out.println(strPrintFinish + "addHp_should_notAddNegativeHp");
+    }
+
+    @Test
+    public void test_loseHp_should_notLoseNegativeHp() {
+        System.out.println(strPrintStart + "loseHp_should_notLoseNegativeHp");
+
+        int before = testPlayer.getHP();
+        testPlayer.loseHP(-5);
+        assertEquals(testPlayer.getHP(), before);
+
+        System.out.println(strPrintFinish + "oseHp_should_notLoseNegativeHp");
+    }
+
+    @Test
     public void test_loseHP_should_notGoLowerThanZero() {
         System.out.println(strPrintStart + "loseHP_should_notGoLowerThanZero");
 
@@ -67,5 +89,27 @@ public class PlayerControllerTests extends TestCase {
         assertEquals(testPlayer.getHP(), before + 5);
 
         System.out.println(strPrintFinish + "addHp_should_incrementHP");
+    }
+
+    @Test
+    public void test_addScore_should_incrementScore() {
+        System.out.println(strPrintStart + "addScore_should_incrementScore");
+
+        int before = testPlayer.getScore();
+        testPlayer.addScore(5);
+        assertEquals(testPlayer.getScore(), before + 5);
+
+        System.out.println(strPrintFinish + "addScore_should_incrementScore");
+    }
+
+    @Test
+    public void test_addScore_should_notAddNegativeScore() {
+        System.out.println(strPrintStart + "addScore_should_incrementScore");
+
+        int before = testPlayer.getScore();
+        testPlayer.addScore(-5);
+        assertEquals(testPlayer.getScore(), before);
+
+        System.out.println(strPrintFinish + "addScore_should_incrementScore");
     }
 }
