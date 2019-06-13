@@ -19,12 +19,14 @@ public final class ShapeRecognition {
         //points != null
         float maxX = -1;
         boolean wrapping = false;
+        PointF lastPoint = null;
 
         boolean result = true;
 
+
         for(PointF point : points){
             if(wrapping){
-                if(point.x > maxX){
+                if(lastPoint != null && point.x > lastPoint.x){
                     //Supposed to be heading leftwards
                     result = false;
                 }
@@ -37,6 +39,8 @@ public final class ShapeRecognition {
                 //One state for beginning to head leftwards
                 wrapping = true;
             }
+
+            lastPoint = new PointF(point.x, point.y); //Deep copy
         }
 
         return result && wrapping; //Ensure that the motion wraps and is valid
