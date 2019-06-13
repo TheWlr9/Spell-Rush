@@ -67,7 +67,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     } // end init()
 
     private void setupView(){
-        getHolder().addCallback(this); // TODO: explain what this does
+        getHolder().addCallback(this); // This allows the view to process changes and events
         getHolder().setFormat(PixelFormat.TRANSPARENT);
         setZOrderMediaOverlay(true);
         setFocusable(true);
