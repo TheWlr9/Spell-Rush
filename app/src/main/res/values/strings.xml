@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Spell Rush</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="title_activity_leaderboard">Spell Rush: Leaderboard</string>
+    <string name="logo">logo</string>
+    <string name="Spell_Rush">Spell Rush</string>
+    <string name="Start">Start</string>
+    <string name="Settings">Settings</string>
+    <string name="Leader_Board">Leader Board</string>
+    <string name="Will_Ritchie">Will Ritchie</string>
+    <string name="Earl_John_Placido">Earl John Placido</string>
+    <string name="Nathan_Carrier">Nathan Carrier</string>
+    <string name="Chad_Hillary">Chad Hillary</string>
+    <string name="Mike_Winkler">Mike Winkler</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="leaderboard_back">Go Back</string>
+    <string name="leaderboard_header_name">Player Name</string>
+    <string name="leaderboard_header_score">Score</string>
+    <string name="str_quit">QUIT</string>
+    <string name="title_activity_GameActivity">title_activity_GameActivity</string>
+    <string name="strQuit">QUIT</string>
+</resources>
