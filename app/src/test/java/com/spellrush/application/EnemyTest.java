@@ -1,5 +1,7 @@
 package com.spellrush.application;
 
+import com.spellrush.objects.Enemy;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

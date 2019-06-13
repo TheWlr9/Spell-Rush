@@ -1,4 +1,4 @@
-package com.spellrush.application;
+package com.spellrush.objects;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
