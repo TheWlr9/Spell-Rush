@@ -4,27 +4,30 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.spellrush.business.GameView;
 import com.spellrush.objects.GameObject;
 
 public class Enemy extends GameObject {
 
-    public final int MAX_HP=3;
-    private int hp = MAX_HP; //magic for now. Decide on difficulty levels later
+    public final int MAX_HP = 100;
+    private final int enemyHalfWidth = 100;
+    private final int enemyHalfHeight = 50;
+
+    private int hp;
     private int xPos;
     private int yPos;
-    private int enemyHalfWidth=100;
-    private int enemyHalfHeight=50;
-    private int attackWait;//30FPS. So one second for every 30
+    private int attackWait; //30FPS. So one second for every 30
     private int attackTimer;
-    private boolean alive=true;
-    private int col;
+    private boolean alive;
 
     public Enemy(int x, int y, int depth , int framesBetweenAttacks){
         super(depth);
-        xPos= x;
-        yPos=y;
-        attackWait=framesBetweenAttacks;
-        attackTimer= 0;
+        xPos = x;
+        yPos = y;
+        attackWait = framesBetweenAttacks;
+        attackTimer = 0;
+        hp = MAX_HP;
+        alive = true;
 
     }
 
@@ -42,14 +45,16 @@ public class Enemy extends GameObject {
     }
 
     private void doAttack(){
-        System.out.println("attack done");
+        // Op
     }
 
-    public void getHit(){
-        hp-=1;
-        if(hp<=0){
-            hp=0;
-            this.destroy();
+    public void getHit(int dmg){
+        if(dmg > 0) {
+            hp -= dmg;
+            if (hp <= 0) {
+                hp = 0;
+                this.destroy();
+            }
         }
     }
 
@@ -59,6 +64,7 @@ public class Enemy extends GameObject {
 
     private void destroy(){
         alive=false;
+        GameView.removeObject(this);
     }
 
     @Override
