@@ -12,4 +12,4 @@
 
 
 
-![Architecture Diagram](Architecture Diagram.svg)
+<img href="Architecture Diagram.svg" />
