@@ -49,8 +49,10 @@ public class FingerPathLayer extends GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        for(int i = 1; i < path.size(); i++){
-            canvas.drawLine(path.get(i-1).x, path.get(i-1).y, path.get(i).x, path.get(i).y, paint);
+        if(canvas != null && path != null) {
+            for (int i = 1; i < path.size(); i++) {
+                canvas.drawLine(path.get(i - 1).x, path.get(i - 1).y, path.get(i).x, path.get(i).y, paint);
+            }
         }
     }
 
