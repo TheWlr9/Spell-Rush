@@ -11,7 +11,7 @@ public class ExampleBall extends GameObject {
     public ExampleBall(){
         super(100);
         xPos = 400;
-        yPos = 0;
+        yPos = 50;
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.spellrush.application.Enemy;
 import com.spellrush.objects.ExampleBall;
 import com.spellrush.objects.GameObject;
 import com.spellrush.presentation.UI.FingerPathLayer;
@@ -59,10 +60,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private ArrayList<GameObject> createStartupObjects(){
         ArrayList<GameObject> newObjects = new ArrayList<GameObject>();
 
-
         newObjects.add(new GameHUD());
         newObjects.add(fingerPathLayer);
         newObjects.add(new ExampleBall());
+        newObjects.add(new Enemy(400,400,50,30));
 
         Collections.sort(newObjects, Collections.reverseOrder()); // Set order based on depth
         return newObjects;
@@ -81,10 +82,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void update(){
+        // Update each of the GameViewLayer objects.
         for (GameObject object : GameObjects) {
             object.update();
         }
-
         drawingAI.hasValidDrawnEvent();
     } // end update()
 
@@ -104,6 +105,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         thread.start();
     } // end surfaceCreated()
 
+    public boolean onTouchEvent(MotionEvent event){
+        boolean value = false;
+
+        value = fingerPathLayer.onTouchEvent(event);
+
+        return value;
+    } // end of onTouchEvent(event)
+
+
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
     }
@@ -119,12 +129,4 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             e.printStackTrace();
         }
     } // end surfaceDestroyed()
-
-    public boolean onTouchEvent(MotionEvent event){
-        boolean value = false;
-
-        value = fingerPathLayer.onTouchEvent(event);
-
-        return value;
-    } // end of onTouchEvent(event)
 }
