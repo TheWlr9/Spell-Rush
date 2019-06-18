@@ -11,3 +11,16 @@
 - the `application` package represents the domain layer of our architecture. Classes in this package contain responsibilities of all layers of our 3-layer architecture.
 
 ![Architecture Diagram](architecture_diagram.png)
+
+| **Presentation** | **Business** | **Persistence** |
+| ---------------- | ------------ | --------------- |
+|                  |              |                 |
+|                  |              |                 |
+|                  |              |                 |
+
+| **Application** | **Objects** |
+| --------------- | ----------- |
+|                 |             |
+|                 |             |
+|                 |             |
+
