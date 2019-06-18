@@ -10,7 +10,7 @@ Spell Rush is an action game with a focus on an innovative battle system that us
 
 ### Project Description
 
-Players will draw symbols on their screen to perform actions such as attacks and defenses to battle simple AI enemies. Players will need to make quick decisions in real time, with more powerful actions requiring more drawing complexity. Throughout the game, players will strategize their actions based on incoming attacks, their current defenses, health, and learned attack gestures. Players will be rewarded with scores that reflect their competence in battle as well as new actions and/or powerups. These scores can be submitted to a local leaderboard. 
+Players will draw symbols on their screen to perform actions such as attacks and defenses to battle a simple AI enemy. Players will need to make quick decisions in real time, with more powerful actions requiring more drawing complexity. Throughout the game, players will strategize their actions based on incoming attacks, their current defenses, health, and learned attack gestures. Players will be rewarded with scores that reflect their competence in battle as well as new actions and/or powerups. These scores can be submitted to a local leaderboard. 
 
 ### Who Our Users Are
 
@@ -22,7 +22,7 @@ Our app provides entertainment. Users will exercise their problem-solving skills
 
 ### Project Success Criteria
 
-Our team will consider this project a success if the following at least two of the following four criteria are met. Firstly, 50% of the players will return to the app after their first session. Secondly, our players will play until a "game over" at least thrice during their first play session. Thirdly, our player base reaches at least 8 unique daily users sometime during its 1-month initial release window.  Lastly, players rate our application at least an average of 3.5 out of 5 stars on our in-app rating system.
+Our team will consider this project a success if the following at least two of the following four criteria are met. Firstly, 50% of the players will return to the app after their first session. Secondly, 46% of our players will play until a "game over" at least thrice during their first play session. Thirdly, our player base reaches at least 8 unique daily users sometime during its 1-month initial release window.  Lastly, players rate our application at least an average of 3.5 out of 5 stars on our in-app rating system.
 
 # Programming Practices
 
