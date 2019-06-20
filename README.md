@@ -72,3 +72,15 @@ Our team will consider this project a success if the following at least two of t
 ## Architecture
 
 - 3-tier architecture, seperated into packages
+
+# Merge / Review Process
+
+## Mergre Criteria
+
+- Atleast two people approved (thumbs up and an 'all good' comment).
+- If it has been 24 hours, and atleast one person has looked at it, and you've made the changes, 
+ - Spam slack, wait like maybe 2 hours for a response, and if not just go ahead ONLY IF it's blocking you from another task.
+- All discussions must be resolved
+
+## Reviewing
+- Leave a thumbs up emoji and also make a comment saying you've looked at it
