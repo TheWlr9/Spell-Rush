@@ -24,39 +24,49 @@ public class GameThread extends Thread {
 
     public static Canvas canvas;
 
+    /**
+     * Constructor
+     *
+     * @param surfaceHolder Holds the GameView SurfaceView object
+     * @param gameView
+     */
     public GameThread(SurfaceHolder surfaceHolder, GameView gameView){
         super();
         this.surfaceHolder = surfaceHolder;
         this.gameView = gameView;
     }
 
-    // run - Manage the game loop. Ensure the loop iterates once per frame (According to FPS).
+    /**
+     * run
+     *
+     * Once per frame, iterate the main game loop.
+     */
     @Override
     public void run(){
         long timeAtFrameStart;
-        long timeAtFrameEndInMs;
-        long waitTime;
 
-        // MAIN GAME LOOP - Iterating once per frame
+        //Perform all game updates, then sleep until next frame
         while (isRunning){
-            // Get current program time before running frame
             timeAtFrameStart = System.nanoTime();
-
-            // Do all game updates once per frame.
             this.runGameFrame();
+            sleepUntilNextFrame(timeAtFrameStart);
 
-            // Calculate time until next frame and sleep until then
-            timeAtFrameEndInMs = (System.nanoTime() - timeAtFrameStart) / 1000000;
-            waitTime = SKIP_TICKS - timeAtFrameEndInMs;
-            sleepUntilNextFrame(waitTime);
         }
     } // end run()
 
-    // sleepUntilNextFrame - Put the thread to sleep until it's time for the next frame.
-    private void sleepUntilNextFrame(long time){
-        if(time >= 0){
+    /** sleepUntilNextFrame
+     *
+     * Put the thread to sleep until it's time for the next frame.
+     *
+     * @param frameStartTime time the frame started at
+     */
+    private void sleepUntilNextFrame(long frameStartTime){
+        long timeAtFrameEndInMs = (System.nanoTime() - frameStartTime) / 1000000;
+        long waitTime = SKIP_TICKS - timeAtFrameEndInMs;
+
+        if(waitTime >= 0){
             try{
-                sleep(time);
+                sleep(waitTime);
             }
             catch (Exception e){
                 e.printStackTrace();
