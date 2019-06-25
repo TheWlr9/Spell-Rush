@@ -125,11 +125,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        // Start the main game loop.
-        thread.setRunning(true);
-        thread.start();
+        if (thread.getState() == Thread.State.TERMINATED){
+            // Create a new game thread to run the game on
+            thread = new GameThread(getHolder(), this);
+        }
+        if (thread.getState() == Thread.State.NEW) {
+            // Start the main game loop.
+            thread.setRunning(true);
+            thread.start();
+        }
     } // end surfaceCreated()
 
+    @Override
     public boolean onTouchEvent(MotionEvent event){
         boolean value = false;
 
@@ -154,4 +161,5 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             e.printStackTrace();
         }
     } // end surfaceDestroyed()
+
 }
