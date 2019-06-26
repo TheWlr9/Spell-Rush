@@ -7,7 +7,7 @@ import android.graphics.Canvas;
  *
  * Abstract class for any game object that needs to be updated and drawn to the screen
  */
-public abstract class GameObject implements Comparable<GameObject>{
+public abstract class GameObject implements Comparable<GameObject>, IDrawnObject{
     // Specifies the order in which elements are drawn to the screen
     public int drawDepth;
 

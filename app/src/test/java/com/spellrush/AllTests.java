@@ -4,7 +4,9 @@ import com.spellrush.application.EnemyTest;
 import com.spellrush.application.ScoreEntryTest;
 import com.spellrush.business.FingerPathTests;
 import com.spellrush.business.GameObjectTests;
+import com.spellrush.business.HealthObjectTests;
 import com.spellrush.business.LeaderboardControllerTest;
+import com.spellrush.business.LevelManagerTests;
 import com.spellrush.business.PlayerControllerTests;
 
 import org.junit.runner.RunWith;
@@ -17,8 +19,9 @@ import org.junit.runners.Suite;
         PlayerControllerTests.class,
         EnemyTest.class,
         GameObjectTests.class,
-        FingerPathTests.class
-
+        FingerPathTests.class,
+        LevelManagerTests.class,
+        HealthObjectTests.class,
 })
 public class AllTests {
 
