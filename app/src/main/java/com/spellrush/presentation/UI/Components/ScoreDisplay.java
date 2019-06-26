@@ -4,7 +4,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-public class ScoreDisplay {
+import com.spellrush.business.PlayerController;
+import com.spellrush.objects.IDrawnObject;
+
+public class ScoreDisplay implements IDrawnObject {
     private final int NUM_DIGITS = 6;
     private int x;
     private int y;
@@ -17,7 +20,8 @@ public class ScoreDisplay {
         myPaint = new Paint();
     }
 
-    public void drawScore(Canvas canvas, int playerScore) {
+    public void draw(Canvas canvas) {
+        int playerScore = PlayerController.getInstance().getScore();
         String formattedScore =  String.format("%0" + NUM_DIGITS + "d", playerScore);
         myPaint.setTextSize(64);
         myPaint.setColor(Color.WHITE);

@@ -2,7 +2,7 @@ package com.spellrush.business;
 
 import android.graphics.Canvas;
 
-import com.spellrush.objects.GameObject;
+import com.spellrush.objects.HealthObject;
 
 /*******************************************
  * Player Controller Class
@@ -10,18 +10,16 @@ import com.spellrush.objects.GameObject;
  * Keep track of player HP, Score,
  * Learned spells, etc.
  * *****************************************/
-public class PlayerController extends GameObject {
+public class PlayerController extends HealthObject {
 
     // Follow Singleton design pattern
     private static final PlayerController instance = new PlayerController();
 
     public static final int MAX_HP = 100;
-    private int hp;
     private int score;
 
     private PlayerController() {
-        super(0);
-        hp = MAX_HP;
+        super(0, MAX_HP);
         score = 0;
     }
 
@@ -29,28 +27,14 @@ public class PlayerController extends GameObject {
         return instance;
     }
 
-    public int getHP(){
-        return this.hp;
+    @Override
+    protected void onDestroyed() {
+        //TODO: trigger a game over
+        return;
     }
+
     public int getScore(){
         return score;
-    }
-
-    // Reduce player HP by amount
-    public int loseHP(int amount) {
-        if(amount > 0) { // edge case: amount is negative
-            hp = Math.max(hp - amount, 0);
-        }
-        return hp;
-    }
-
-
-    // Increase player HP by amount
-    public int addHP( int amount) {
-        if(amount > 0) { // edge case: amount is negative
-            hp = Math.min(hp + amount, MAX_HP);
-        }
-        return hp;
     }
 
     public void addScore(int amt){
@@ -58,8 +42,15 @@ public class PlayerController extends GameObject {
             score += amt;
     }
 
+    public void reset(){
+        super.addHP(MAX_HP);
+        score = 0;
+    }
+
+    @Override
     public void update(){
         addScore(1);
+        getHit(1);
     }
 
     @Override

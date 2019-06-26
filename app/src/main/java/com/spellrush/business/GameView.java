@@ -9,13 +9,14 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.spellrush.objects.Enemy;
 import com.spellrush.objects.GameObject;
 import com.spellrush.presentation.UI.FingerPathLayer;
 import com.spellrush.presentation.UI.GameHUD;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /*******************************************************
 * GameView
@@ -27,12 +28,20 @@ import java.util.Collections;
 *******************************************************/
 public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
+
+    // Follow Singleton design pattern
+    private static GameView instance;
+
     private static ArrayList<GameObject> gameObjects;
     private static PlayerController player;
-
+    private static LevelManager levelManager;
     private GameThread thread;
     private FingerPathLayer fingerPathLayer;
     private ShapeRecognition drawingAI;
+
+    // Temporary lists to avoid concurrent GameObject array access
+    private static Queue<GameObject> objectsToDelete;
+    private static Queue<GameObject> objectsToAdd;
 
     /** Default Constructors Required by SurfaceView **/
 
@@ -61,7 +70,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
         // Initialize the gameObjects list
         gameObjects = createStartupObjects();
+        objectsToDelete = new LinkedList<>();
+        objectsToAdd = new LinkedList<>();
+
+        instance = this;
     } // end init()
+
+    public static GameView getInstance(){
+        return instance;
+    }
 
     private void setupView(){
         getHolder().addCallback(this); // This allows the view to process changes and events
@@ -74,14 +91,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private ArrayList<GameObject> createStartupObjects(){
         ArrayList<GameObject> newObjects = new ArrayList<GameObject>();
 
+        levelManager = LevelManager.getInstance();
         player = PlayerController.getInstance();
         fingerPathLayer = new FingerPathLayer();
         drawingAI = new ShapeRecognition(fingerPathLayer);
 
         newObjects.add(player);
-        newObjects.add(new GameHUD());
         newObjects.add(fingerPathLayer);
-        newObjects.add(new Enemy(400,400,50,30));
+        newObjects.add(levelManager);
+        newObjects.add(new GameHUD());
 
         Collections.sort(newObjects, Collections.reverseOrder()); // Set order based on depth
 
@@ -92,7 +110,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     // Add new game object to list of game objects
     public static void addObject(GameObject newObject){
         if(gameObjects != null && newObject != null) {
-            gameObjects.add(newObject.drawDepth, newObject);
+            // Add the object to a temporary list while the gameObjects list is still updating
+            objectsToAdd.add(newObject);
         }
     }
 
@@ -100,7 +119,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     // Remove game object from list of game objects
     public static void removeObject(GameObject oldObject){
         if(gameObjects != null && oldObject != null) {
-            gameObjects.remove(oldObject);
+            // Add the object to a temporary list while the gameObjects list is still updating
+            objectsToDelete.add(oldObject);
         }
     }
 
@@ -110,7 +130,24 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             object.update();
         }
         drawingAI.hasValidDrawnEvent();
+        deleteObjects();
+        addObjects();
+
     } // end update()
+
+    // Delete all objects added to Object Deleting Queue in this Update Frame
+    private void deleteObjects(){
+        while(!objectsToDelete.isEmpty()){
+            gameObjects.remove(objectsToDelete.remove());
+        }
+    }
+    // Add all objects added to Object Adding Queue in this Update Frame
+    private void addObjects(){
+        while(!objectsToAdd.isEmpty()){
+            GameObject newObj = objectsToAdd.remove();
+            gameObjects.add(newObj.drawDepth, newObj);
+        }
+    }
 
     @Override
     public void draw(Canvas canvas){
@@ -160,6 +197,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             Log.e("ERROR", "run: ",e);
             e.printStackTrace();
         }
+
+        player.reset();
+        levelManager.reset();
     } // end surfaceDestroyed()
 
 }
