@@ -49,8 +49,7 @@ public class PlayerController extends HealthObject {
 
     @Override
     public void update(){
-        addScore(1);
-        getHit(1);
+        // addScore(1);
     }
 
     @Override

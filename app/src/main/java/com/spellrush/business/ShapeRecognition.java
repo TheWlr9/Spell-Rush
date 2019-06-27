@@ -2,11 +2,13 @@ package com.spellrush.business;
 
 import android.graphics.PointF;
 
+import com.spellrush.objects.attacks.AttackFactory;
 import com.spellrush.presentation.UI.FingerPathLayer;
 
 import java.util.ArrayList;
 
 public final class ShapeRecognition {
+
     private ArrayList<PointF> points, lastPoints;
     private FingerPathLayer lFPL;
 
@@ -53,6 +55,7 @@ public final class ShapeRecognition {
             if(hasDrawnFire()) {
                 //SEND EVENT
                 System.out.println("Fire event!");
+                AttackFactory.createFireAttack(true, 0);
             }
         }
     }

@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.spellrush.objects.attacks.AttackFactory;
+
 public class BasicEnemy extends Enemy {
 
     public static final int MAX_HP = 100;
@@ -14,9 +16,14 @@ public class BasicEnemy extends Enemy {
         super(x, y, depth, framesBetweenAttacks, MAX_HP);
     }
 
+    @Override
+    public void doAttack() {
+        AttackFactory.createFireAttack(false,0);
+    }
+
+    @Override
     public void update() {
         super.update();
-        getHit(1);
     }
 
     @Override

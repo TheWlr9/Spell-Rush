@@ -18,6 +18,10 @@ public class LevelManagerTests extends TestCase {
         public testEnemy(int x, int y, int depth, int framesBetweenAttacks) {
             super(x, y, depth, framesBetweenAttacks, 10);
         }
+
+        @Override
+        public void doAttack() { return; }
+
         @Override
         public void draw(Canvas canvas) { return; }
     }

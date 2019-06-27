@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import static junit.framework.Assert.*;
 
-public class LeaderboardControllerTest {
+public class LeaderboardControllerTests {
 
     @Test
     public void test_verifyListIsSorted() {

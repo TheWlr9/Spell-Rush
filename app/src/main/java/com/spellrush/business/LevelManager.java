@@ -1,25 +1,28 @@
 package com.spellrush.business;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
 
 import com.spellrush.objects.BasicEnemy;
 import com.spellrush.objects.Enemy;
 import com.spellrush.objects.GameObject;
+import com.spellrush.objects.attacks.GameBoard;
 
-enum levels{
+enum Level{
     level_1
 }
 
 // TODO: flesh this out, make it modular for differant enemies... (see "level manager" story)
 public class LevelManager extends GameObject {
-
     // Follow Singleton Design Pattern
     private static final LevelManager instance = new LevelManager();
 
     public static final int ENEMY_DEPTH = 50;
-    private Enemy currEnemy;
-    private levels currLevel;
+    public static final int MAX_BULLETS = 10; // Max bullets at a time for each player
 
+    private GameBoard gameBoard;
+    private Enemy currEnemy;
+    private Level currLevel;
 
     private LevelManager(){
         super(ENEMY_DEPTH);
@@ -28,8 +31,17 @@ public class LevelManager extends GameObject {
 
     // Initialize the Level Manager (Level 0)
     private void init(){
-        currLevel = levels.level_1;
-        this.setCurrentEnemy(new BasicEnemy(400,400,ENEMY_DEPTH,30));
+        int deviceHeight;
+        try {
+            deviceHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+        } catch (RuntimeException e) {
+            // Catch if testing, and this is not mocked
+            deviceHeight = 0;
+        }
+
+        currLevel = Level.level_1;
+        this.setCurrentEnemy(new BasicEnemy(400,200,ENEMY_DEPTH,80));
+        this.gameBoard = new GameBoard(1, 200, deviceHeight - 200, MAX_BULLETS);
     }
 
     public static LevelManager getInstance(){
@@ -46,21 +58,34 @@ public class LevelManager extends GameObject {
         return currEnemy;
     }
 
+    /* Used to add attacks to the board in  AttackFactory */
+    public GameBoard getGameBoard(){ return gameBoard; }
 
     @Override
     public void update() {
+        if(gameBoard != null) {
+            gameBoard.update();
+        }
+        updateEnemy();
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        if(gameBoard != null) {
+            gameBoard.draw(canvas);
+        }
+        if(currEnemy != null) {
+            currEnemy.draw(canvas);
+        }
+    }
+
+    // Call update function for enemy if it exists
+    private void updateEnemy(){
         if(currEnemy != null) {
             currEnemy.update();
             if (!currEnemy.isAlive()) {
                 currEnemy = null;
             }
-        }
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-        if(currEnemy != null) {
-            currEnemy.draw(canvas);
         }
     }
 
