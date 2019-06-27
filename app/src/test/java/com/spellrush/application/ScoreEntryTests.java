@@ -3,7 +3,7 @@ package com.spellrush.application;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class ScoreEntryTest {
+public class ScoreEntryTests {
     @Test
     public void verifyScoreIsCreated() {
         ScoreEntry scoreEntry;

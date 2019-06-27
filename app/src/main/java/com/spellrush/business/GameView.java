@@ -30,6 +30,8 @@ import java.util.Queue;
 public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
 
+    private static final int MAX_BULLETS = 100;
+
     // Follow Singleton design pattern
     private static GameView instance;
 

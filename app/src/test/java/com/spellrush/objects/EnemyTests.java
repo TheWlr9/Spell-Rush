@@ -1,14 +1,12 @@
-package com.spellrush.application;
+package com.spellrush.objects;
 
 import android.graphics.Canvas;
 
-import com.spellrush.objects.Enemy;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-public class EnemyTest {
+public class EnemyTests extends TestCase {
 
     public static final int testMaxHP = 100;
 
@@ -16,6 +14,12 @@ public class EnemyTest {
         public testEnemy(int x, int y, int depth, int framesBetweenAttacks) {
             super(x, y, depth, framesBetweenAttacks, testMaxHP);
         }
+
+        @Override
+        public void doAttack() {
+            return;
+        }
+
         @Override
         public void draw(Canvas canvas) { return; }
     }

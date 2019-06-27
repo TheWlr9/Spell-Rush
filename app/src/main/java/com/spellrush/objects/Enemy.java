@@ -20,9 +20,7 @@ public abstract class Enemy extends HealthObject {
         alive = true;
     }
 
-    private void doAttack(){
-        // Op
-    }
+    public abstract void doAttack();
 
     public boolean isAlive(){
         return alive;
@@ -33,7 +31,7 @@ public abstract class Enemy extends HealthObject {
         attackTimer+=1;
         if(attackTimer >=attackWait){
             attackTimer=0;
-            this.doAttack();
+            doAttack();
         }
     }
 

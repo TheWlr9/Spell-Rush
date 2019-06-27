@@ -1,8 +1,6 @@
-package com.spellrush.business;
+package com.spellrush.objects;
 
 import android.graphics.Canvas;
-
-import com.spellrush.objects.HealthObject;
 
 import junit.framework.TestCase;
 
