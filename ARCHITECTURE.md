@@ -2,6 +2,8 @@
 
 ## Packages
 
+*"Identify packages and major source code files"*
+
 * `presentation` represents the visual layer of our application. Classes in this package are concerned with how things are drawn to the screen or layouts are displayed.
 - `business` is the package that represents the logic layer of our application. Classes in this package perform the calculations and operations behind the objects that are displayed. This class includes non-visual objects that manage the game elements and conduct the flow of the application.
 -  the `persistence` package is the data layer of the application. Classes in this package are concerned with methods such as adding, modifying and removing persistent data.
@@ -11,11 +13,11 @@
 
 ![Architecture Diagram](architecture_diagram.png)
 
-| **Presentation** | **Business** | **Persistence** |
-| ---------------- | ------------ | --------------- |
-|                  | LevelManager |                 |
-|                  |              |                 |
-|                  |              |                 |
+| **Presentation** | **Business** | **Persistence** |  **Audio**   |
+| ---------------- | ------------ | --------------- | ------------ |
+|                  | LevelManager |                 | AudioManager |
+|                  |              |                 |  SoundEvent  |
+|                  |              |                 |              |
 
 | **Application** | **Objects**                              |
 | --------------- | ---------------------------------------- |

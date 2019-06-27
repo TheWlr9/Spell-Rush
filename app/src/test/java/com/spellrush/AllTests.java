@@ -2,6 +2,7 @@ package com.spellrush;
 
 import com.spellrush.application.EnemyTest;
 import com.spellrush.application.ScoreEntryTest;
+import com.spellrush.audio.AudioManagerTest;
 import com.spellrush.business.FingerPathTests;
 import com.spellrush.business.GameObjectTests;
 import com.spellrush.business.HealthObjectTests;
@@ -20,6 +21,7 @@ import org.junit.runners.Suite;
         EnemyTest.class,
         GameObjectTests.class,
         FingerPathTests.class,
+        AudioManagerTest.class,
         LevelManagerTests.class,
         HealthObjectTests.class,
 })

@@ -105,6 +105,16 @@
             android:ems="10"
             android:textAlignment="center"
             android:text="@string/Mike_Winkler" />
+
+        <TextView
+            android:labelFor="@id/trevorName"
+            android:id="@+id/trevorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textAlignment="center"
+            android:text="@string/Trevor_Lentz" />
     </LinearLayout>
 
 
