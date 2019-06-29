@@ -6,6 +6,7 @@ import com.spellrush.business.FingerPathTests;
 import com.spellrush.business.LeaderboardControllerTests;
 import com.spellrush.business.LevelManagerTests;
 import com.spellrush.business.PlayerControllerTests;
+import com.spellrush.business.ShapeRecognitionTests;
 import com.spellrush.objects.EnemyTests;
 import com.spellrush.objects.GameObjectTests;
 import com.spellrush.objects.HealthObjectTests;
@@ -30,6 +31,7 @@ import org.junit.runners.Suite;
         AttackFactoryTests.class,
         AttackObjectTests.class,
         GameBoardTests.class,
+        ShapeRecognitionTests.class
 })
 public class AllTests {
 

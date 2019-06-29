@@ -9,8 +9,8 @@ import android.graphics.Canvas;
 
 public abstract class AttackObject {
 
-    protected final int ATTACK_WIDTH = 100;
-    protected final int ATTACK_HEIGHT = 100;
+    protected final int ATTACK_WIDTH = 128;
+    protected final int ATTACK_HEIGHT = 128;
 
     //public so accessible, final so cannot be changed.
     final boolean isPlayerAttack; //the "allegiance" of this attack.
