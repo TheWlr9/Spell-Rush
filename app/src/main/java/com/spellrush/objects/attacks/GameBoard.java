@@ -29,7 +29,7 @@ public class GameBoard extends GameObject{
 
     /* Used to tell the addAttack what type of attack it should create*/
     public enum AttackType{
-        Fire, Water, Earth
+        Fire, Water, Ground
     }
 
     //game board "rules"
@@ -112,6 +112,14 @@ public class GameBoard extends GameObject{
         AttackObject newAttack;
         switch(type){
             case Fire:
+                newAttack = new FireAttack(isPlayerAttack, laneIndex, speed, laneStart, laneEnd , damage);
+                break;
+            case Water:
+                newAttack = new WaterAttack(isPlayerAttack, laneIndex, speed, laneStart, laneEnd , damage);
+                break;
+            case Ground:
+                newAttack = new GroundAttack(isPlayerAttack, laneIndex, speed, laneStart, laneEnd , damage);
+                break;
             default:
                 newAttack = new FireAttack(isPlayerAttack, laneIndex, speed, laneStart, laneEnd , damage);
                 break;

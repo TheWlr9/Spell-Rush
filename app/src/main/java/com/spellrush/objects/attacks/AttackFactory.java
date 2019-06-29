@@ -20,4 +20,22 @@ public class AttackFactory {
         GameBoard board = LevelManager.getInstance().getGameBoard();
         board.addAttack(GameBoard.AttackType.Fire, isPlayerAttack, laneIndex, ATTACK_SPEED, ATTACK_DAMAGE);
     }
+
+    /**
+     * @param isPlayerAttack The attack's allegiance (and direction of movement).
+     * @param laneIndex The lane the attack will start in.
+     */
+    public static void createWaterAttack(boolean isPlayerAttack, int laneIndex){
+        GameBoard board = LevelManager.getInstance().getGameBoard();
+        board.addAttack(GameBoard.AttackType.Water, isPlayerAttack, laneIndex, ATTACK_SPEED, ATTACK_DAMAGE);
+    }
+
+    /**
+     * @param isPlayerAttack The attack's allegiance (and direction of movement).
+     * @param laneIndex The lane the attack will start in.
+     */
+    public static void createGroundAttack(boolean isPlayerAttack, int laneIndex){
+        GameBoard board = LevelManager.getInstance().getGameBoard();
+        board.addAttack(GameBoard.AttackType.Ground, isPlayerAttack, laneIndex, ATTACK_SPEED, ATTACK_DAMAGE);
+    }
 }
