@@ -18,7 +18,7 @@ public class AttackFactory {
      */
     public static void createFireAttack(boolean isPlayerAttack, int laneIndex){
         GameBoard board = LevelManager.getInstance().getGameBoard();
-        board.addAttack(GameBoard.AttackType.Fire, isPlayerAttack, laneIndex, ATTACK_SPEED, ATTACK_DAMAGE);
+        board.addAttack(AttackObject.AttackType.Fire, isPlayerAttack, laneIndex, ATTACK_SPEED, ATTACK_DAMAGE);
     }
 
     /**
@@ -27,7 +27,7 @@ public class AttackFactory {
      */
     public static void createWaterAttack(boolean isPlayerAttack, int laneIndex){
         GameBoard board = LevelManager.getInstance().getGameBoard();
-        board.addAttack(GameBoard.AttackType.Water, isPlayerAttack, laneIndex, ATTACK_SPEED, ATTACK_DAMAGE);
+        board.addAttack(AttackObject.AttackType.Water, isPlayerAttack, laneIndex, ATTACK_SPEED, ATTACK_DAMAGE);
     }
 
     /**
@@ -36,6 +36,6 @@ public class AttackFactory {
      */
     public static void createGroundAttack(boolean isPlayerAttack, int laneIndex){
         GameBoard board = LevelManager.getInstance().getGameBoard();
-        board.addAttack(GameBoard.AttackType.Ground, isPlayerAttack, laneIndex, ATTACK_SPEED, ATTACK_DAMAGE);
+        board.addAttack(AttackObject.AttackType.Ground, isPlayerAttack, laneIndex, ATTACK_SPEED, ATTACK_DAMAGE);
     }
 }

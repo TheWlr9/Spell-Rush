@@ -9,6 +9,11 @@ import android.graphics.Canvas;
 
 public abstract class AttackObject {
 
+    /* Used to tell the addAttack what type of attack it should create*/
+    public enum AttackType{
+        Fire, Water, Ground
+    }
+
     protected final int ATTACK_WIDTH = 128;
     protected final int ATTACK_HEIGHT = 128;
 
@@ -21,7 +26,8 @@ public abstract class AttackObject {
     protected int xPos; // X position on the screen
     private int speed;
     private int damage;
-    private boolean destroyed = false; //kept here in case caller wants to animate object destruction
+    private boolean destroyed = false;
+    private AttackType type;
 
     /**
      * Constructor
@@ -33,7 +39,7 @@ public abstract class AttackObject {
      * @param laneEnd Y value of the "goal zone"
      * @param damage How much is subtracted from the enemy/player HP on goal
      */
-    protected AttackObject(boolean isPlayerAttack, int lane, int speed, int laneStart, int laneEnd, int damage) {
+    protected AttackObject(boolean isPlayerAttack, int lane, int speed, int laneStart, int laneEnd, int damage, AttackType type) {
         this.isPlayerAttack = isPlayerAttack;
         if(isPlayerAttack){
             speed = -speed; // Set direction of bullet to upwards
@@ -44,6 +50,7 @@ public abstract class AttackObject {
         this.laneEnd = laneEnd;
         this.damage = damage;
         this.xPos = calculateCanvasXPosition(lane);
+        this.type = type;
     }
 
     /**
@@ -62,6 +69,12 @@ public abstract class AttackObject {
         return damage;
     }
 
+    AttackType getType() { return type; }
+
+    int getLaneEnd(){
+        return laneEnd;
+    }
+
     /**
      * @return whether this attack has collided with another attack
      */
@@ -69,12 +82,15 @@ public abstract class AttackObject {
         return destroyed;
     }
 
+    void setDestroyed(boolean setter){
+        destroyed = setter;
+    }
+
     /**
      * Update attack position and location, destroy if we have gone past the end of the lane.
      */
     private void updatePosition(){
         yPos += speed;
-        destroyed = (isPlayerAttack && yPos < laneEnd) || (!isPlayerAttack && yPos > laneEnd);
     }
 
 

@@ -22,7 +22,7 @@ public class GroundAttack extends AttackObject {
      * @param damage How much is subtracted from the enemy/player HP on goal
      */
     GroundAttack(boolean isPlayerAttack, int lane, int speed, int laneStart, int laneEnd, int damage) {
-        super(isPlayerAttack, lane, speed, laneStart, laneEnd, damage);
+        super(isPlayerAttack, lane, speed, laneStart, laneEnd, damage, AttackType.Ground);
     }
 
     @Override
