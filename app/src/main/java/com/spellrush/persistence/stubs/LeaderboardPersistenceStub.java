@@ -21,7 +21,7 @@ public class LeaderboardPersistenceStub implements ILeaderboardPersistence {
         scoreEntries.add(new ScoreEntry("ron",8008));
         scoreEntries.add(new ScoreEntry("123109qwei", 0));
         scoreEntries.add(new ScoreEntry("AAAAAAAAAAAAAAA",1));
-        scoreEntries.add(new ScoreEntry("name", 70707));
+        scoreEntries.add(new ScoreEntry("STUB", 70707));
     }
 
     @Override
