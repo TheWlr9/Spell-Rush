@@ -3,6 +3,7 @@ package com.spellrush.presentation;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -64,6 +65,8 @@ public class LeaderboardActivity extends Activity {
         rowName.setLayoutParams(new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT, 0.5f));
+        rowName.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
+
 
         // create textView for the score in this row
         TextView rowScore = new TextView(this);
@@ -71,6 +74,7 @@ public class LeaderboardActivity extends Activity {
         rowScore.setLayoutParams(new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT, 0.5f));
+        rowScore.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
 
         // adds the textview of name and score into the row
         newRow.addView(rowName);
