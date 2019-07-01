@@ -26,11 +26,9 @@ import java.util.Queue;
 public class GameBoard extends GameObject{
 
     static final int BULLET_DEPTH = 20;
-
-    /* Used to tell the addAttack what type of attack it should create*/
-    public enum AttackType{
-        Fire, Water, Ground
-    }
+    static final int COLLISION_DIST = 100;
+    static final int SMALL_POINTS = 50;
+    static final int BIG_POINTS = SMALL_POINTS * 2;
 
     //game board "rules"
     private ArrayList<AttackObject> attacks; //a list of all attacks on the board
@@ -96,7 +94,7 @@ public class GameBoard extends GameObject{
      * @param speed what speed this attack will travel at
      * @param damage How much is subtracted from the enemy/player HP on goal
      */
-    void addAttack(AttackType type, boolean isPlayerAttack, int laneIndex,  int speed, int damage){
+    void addAttack(AttackObject.AttackType type, boolean isPlayerAttack, int laneIndex, int speed, int damage){
         if(laneIndex < 0 || laneIndex >= numLanes || (attacks.size() + attacksToAdd.size() - attacksToDelete.size()) >= maxObjects){
             return;
         }
@@ -159,6 +157,10 @@ public class GameBoard extends GameObject{
         }
     }
 
+    public boolean areColliding(AttackObject attack1, AttackObject attack2){
+        return Math.abs(attack1.getYPosition() - attack2.getYPosition()) <= COLLISION_DIST;
+    }
+
     /**
      * @param attack attack to update.
      *
@@ -166,8 +168,52 @@ public class GameBoard extends GameObject{
      * attacks kept around for a frame after destruction, to indicate destruction before it disappears.
      */
     private void updateAttack(AttackObject attack){
-        attack.update();
-        if(attack.wasDestroyed()){
+        if(!attack.wasDestroyed()) {
+            attack.update();
+
+            for (AttackObject otherAtt : attacks) {
+                AttackObject loser = null;
+
+                if (!otherAtt.wasDestroyed() && otherAtt.isPlayerAttack != attack.isPlayerAttack && areColliding(attack, otherAtt)) {
+                    if(attack.getType() == otherAtt.getType()){
+                        attack.setDestroyed(true);
+                        otherAtt.setDestroyed(true);
+
+                        PlayerController.getInstance().addScore(SMALL_POINTS);
+                    }
+                    else if((attack.getType() == AttackObject.AttackType.Fire && otherAtt.getType() == AttackObject.AttackType.Water) ||
+                            (attack.getType() == AttackObject.AttackType.Water && otherAtt.getType() == AttackObject.AttackType.Ground) ||
+                            (attack.getType() == AttackObject.AttackType.Ground && otherAtt.getType() == AttackObject.AttackType.Fire)){
+                        loser = attack;
+                    }
+                    else{
+                        loser = otherAtt;
+                    }
+
+                    if(loser != null) {
+                        loser.setDestroyed(true);
+                        if (!loser.isPlayerAttack) {
+                            PlayerController.getInstance().addScore(BIG_POINTS);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (attack.wasDestroyed()) {
+            onAttackDestroyed(attack);
+        }
+        else if((attack.isPlayerAttack && attack.getYPosition() < attack.getLaneEnd()) || (!attack.isPlayerAttack && attack.getYPosition() > attack.getLaneEnd())){
+            if(attack.isPlayerAttack){
+                Enemy enemy = LevelManager.getInstance().getCurrentEnemy();
+                if(enemy != null){
+                    enemy.getHit(attack.getDamage());
+                }
+            }
+            else{
+                PlayerController.getInstance().getHit(attack.getDamage());
+            }
+
             onAttackDestroyed(attack);
         }
     }
@@ -179,14 +225,6 @@ public class GameBoard extends GameObject{
      * @param attack the attack to operate on
      */
     private void onAttackDestroyed(AttackObject attack) {
-        if(attack.isPlayerAttack){
-            Enemy enemy = LevelManager.getInstance().getCurrentEnemy();
-            if( enemy != null)
-            enemy.getHit(attack.getDamage());
-        }
-        else {
-            PlayerController.getInstance().getHit(attack.getDamage());
-        }
         attacksToDelete.add(attack);
     }
 

@@ -23,7 +23,7 @@ public class AttackObjectTests {
     class StubAttackObject extends AttackObject {
 
         public StubAttackObject(boolean isPlayerAttack){
-            super(isPlayerAttack, 0,spd,laneStart,laneEnd,dmg);
+            super(isPlayerAttack, 0,spd,laneStart,laneEnd,dmg, AttackType.Fire);
         }
 
         @Override
@@ -68,25 +68,5 @@ public class AttackObjectTests {
         setUp();
         assertFalse(pStubAttack.wasDestroyed());
         System.out.println(strPrintFinish + "test_wasDestroyed_shouldBeFalseOnInit");
-    }
-
-    @Test
-    public void test_update_shouldDestroyPlayerBulletPastEnemyGoal() {
-        System.out.println(strPrintStart + "test_update_shouldDestroyPlayerBulletPastPlayerGoal");
-
-        setUp();
-        pStubAttack.update();
-        pStubAttack.update();
-        assertTrue(pStubAttack.wasDestroyed());
-        System.out.println(strPrintFinish + "test_update_shouldDestroyPlayerBulletPastPlayerGoal");
-    }
-
-    @Test
-    public void test_update_shouldDestroyEnemyBulletPastPlayerGoal() {
-        System.out.println(strPrintStart + "test_update_shouldMoveBulletBySpeed");
-        eStubAttack.update();
-        eStubAttack.update();
-        assertTrue(eStubAttack.wasDestroyed());
-        System.out.println(strPrintFinish + "test_update_shouldMoveBulletBySpeed");
     }
 }

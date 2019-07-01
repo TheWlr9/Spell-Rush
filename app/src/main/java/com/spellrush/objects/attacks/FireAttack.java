@@ -22,7 +22,7 @@ public class FireAttack extends AttackObject {
      * @param damage How much is subtracted from the enemy/player HP on goal
      */
     FireAttack(boolean isPlayerAttack, int lane, int speed, int laneStart, int laneEnd, int damage) {
-        super(isPlayerAttack, lane, speed, laneStart, laneEnd, damage);
+        super(isPlayerAttack, lane, speed, laneStart, laneEnd, damage, AttackType.Fire);
     }
 
     @Override
