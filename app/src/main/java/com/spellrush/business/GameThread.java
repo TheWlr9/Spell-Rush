@@ -47,9 +47,10 @@ public class GameThread extends Thread {
 
         //Perform all game updates, then sleep until next frame
         while (isRunning){
-            timeAtFrameStart = System.nanoTime();
-            this.runGameFrame();
-            sleepUntilNextFrame(timeAtFrameStart);
+
+                timeAtFrameStart = System.nanoTime();
+                this.runGameFrame();
+                sleepUntilNextFrame(timeAtFrameStart);
 
         }
     } // end run()

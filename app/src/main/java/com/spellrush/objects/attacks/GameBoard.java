@@ -110,6 +110,7 @@ public class GameBoard extends GameObject{
         AttackObject newAttack;
         switch(type){
             case Fire:
+            default:
                 newAttack = new FireAttack(isPlayerAttack, laneIndex, speed, laneStart, laneEnd , damage);
                 break;
             case Water:
@@ -117,9 +118,6 @@ public class GameBoard extends GameObject{
                 break;
             case Ground:
                 newAttack = new GroundAttack(isPlayerAttack, laneIndex, speed, laneStart, laneEnd , damage);
-                break;
-            default:
-                newAttack = new FireAttack(isPlayerAttack, laneIndex, speed, laneStart, laneEnd , damage);
                 break;
         }
         attacksToAdd.add(newAttack);

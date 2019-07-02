@@ -24,6 +24,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="#74FFFFFF"
             android:textStyle="bold"
-            tools:text="QUIT"></Button>
+            tools:text="QUIT"/>
     </LinearLayout>
 </FrameLayout>

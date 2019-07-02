@@ -28,6 +28,13 @@
             android:name="android.support.PARENT_ACTIVITY"
             android:value="com.spellrush.presentation.GameActivity" />
     </activity>
+        <activity
+            android:name=".presentation.GameOverActivity"
+            android:label="@string/title_activity_GameOverActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.spellrush.presentation.GameOverActivity" />
+        </activity>
     </application>
 
 </manifest>
