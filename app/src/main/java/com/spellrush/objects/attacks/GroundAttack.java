@@ -27,15 +27,6 @@ public class GroundAttack extends AttackObject {
 
     @Override
     public void draw(Canvas canvas) {
-        Resources r = GameView.getInstance().getContext().getResources();
-        Drawable spr;
-        if(isPlayerAttack) {
-            spr = r.getDrawable(R.drawable.ground_attack);
-        } else {
-            spr = r.getDrawable(R.drawable.ground_attack);
-        }
-
-        spr.setBounds(xPos, yPos, xPos + super.ATTACK_WIDTH, yPos + super.ATTACK_HEIGHT);
-        spr.draw(canvas);
+        super.draw(canvas, R.drawable.ground_attack,R.drawable.ground_attack);
     }
 }

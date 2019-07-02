@@ -1,6 +1,10 @@
 package com.spellrush.objects.attacks;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+
+import com.spellrush.business.GameView;
 
 /**
  * Back end to track information about individual attacks.
@@ -115,4 +119,19 @@ public abstract class AttackObject {
 
     public abstract void draw(Canvas canvas);
 
+
+    /**
+     * Draws an attack object, after being told what to draw.
+     * Can be used by subclasses if they want to draw "by default"
+     *
+     * @param canvas canvas to draw on
+     * @param playerSprite sprite to draw if player
+     * @param enemySprite sprite to draw if enemy
+     */
+    protected void draw(Canvas canvas, int playerSprite, int enemySprite) {
+        Resources r = GameView.getInstance().getContext().getResources();
+        Drawable sprite = (isPlayerAttack) ? r.getDrawable(playerSprite) : r.getDrawable(enemySprite);
+        sprite.setBounds(xPos, yPos, xPos + ATTACK_WIDTH, yPos + ATTACK_HEIGHT);
+        sprite.draw(canvas);
+    }
 }
