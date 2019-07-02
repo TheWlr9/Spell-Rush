@@ -144,7 +144,7 @@ public class GameBoardTests extends TestCase {
         stubBoard.clear();
         stubBoard.update();
 
-        
+
         //Fire VS. Water
         stubBoard.addAttack(AttackObject.AttackType.Fire, true, 0, 1, 10);
         stubBoard.addAttack(AttackObject.AttackType.Water, false, 0, 1, 50);

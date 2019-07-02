@@ -1,8 +1,11 @@
 package com.spellrush.business;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -10,6 +13,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.spellrush.objects.GameObject;
+import com.spellrush.presentation.GameOverActivity;
 import com.spellrush.presentation.UI.FingerPathLayer;
 import com.spellrush.presentation.UI.GameHUD;
 
@@ -42,6 +46,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private FingerPathLayer fingerPathLayer;
     private ShapeRecognition drawingAI;
 
+
     // Temporary lists to avoid concurrent GameObject array access
     private static Queue<GameObject> objectsToDelete;
     private static Queue<GameObject> objectsToAdd;
@@ -65,6 +70,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
     // GameView Constructor. Create the initial Game Objects and the main game thread.
     private void init(){
+
         // Setup the View
         this.setupView();
 
@@ -83,6 +89,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         return instance;
     }
 
+    @TargetApi(Build.VERSION_CODES.ECLAIR)
     private void setupView(){
         getHolder().addCallback(this); // This allows the view to process changes and events
         getHolder().setFormat(PixelFormat.TRANSPARENT);
@@ -204,5 +211,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         player.reset();
         levelManager.reset();
     } // end surfaceDestroyed()
+
+    public void triggerGameOver(){
+        thread.setRunning(false);
+        Intent gameOverIntent = new Intent(this.getContext(), GameOverActivity.class);
+        gameOverIntent.putExtra("score",player.getScore());
+        this.getContext().startActivity(gameOverIntent);
+    }
 
 }

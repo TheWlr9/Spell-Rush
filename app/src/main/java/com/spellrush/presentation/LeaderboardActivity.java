@@ -2,19 +2,22 @@ package com.spellrush.presentation;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.util.TypedValue;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.spellrush.services.Services;
-import com.spellrush.business.LeaderboardController;
+import com.spellrush.R;
 import com.spellrush.application.ScoreEntry;
+import com.spellrush.business.LeaderboardController;
+import com.spellrush.services.Services;
 
 import java.util.List;
-import com.spellrush.R;
 
 public class LeaderboardActivity extends Activity {
     private final int MAX_NUM_OF_ROWS = 10;
@@ -24,6 +27,7 @@ public class LeaderboardActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         //shows the leaderboard
         setContentView(R.layout.activity_leaderboard);
@@ -53,6 +57,7 @@ public class LeaderboardActivity extends Activity {
         catch(Exception e){
             displayException(e);
         }
+        createMenuButton();
     } //end onCreate()
 
     // populates each cell in the row
@@ -94,4 +99,15 @@ public class LeaderboardActivity extends Activity {
         message.setNeutralButton("Made an oopsie", null);
         message.show();
     } //end displayException(e)
+
+    private void createMenuButton(){
+        Button menuButton = (Button) findViewById(R.id.ldr_brd_Menu);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent exitIntent = new Intent(LeaderboardActivity.this, HomeActivity.class);
+                LeaderboardActivity.this.startActivity(exitIntent);
+            }
+        });
+    }
 }

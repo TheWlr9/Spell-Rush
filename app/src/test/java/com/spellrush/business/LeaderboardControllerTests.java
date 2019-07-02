@@ -4,52 +4,34 @@ import com.spellrush.services.Services;
 import com.spellrush.application.ScoreEntry;
 import com.spellrush.persistence.ILeaderboardPersistence;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class LeaderboardControllerTests {
-    private static final String strPrintStart = "\nStarting LeaderBoardControllerTests: ";
-    private static final String strPrintFinish = "\nFinished LeaderBoardControllerTests: ";
-
-    private LeaderboardController leaderboardController;
-    private ILeaderboardPersistence leaderboardPersistence;
-
-    @Before
-    public void setUp() {
-        leaderboardPersistence = mock(ILeaderboardPersistence.class);
-        leaderboardController = new LeaderboardController(leaderboardPersistence);
-    }
-
 
     @Test
-    public void test_mocked_getAllScoresSorted(){
-        System.out.println(strPrintStart + "test_mocked_getAllScores");
+    public void test_verifyListIsSorted() {
+        int initialCount, highestScore;
 
-        final ScoreEntry entry = new ScoreEntry("TEST", 9999999);
-        final List<ScoreEntry> copy = new ArrayList<>();
-        copy.add(entry);
+        System.out.println("Starting Test -  Leaderboard Controller Test - Verify that the returned list is sorted");
+        LeaderboardController controller = new LeaderboardController(Services.getLeaderboardPersistence());
+        ILeaderboardPersistence data = Services.getLeaderboardPersistence();
+        assertNotNull(controller);
+        assertNotNull(data);
 
-        try {
-            when(leaderboardPersistence.insertScore(entry)).thenReturn(copy.add(entry));
-            when(leaderboardPersistence.deleteScore(entry)).thenReturn(copy.remove(entry));
-            when(leaderboardPersistence.getAllScores()).thenReturn(copy);
+        highestScore = data.getAllScores().get(0).getPlayerScore();
+        initialCount = data.getAllScores().size();
 
-            assertTrue(leaderboardController.insertScore(entry));
-            assertTrue(leaderboardController.getAllScoresSorted().size() > 0);
-            assertTrue(leaderboardController.deleteScore(entry));
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+        System.out.println("The current highest score is " + highestScore + ".");
 
-        System.out.println(strPrintFinish + "test_mocked_getAllScores");
-    }
+        System.out.println("Inserting score: " + (highestScore+1) + ".");
+        controller.insertScore(new ScoreEntry("New Highest", highestScore+1));
+        assertTrue(initialCount == data.getAllScores().size()-1);
+        controller.deleteScore(new ScoreEntry("New Highest", highestScore+1));
+        assertTrue((initialCount == data.getAllScores().size()));
+
+        System.out.println("Finished Test - Leaderboard Controller Test - Verify that the returned list is sorted");
+    } //end verifyListIsSorted()
 
 }

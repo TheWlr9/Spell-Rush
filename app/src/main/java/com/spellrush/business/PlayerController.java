@@ -29,7 +29,7 @@ public class PlayerController extends HealthObject {
 
     @Override
     protected void onDestroyed() {
-        //TODO: trigger a game over
+       GameView.getInstance().triggerGameOver();
         return;
     }
 
