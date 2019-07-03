@@ -17,6 +17,11 @@ public class Enemy extends HealthObject {
 
     private Enemy(){
         super(0, MAX_HP);
+        init();
+    }
+
+    // Do things that should be done on level start
+    private void init(){
         alive = true;
     }
 
@@ -33,6 +38,11 @@ public class Enemy extends HealthObject {
     }
     public boolean isAlive(){
         return alive;
+    }
+
+    public void reset(){
+        init();
+        super.addHP(MAX_HP);
     }
 
     @Override

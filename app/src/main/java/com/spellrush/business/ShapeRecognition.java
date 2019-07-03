@@ -7,7 +7,7 @@ import com.spellrush.presentation.UI.FingerPathLayer;
 
 import java.util.ArrayList;
 
-public final class ShapeRecognition {
+public class ShapeRecognition {
 
     private ArrayList<PointF> points, lastPoints;
     final static int MAX_NUM_OF_SEQ_ERRS = 5;

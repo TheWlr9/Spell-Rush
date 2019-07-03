@@ -3,10 +3,8 @@ package com.spellrush.business;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 
-import com.spellrush.objects.BasicEnemyAI;
 import com.spellrush.objects.Enemy;
 import com.spellrush.objects.GameObject;
-import com.spellrush.objects.MediumEnemyAI;
 import com.spellrush.objects.MediumEnemyAI;
 import com.spellrush.objects.attacks.GameBoard;
 
@@ -83,6 +81,7 @@ public class LevelManager extends GameObject {
 
     // Called when restarting the game
     public void reset(){
+        currEnemy.reset();
         init();
     }
 }
