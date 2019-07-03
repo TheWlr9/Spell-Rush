@@ -8,31 +8,18 @@ import org.junit.Test;
 
 public class EnemyTests extends TestCase {
 
-    public static final int testMaxHP = 100;
-
-    public class testEnemy extends Enemy{
-        public testEnemy(int x, int y, int depth, int framesBetweenAttacks) {
-            super(x, y, depth, framesBetweenAttacks, testMaxHP);
-        }
-
-        @Override
-        public void doAttack() {
-            return;
-        }
-
-        @Override
-        public void draw(Canvas canvas) { return; }
-    }
-
-    Enemy enemy = new testEnemy(100,100,100,60);
 
     @Test
-    public void test_alive_change_to_dead_at_hp_zero(){
+    public void test_alive_change_to_NullEnemy(){
         System.out.println("Ending Test- enemy alive state should change to false");
-        enemy = new testEnemy(0,0,0,0); // Reset HP
+        Enemy enemy = Enemy.getInstance();
+        enemy.setAI(new BasicEnemyAI());
         assertTrue(enemy.isAlive());
-        enemy.getHit(testMaxHP + 5);
+        assertTrue(enemy.getAI() instanceof BasicEnemyAI);
+        enemy.getHit(enemy.getMaxHP());
         assertFalse(enemy.isAlive());
+        assertTrue(enemy.getAI() instanceof NullEnemyAI);
         System.out.println("Ending Test- enemy alive state should change to false");
     }
 }
+

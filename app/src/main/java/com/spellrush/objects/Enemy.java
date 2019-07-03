@@ -1,47 +1,57 @@
 package com.spellrush.objects;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 
-public abstract class Enemy extends HealthObject {
-    protected int xPos;
-    protected int yPos;
+import com.spellrush.business.IEnemyAI;
 
-    protected int attackWait; //30FPS. So one second for every 30
-    protected int attackTimer;
-    protected boolean alive;
+public class Enemy extends HealthObject {
+
+    public static final Enemy instance = new Enemy();
+
+    private static final int MAX_HP = 100;
+    protected static boolean alive;
+    protected static IEnemyAI brain = new NullEnemyAI();
 
 
-    public Enemy(int x, int y, int depth , int framesBetweenAttacks, int maxHP){
-        super(depth, maxHP);
-        xPos = x;
-        yPos = y;
-        attackWait = framesBetweenAttacks;
-        attackTimer = 0;
+    private Enemy(){
+        super(0, MAX_HP);
         alive = true;
     }
 
-    public abstract void doAttack();
+    public void setAI(IEnemyAI a_i_Type){
+        brain  = a_i_Type;
+    }
 
+    public IEnemyAI getAI(){
+        return brain;
+    }
+
+    public static Enemy getInstance(){
+        return  instance;
+    }
     public boolean isAlive(){
         return alive;
     }
 
     @Override
     public void update() {
-        attackTimer+=1;
-        if(attackTimer >=attackWait){
-            attackTimer=0;
-            doAttack();
-        }
+    brain.update();
     }
 
     @Override
     protected void onDestroyed(){
         alive=false;
+        setAI( new NullEnemyAI());
     }
 
     @Override
-    public abstract void draw(Canvas canvas);
+    public void draw(Canvas canvas) {
+        Paint myPaint = new Paint();
+        myPaint.setColor(Color.BLUE);
+        canvas.drawRect(0,0, 2000,200, myPaint);
+    }
 
 }
 

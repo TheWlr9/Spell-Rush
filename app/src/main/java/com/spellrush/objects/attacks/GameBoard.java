@@ -203,7 +203,7 @@ public class GameBoard extends GameObject{
         }
         else if((attack.isPlayerAttack && attack.getYPosition() < attack.getLaneEnd()) || (!attack.isPlayerAttack && attack.getYPosition() > attack.getLaneEnd())){
             if(attack.isPlayerAttack){
-                Enemy enemy = LevelManager.getInstance().getCurrentEnemy();
+                Enemy enemy = Enemy.getInstance();
                 if(enemy != null){
                     enemy.getHit(attack.getDamage());
                 }
