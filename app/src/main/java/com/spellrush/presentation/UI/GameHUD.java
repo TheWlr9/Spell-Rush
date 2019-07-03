@@ -43,7 +43,7 @@ public class GameHUD extends GameObject {
     @Override
     public void draw(Canvas canvas){
         PlayerController player = PlayerController.getInstance();
-        Enemy enemy = LevelManager.getInstance().getCurrentEnemy();
+        Enemy enemy = Enemy.getInstance();
 
         if(canvas != null) {
             score.draw(canvas);

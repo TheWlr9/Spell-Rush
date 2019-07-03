@@ -5,19 +5,18 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.spellrush.R;
-import com.spellrush.application.ScoreEntry;
-import com.spellrush.business.LeaderboardController;
 import com.spellrush.services.Services;
+import com.spellrush.business.LeaderboardController;
+import com.spellrush.application.ScoreEntry;
 
 import java.util.List;
+import com.spellrush.R;
 
 public class LeaderboardActivity extends Activity {
     private final int MAX_NUM_OF_ROWS = 10;
@@ -27,7 +26,6 @@ public class LeaderboardActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         //shows the leaderboard
         setContentView(R.layout.activity_leaderboard);
@@ -70,8 +68,6 @@ public class LeaderboardActivity extends Activity {
         rowName.setLayoutParams(new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT, 0.5f));
-        rowName.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
-
 
         // create textView for the score in this row
         TextView rowScore = new TextView(this);
@@ -79,7 +75,6 @@ public class LeaderboardActivity extends Activity {
         rowScore.setLayoutParams(new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT, 0.5f));
-        rowScore.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
 
         // adds the textview of name and score into the row
         newRow.addView(rowName);

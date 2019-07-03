@@ -3,9 +3,11 @@ package com.spellrush.business;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 
-import com.spellrush.objects.BasicEnemy;
+import com.spellrush.objects.BasicEnemyAI;
 import com.spellrush.objects.Enemy;
 import com.spellrush.objects.GameObject;
+import com.spellrush.objects.MediumEnemyAI;
+import com.spellrush.objects.MediumEnemyAI;
 import com.spellrush.objects.attacks.GameBoard;
 
 enum Level{
@@ -40,22 +42,13 @@ public class LevelManager extends GameObject {
         }
 
         currLevel = Level.level_1;
-        this.setCurrentEnemy(new BasicEnemy(400,200,ENEMY_DEPTH,80));
         this.gameBoard = new GameBoard(1, 200, deviceHeight - 200, MAX_BULLETS);
+        currEnemy=Enemy.getInstance();
+        currEnemy.setAI(new MediumEnemyAI());
     }
 
     public static LevelManager getInstance(){
         return instance;
-    }
-
-    public void setCurrentEnemy(Enemy newEnemy){
-        if(newEnemy != null) {
-            currEnemy = newEnemy;
-        }
-    }
-
-    public Enemy getCurrentEnemy(){
-        return currEnemy;
     }
 
     /* Used to add attacks to the board in  AttackFactory */
@@ -79,15 +72,14 @@ public class LevelManager extends GameObject {
         }
     }
 
+    public void setCurrentEnemyAI(IEnemyAI brain){
+        currEnemy.setAI(brain);
+    }
+
     // Call update function for enemy if it exists
     private void updateEnemy(){
-        if(currEnemy != null) {
             currEnemy.update();
-            if (!currEnemy.isAlive()) {
-                currEnemy = null;
-            }
-        }
-    }
+     }
 
     // Called when restarting the game
     public void reset(){
