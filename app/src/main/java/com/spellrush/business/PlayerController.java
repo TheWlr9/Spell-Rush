@@ -30,7 +30,7 @@ public class PlayerController extends HealthObject {
     @Override
     protected void onDestroyed() {
        GameView.getInstance().triggerGameOver();
-        return;
+       return;
     }
 
     public int getScore(){

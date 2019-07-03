@@ -1,9 +1,5 @@
 package com.spellrush.objects;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-
 import com.spellrush.business.IEnemyAI;
 import com.spellrush.objects.attacks.AttackFactory;
 
@@ -11,8 +7,9 @@ import java.util.Random;
 
 public class BasicEnemyAI implements IEnemyAI {
 
-    private final int MAX_WAIT=120; // the most amount of frames between attacks
-    private final int MIN_WAIT=30; // the smallest amount of frames...
+    final int MAX_WAIT=120; // the most amount of frames between attacks
+    final int MIN_WAIT=30; // the smallest amount of frames...
+
     private int frameCount=0;
     private int wait=30; //default wait between attacks in frames
 
@@ -34,12 +31,18 @@ public class BasicEnemyAI implements IEnemyAI {
             doAttack();
             frameCount=0;
         }
-
     }
 
     public void newWait(){
         wait = (new Random()).nextInt(MAX_WAIT-MIN_WAIT+1)+MIN_WAIT;
     }
 
+    // package-scoped getters for testing, etc.
+    int getWait(){
+        return wait;
+    }
+    int getFrameCount() {
+        return frameCount;
+    }
 }
 

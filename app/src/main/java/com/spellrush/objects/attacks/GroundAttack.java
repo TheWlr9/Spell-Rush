@@ -32,7 +32,7 @@ public class GroundAttack extends AttackObject {
         if(isPlayerAttack) {
             spr = r.getDrawable(R.drawable.ground_attack);
         } else {
-            spr = r.getDrawable(R.drawable.ground_attack);
+            spr = r.getDrawable(R.drawable.ground_attack_enemy);
         }
 
         spr.setBounds(xPos, yPos, xPos + super.ATTACK_WIDTH, yPos + super.ATTACK_HEIGHT);

@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class MediumEnemyAI implements IEnemyAI {
 
-    private final int MAX_WAIT=120; // the most amount of frames between attacks
-    private final int MIN_WAIT=30; // the smallest amount of frames...
+    final int MAX_WAIT=120; // the most amount of frames between attacks
+    final int MIN_WAIT=30; // the smallest amount of frames...
     private int frameCount=0;
     private int wait=30; //default wait between attacks in frames
     private int multiShot = 1;
@@ -46,4 +46,11 @@ public class MediumEnemyAI implements IEnemyAI {
         wait = (new Random()).nextInt(MAX_WAIT-MIN_WAIT+1)+MIN_WAIT;
     }
 
+    // package-scoped getters for testing, etc.
+    int getWait(){
+        return wait;
+    }
+    int getFrameCount() {
+        return frameCount;
+    }
 }

@@ -13,6 +13,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.spellrush.objects.GameObject;
+import com.spellrush.objects.IGameObject;
 import com.spellrush.presentation.GameOverActivity;
 import com.spellrush.presentation.UI.FingerPathLayer;
 import com.spellrush.presentation.UI.GameHUD;
@@ -31,7 +32,7 @@ import java.util.Queue;
  * Maintains all game objects within the view, and calls
  * their update and draw methods once per frame.
 *******************************************************/
-public class GameView extends SurfaceView implements SurfaceHolder.Callback
+public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGameObject
 {
 
     private static final int MAX_BULLETS = 100;
@@ -66,6 +67,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     public GameView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
+    }
+
+    // Unit testing / DI constructor
+    GameView(Context context, ArrayList<GameObject> objList, Queue<GameObject> addList, Queue<GameObject> delList, ShapeRecognition drawingAI) {
+        super(context);
+        gameObjects = objList;
+        objectsToAdd = addList;
+        objectsToDelete = delList;
+        this.drawingAI = drawingAI;
+        instance = this;
     }
 
     // GameView Constructor. Create the initial Game Objects and the main game thread.
@@ -155,8 +166,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private void addObjects(){
         while(!objectsToAdd.isEmpty()){
             GameObject newObj = objectsToAdd.remove();
-            gameObjects.add(newObj.drawDepth, newObj);
+            gameObjects.add(newObj);
         }
+        Collections.sort(gameObjects, Collections.reverseOrder()); // Set order based on depth
     }
 
     @Override
