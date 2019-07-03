@@ -13,17 +13,23 @@
 
 ![Architecture Diagram](architecture_diagram.png)
 
-| **Presentation** | **Business** | **Persistence** |  **Audio**   |
-| ---------------- | ------------ | --------------- | ------------ |
-|                  | LevelManager |                 | AudioManager |
-|                  |              |                 |  SoundEvent  |
-|                  |              |                 |              |
+| **Presentation** | **Business** | **Persistence**                         | **Audio**    |
+| ---------------- | ------------ | --------------------------------------- | ------------ |
+| GameOverActivity | LevelManager | **HSQLDB** -> LeaderboardHSQLDB         | AudioManager |
+|                  | IEnemyAI     |                                         | SoundEvent   |
+|                  |              | **stubs** -> LeaderboardPersistanceStub |              |
 
-| **Application** | **Objects**                              |
-| --------------- | ---------------------------------------- |
-|                 | BasicEnemy (extends enemy)               |
-|                 | HealthObject (extended by player, enemy) |
-|                 | IDrawnObject (imp. by gameobject)        |
+| **Services**  | **Objects**                              |
+| ------------- | ---------------------------------------- |
+| Services.java |                                          |
+|               | HealthObject (extended by player, enemy) |
+|               | IGameObject (interface for GameObject)   |
+|               | IDrawnObject (interface for IGameObject) |
+|               | MediumEnemyAI (implements enemyAI)       |
+|               | NullEnemyA (implements enemyAI)          |
+|               | BasicEnemyAI (implements enemyAI)        |
+|               |                                          |
+|               |                                          |
 
 
 ![Architecture Diagram](architecture_diagram.png)
