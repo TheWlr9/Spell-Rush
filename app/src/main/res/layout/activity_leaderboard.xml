@@ -16,7 +16,7 @@
         android:text="@string/leaderboard"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="36sp" />
+        android:textSize="60sp" />
 
     <TableLayout
         android:layout_marginTop="10dp"
@@ -32,18 +32,21 @@
 
             <TextView
                 android:id="@+id/leaderboard_header_name"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="@string/leaderboard_header_name"
                 android:textColor="#000"
-                android:text="@string/leaderboard_header_name"/>
+                android:textSize="40sp" />
+
             <TextView
                 android:id="@+id/leaderboard_header_score"
-                android:textColor="#000"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/leaderboard_header_score"/>
+                android:text="@string/leaderboard_header_score"
+                android:textColor="#000"
+                android:textSize="40sp" />
 
         </TableRow>
         <View
@@ -51,5 +54,14 @@
             android:layout_width="match_parent"
             android:background="#000"/>
     </TableLayout>
+
+    <Button
+        android:id="@+id/ldr_brd_Menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_menu"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100sp"
+        />
 
 </LinearLayout>

@@ -12,11 +12,18 @@
     <string name="Nathan_Carrier">Nathan Carrier</string>
     <string name="Chad_Hillary">Chad Hillary</string>
     <string name="Mike_Winkler">Mike Winkler</string>
+    <string name="Trevor_Lentz">Special thanks to Trevor Lentz for the menu music :D</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="leaderboard_back">Go Back</string>
     <string name="leaderboard_header_name">Player Name</string>
     <string name="leaderboard_header_score">Score</string>
-    <string name="str_quit">QUIT</string>
     <string name="title_activity_GameActivity">title_activity_GameActivity</string>
-    <string name="strQuit">QUIT</string>
+    <string name="title_activity_GameOverActivity">Game Over</string>
+    <string name="Play_Again">Play Again</string>
+    <string name="strQuit">Quit</string>
+    <string name="player_name">Name</string>
+    <string name="init_Value">000000</string>
+    <string name="SubmitScore">Submit Score</string>
+    <string name="Final_Score">Final Score</string>
+    <string name="Game_Over">Game Over</string>
 </resources>

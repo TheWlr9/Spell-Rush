@@ -13,8 +13,10 @@ public class HealthBar {
     private int borderWidth;
 
     private Paint myPaint;
+    private int hpColor;
+    private boolean showText;
 
-    public HealthBar(int xpos, int ypos, int width, int height, int borderWidth){
+    public HealthBar(int xpos, int ypos, int width, int height, int borderWidth, boolean forPlayer) {
         x = xpos;
         y = ypos;
         this.width = width;
@@ -22,15 +24,22 @@ public class HealthBar {
         this.borderWidth = borderWidth;
 
         myPaint = new Paint();
+        if(forPlayer){
+            hpColor = Color.GREEN;
+            showText = true;
+        }
+        else {
+            hpColor = Color.RED;
+            showText = false;
+        }
     }
 
-    public void drawHealthBar(Canvas canvas, int playerMaxHP, int playerHP) {
-        int innerWidth = (int) Math.round(width * ((double) playerHP / playerMaxHP));
+    public void drawHealthBar(Canvas canvas, int baseHP, int maxHP) {
+        int innerWidth = (int) Math.round(width * ((double) baseHP / maxHP));
         draw(canvas, innerWidth);
     }
 
     private void draw(Canvas canvas, int innerWidth) {
-
         myPaint.setTextSize(64);
         myPaint.setColor(Color.BLACK);
         canvas.drawRect(x-borderWidth,y-borderWidth,x+width+borderWidth,y+height+borderWidth,myPaint);
@@ -38,10 +47,12 @@ public class HealthBar {
         myPaint.setColor(Color.GRAY);
         canvas.drawRect(x,y,x+width,y+height,myPaint);
 
-        myPaint.setColor(Color.GREEN);
+        myPaint.setColor(hpColor);
         canvas.drawRect(x,y,x+innerWidth,y+height,myPaint);
 
-        myPaint.setColor(Color.WHITE);
-        canvas.drawText("HEALTH", x, y - 32, myPaint);
+        if(showText) {
+            myPaint.setColor(Color.WHITE);
+            canvas.drawText("HEALTH", x, y - 32, myPaint);
+        }
     }
 }

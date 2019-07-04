@@ -4,76 +4,64 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import com.spellrush.business.GameView;
-import com.spellrush.objects.GameObject;
+import com.spellrush.business.IEnemyAI;
 
-public class Enemy extends GameObject {
+public class Enemy extends HealthObject {
 
-    public final int MAX_HP = 100;
-    private final int enemyHalfWidth = 100;
-    private final int enemyHalfHeight = 50;
+    public static final Enemy instance = new Enemy();
 
-    private int hp;
-    private int xPos;
-    private int yPos;
-    private int attackWait; //30FPS. So one second for every 30
-    private int attackTimer;
-    private boolean alive;
+    private static final int MAX_HP = 100;
+    protected static boolean alive;
+    protected static IEnemyAI brain = new NullEnemyAI();
 
-    public Enemy(int x, int y, int depth , int framesBetweenAttacks){
-        super(depth);
-        xPos = x;
-        yPos = y;
-        attackWait = framesBetweenAttacks;
-        attackTimer = 0;
-        hp = MAX_HP;
+
+    private Enemy(){
+        super(0, MAX_HP);
+        init();
+    }
+
+    // Do things that should be done on level start
+    private void init(){
         alive = true;
-
     }
 
-    public int getHP(){
-        return this.hp;
+    public void setAI(IEnemyAI a_i_Type){
+        brain  = a_i_Type;
     }
 
-    @Override
-    public void update() {
-        attackTimer+=1;
-        if(attackTimer >=attackWait){
-            attackTimer=0;
-            this.doAttack();
-        }
+    public IEnemyAI getAI(){
+        return brain;
     }
 
-    private void doAttack(){
-        // Op
+    public static Enemy getInstance(){
+        return  instance;
     }
-
-    public void getHit(int dmg){
-        if(dmg > 0) {
-            hp -= dmg;
-            if (hp <= 0) {
-                hp = 0;
-                this.destroy();
-            }
-        }
-    }
-
     public boolean isAlive(){
         return alive;
     }
 
-    private void destroy(){
+    public void reset(){
+        init();
+        super.addHP(MAX_HP);
+    }
+
+    @Override
+    public void update() {
+    brain.update();
+    }
+
+    @Override
+    protected void onDestroyed(){
         alive=false;
-        GameView.removeObject(this);
+        setAI( new NullEnemyAI());
     }
 
     @Override
     public void draw(Canvas canvas) {
         Paint myPaint = new Paint();
         myPaint.setColor(Color.BLUE);
-        canvas.drawRect(xPos-enemyHalfWidth,yPos-enemyHalfHeight,
-                xPos+enemyHalfWidth,yPos+enemyHalfHeight,myPaint);
-
-        }
+        canvas.drawRect(0,0, 2000,200, myPaint);
     }
+
+}
 

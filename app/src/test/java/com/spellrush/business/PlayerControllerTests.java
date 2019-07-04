@@ -1,10 +1,42 @@
 package com.spellrush.business;
 
+import com.spellrush.business.TestDoubles.FakeContext;
+import com.spellrush.objects.GameObject;
+import com.spellrush.presentation.UI.FingerPathLayer;
+
 import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class PlayerControllerTests extends TestCase {
+
+
+    // Fake shapeAI and FingerPathLayer for Mock GameView
+    class fakeFPLayer extends FingerPathLayer {
+        fakeFPLayer(){
+            super(true);
+        }
+    }
+    class fakeShapeAI extends ShapeRecognition{
+        public fakeShapeAI() {
+            super(new fakeFPLayer());
+        }
+    }
+    class MockGameView extends GameView{
+        private boolean trig;
+        MockGameView(){
+            super(new FakeContext(), new ArrayList<GameObject>(), new LinkedList<GameObject>(), new LinkedList<GameObject>(), new fakeShapeAI() );
+            trig = false;
+        }
+
+        @Override
+        public void triggerGameOver() {
+            trig = true;
+        }
+    }
 
     private PlayerController testPlayer;
     private static final String strPrintStart = "\nStarting testPlayerController: ";
@@ -13,82 +45,6 @@ public class PlayerControllerTests extends TestCase {
     public PlayerControllerTests(String arg0){
         super(arg0);
         testPlayer = PlayerController.getInstance();
-    }
-
-    @Test
-    public void test_addHp_should_notExceedMaxHP() {
-        System.out.println(strPrintStart + "addHp_should_notExceedMaxHP");
-
-        testPlayer.addHP(testPlayer.MAX_HP);
-        assertEquals(testPlayer.MAX_HP, testPlayer.getHP());
-
-        testPlayer.addHP(999999999);
-        assertEquals(testPlayer.MAX_HP, testPlayer.getHP());
-
-        System.out.println(strPrintFinish + "addHp_should_notExceedMaxHP");
-    }
-
-    @Test
-    public void test_addHp_should_notAddNegativeHp() {
-        System.out.println(strPrintStart + "addHp_should_notAddNegativeHp");
-
-        int before = testPlayer.getHP();
-        testPlayer.addHP(-5);
-        assertEquals(testPlayer.getHP(), before);
-
-        System.out.println(strPrintFinish + "addHp_should_notAddNegativeHp");
-    }
-
-    @Test
-    public void test_loseHp_should_notLoseNegativeHp() {
-        System.out.println(strPrintStart + "loseHp_should_notLoseNegativeHp");
-
-        int before = testPlayer.getHP();
-        testPlayer.loseHP(-5);
-        assertEquals(testPlayer.getHP(), before);
-
-        System.out.println(strPrintFinish + "oseHp_should_notLoseNegativeHp");
-    }
-
-    @Test
-    public void test_loseHP_should_notGoLowerThanZero() {
-        System.out.println(strPrintStart + "loseHP_should_notGoLowerThanZero");
-
-        testPlayer.loseHP(testPlayer.MAX_HP);
-        assertEquals(0, testPlayer.getHP());
-
-        testPlayer.loseHP(999999999);
-        assertEquals(0, testPlayer.getHP());
-
-        System.out.println(strPrintFinish + "loseHP_should_notGoLowerThanZero");
-    }
-
-    @Test
-    public void test_loseHP_should_decrementHP() {
-        System.out.println(strPrintStart + "loseHP_should_decrementHP");
-
-        // Add HP first
-        testPlayer.addHP(5);
-
-        int before = testPlayer.getHP();
-        testPlayer.loseHP(5);
-        assertEquals(testPlayer.getHP(), before - 5);
-
-        System.out.println(strPrintFinish + "loseHP_should_decrementHP");
-    }
-
-    @Test
-    public void test_addHp_should_incrementHP(){
-        System.out.println(strPrintStart + "addHp_should_incrementHP");
-
-        // Lose HP first
-        testPlayer.loseHP(5);
-
-        int before = testPlayer.getHP();
-        testPlayer.addHP(5);
-        assertEquals(testPlayer.getHP(), before + 5);
-
-        System.out.println(strPrintFinish + "addHp_should_incrementHP");
     }
 
     @Test
@@ -103,13 +59,29 @@ public class PlayerControllerTests extends TestCase {
     }
 
     @Test
-    public void test_addScore_should_notAddNegativeScore() {
-        System.out.println(strPrintStart + "addScore_should_incrementScore");
+    public void test_reset_should_resetScoreAndHealth() {
+        System.out.println(strPrintStart + "test_reset_should_resetScoreAndHealth");
 
-        int before = testPlayer.getScore();
-        testPlayer.addScore(-5);
-        assertEquals(testPlayer.getScore(), before);
+        testPlayer.reset();
+        assertEquals(testPlayer.getScore(), 0);
+        assertEquals(testPlayer.getHP(), testPlayer.getMaxHP());
 
-        System.out.println(strPrintFinish + "addScore_should_incrementScore");
+        System.out.println(strPrintFinish + "test_reset_should_resetScoreAndHealth");
     }
+
+    @Test
+    public void test_onDestroyed_should_triggerGameView() {
+        System.out.println(strPrintStart + "test_onDestroyed_should_triggerGameView");
+
+        // setup
+        MockGameView mockView = new MockGameView();
+        assertFalse(mockView.trig);
+
+        // test
+        testPlayer.onDestroyed();
+        assertTrue(mockView.trig);
+
+        System.out.println(strPrintFinish + "test_onDestroyed_should_triggerGameView");
+    }
+
 }

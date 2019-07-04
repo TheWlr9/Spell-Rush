@@ -11,17 +11,12 @@ public class LeaderboardPersistenceStub implements ILeaderboardPersistence {
 
     public LeaderboardPersistenceStub() {
         this.scoreEntries = new ArrayList<>();
-        scoreEntries.add(new ScoreEntry("joe",20));
-        scoreEntries.add(new ScoreEntry("biden",40));
-        scoreEntries.add(new ScoreEntry("edwardo", 123));
-        scoreEntries.add(new ScoreEntry("bobbie",500));
-        scoreEntries.add(new ScoreEntry("domingo",9001));
-        scoreEntries.add(new ScoreEntry("bev", 92103));
-        scoreEntries.add(new ScoreEntry("clementina",42));
-        scoreEntries.add(new ScoreEntry("ron",8008));
-        scoreEntries.add(new ScoreEntry("123109qwei", 0));
-        scoreEntries.add(new ScoreEntry("AAAAAAAAAAAAAAA",1));
-        scoreEntries.add(new ScoreEntry("name", 70707));
+        scoreEntries.add(new ScoreEntry("ayy",100));
+        scoreEntries.add(new ScoreEntry("lmao",200));
+        scoreEntries.add(new ScoreEntry("Margaret",500));
+        scoreEntries.add(new ScoreEntry("hunter2",1000));
+        scoreEntries.add(new ScoreEntry("Biden",9001));
+        scoreEntries.add(new ScoreEntry("Joe",200));
     }
 
     @Override

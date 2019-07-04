@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class FingerPathLayer extends GameObject {
     private static final int FINGER_PATH_DEPTH = -50;
+    private static final int MAX_NUM_OF_POINTS = 1000;
     private ArrayList<PointF> path, lastPath;
     private Paint paint;
     private PointF point;
@@ -61,12 +62,14 @@ public class FingerPathLayer extends GameObject {
     }
 
     private void touchMove(float x, float y){
-        point.x = x;
-        point.y = y;
+        if(path.size() < MAX_NUM_OF_POINTS) {
+            point.x = x;
+            point.y = y;
 
-        //Deep copy
-        PointF temp = new PointF(point.x, point.y);
-        path.add(temp);
+            //Deep copy
+            PointF temp = new PointF(point.x, point.y);
+            path.add(temp);
+        }
     }
 
     private void touchEnd(){
@@ -102,7 +105,7 @@ public class FingerPathLayer extends GameObject {
 
     /**
      * 
-     * @return The latest drawn path after the user raises thir finger from the screen.
+     * @return The latest drawn path after the user raises their finger from the screen.
      */
     public ArrayList<PointF> getPath(){
         return lastPath;
