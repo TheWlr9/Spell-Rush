@@ -57,7 +57,12 @@ public class LevelManager extends GameObject {
         if(gameBoard != null) {
             gameBoard.update();
         }
+        if(currEnemy.isAlive()){
         updateEnemy();
+        }
+        else{
+            GameView.getInstance().triggerGameOver();
+        }
     }
 
     @Override

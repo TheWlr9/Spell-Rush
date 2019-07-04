@@ -37,10 +37,10 @@ public class LevelManagerTests extends TestCase {
 
     @Test
     public void test_update_should_DestroyEnemyOnDeath() {
-        System.out.println(strPrintStart + "test_setCurrentEnemy_shouldSetCurrentEnemy");
-        enemy.getHit(enemy.getMaxHP());
+        System.out.println(strPrintStart + "test_update_should_DestroyEnemyOnDeath");
         testManager.update();
+        enemy.getHit(enemy.getMaxHP());
         assertTrue(enemy.getAI() instanceof NullEnemyAI);
-        System.out.println(strPrintFinish + "test_setCurrentEnemy_shouldSetCurrentEnemy");
+        System.out.println(strPrintFinish + "test_update_should_DestroyEnemyOnDeath");
     }
 }
