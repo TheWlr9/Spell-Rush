@@ -12,24 +12,3 @@
 
 
 ![Architecture Diagram](architecture_diagram.png)
-
-| **Presentation** | **Business** | **Persistence**                         | **Audio**    |
-| ---------------- | ------------ | --------------------------------------- | ------------ |
-| GameOverActivity | LevelManager | **HSQLDB** -> LeaderboardHSQLDB         | AudioManager |
-|                  | IEnemyAI     |                                         | SoundEvent   |
-|                  |              | **stubs** -> LeaderboardPersistanceStub |              |
-
-| **Services**  | **Objects**                              |
-| ------------- | ---------------------------------------- |
-| Services.java |                                          |
-|               | HealthObject (extended by player, enemy) |
-|               | IGameObject (interface for GameObject)   |
-|               | IDrawnObject (interface for IGameObject) |
-|               | MediumEnemyAI (implements enemyAI)       |
-|               | NullEnemyA (implements enemyAI)          |
-|               | BasicEnemyAI (implements enemyAI)        |
-|               |                                          |
-|               |                                          |
-
-
-![Architecture Diagram](architecture_diagram.png)
