@@ -14,28 +14,14 @@ public class GroundAttack extends AttackObject {
      *
      * package scope only! - only GameBoard may add attacks to the screen
      *
-     * @param isPlayerAttack whether this is a player attack
-     * @param lane which lane this belongs to
-     * @param speed what speed this attack will travel at
-     * @param laneStart Y value of the bullet's spawning position
-     * @param laneEnd Y value of the "goal zone"
-     * @param damage How much is subtracted from the enemy/player HP on goal
+     * @param attackInfo information about this attack
      */
-    GroundAttack(boolean isPlayerAttack, int lane, int speed, int laneStart, int laneEnd, int damage) {
-        super(isPlayerAttack, lane, speed, laneStart, laneEnd, damage, AttackType.Ground);
+    GroundAttack(AttackInformation attackInfo) {
+        super(attackInfo, AttackType.Ground);
     }
 
     @Override
     public void draw(Canvas canvas) {
-        Resources r = GameView.getInstance().getContext().getResources();
-        Drawable spr;
-        if(isPlayerAttack) {
-            spr = r.getDrawable(R.drawable.ground_attack);
-        } else {
-            spr = r.getDrawable(R.drawable.ground_attack_enemy);
-        }
-
-        spr.setBounds(xPos, yPos, xPos + super.ATTACK_WIDTH, yPos + super.ATTACK_HEIGHT);
-        spr.draw(canvas);
+        super.draw(canvas, R.drawable.ground_attack,R.drawable.ground_attack);
     }
 }
