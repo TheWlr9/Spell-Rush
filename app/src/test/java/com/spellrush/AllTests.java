@@ -17,6 +17,7 @@ import com.spellrush.objects.MediumEnemyAITests;
 import com.spellrush.objects.attacks.AttackFactoryTests;
 import com.spellrush.objects.attacks.AttackObjectTests;
 import com.spellrush.objects.attacks.GameBoardTests;
+import com.spellrush.presentation.LockButtonReceiverTests;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -39,7 +40,8 @@ import org.junit.runners.Suite;
         GameThreadTests.class,
         GameViewTests.class,
         BasicEnemyAITests.class,
-        MediumEnemyAITests.class
+        MediumEnemyAITests.class,
+        LockButtonReceiverTests.class,
 })
 public class AllTests {
 

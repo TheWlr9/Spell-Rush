@@ -46,6 +46,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
     private GameThread thread;
     private FingerPathLayer fingerPathLayer;
     private ShapeRecognition drawingAI;
+    private boolean paused;
 
 
     // Temporary lists to avoid concurrent GameObject array access
@@ -94,6 +95,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
         objectsToAdd = new LinkedList<>();
 
         instance = this;
+        paused = false;
     } // end init()
 
     public static GameView getInstance(){
@@ -146,14 +148,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
     }
 
     public void update(){
-        // Update each of the GameViewLayer objects.
-        for (GameObject object : gameObjects) {
-            object.update();
+        if(!paused) {
+            // Update each of the GameViewLayer objects.
+            for (GameObject object : gameObjects) {
+                object.update();
+            }
+            drawingAI.hasValidDrawnEvent();
+            deleteObjects();
+            addObjects();
         }
-        drawingAI.hasValidDrawnEvent();
-        deleteObjects();
-        addObjects();
-
     } // end update()
 
     // Delete all objects added to Object Deleting Queue in this Update Frame
@@ -173,7 +176,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
 
     @Override
     public void draw(Canvas canvas){
-        if(canvas != null) {
+        if (canvas != null) {
             super.draw(canvas);
             // Draw each of the GameViewLayer objects.
             for (GameObject object : gameObjects) {
@@ -220,8 +223,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
             e.printStackTrace();
         }
 
-        player.reset();
-        levelManager.reset();
     } // end surfaceDestroyed()
 
     public void triggerGameOver(){
@@ -229,6 +230,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
         Intent gameOverIntent = new Intent(this.getContext(), GameOverActivity.class);
         gameOverIntent.putExtra("score",player.getScore());
         this.getContext().startActivity(gameOverIntent);
+    }
+
+    public void setPaused(boolean val){
+        paused = val;
     }
 
 }
