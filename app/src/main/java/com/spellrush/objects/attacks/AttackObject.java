@@ -105,7 +105,6 @@ public abstract class AttackObject {
         yPos += attackInfo.speed;
     }
 
-
     /**
      * This will tell us where to draw in the X-axis based on the width of the canvas and the lane
      * of the attack.
@@ -122,7 +121,9 @@ public abstract class AttackObject {
     }
 
     public void update() {
-        updatePosition();
+        if(!this.wasDestroyed()) {
+            updatePosition();
+        }
     }
 
     public abstract void draw(Canvas canvas);
