@@ -178,7 +178,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
     public void draw(Canvas canvas){
         if (canvas != null) {
             super.draw(canvas);
-            // Draw each of the GameViewLayer objects.
+            // Draw each of the GameViewLayer objects.a
             for (GameObject object : gameObjects) {
                 object.draw(canvas);
             }

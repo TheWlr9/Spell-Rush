@@ -2,7 +2,6 @@ package com.spellrush.objects.attacks;
 
 import android.graphics.Canvas;
 
-import com.spellrush.business.LevelManager;
 import com.spellrush.business.PlayerController;
 import com.spellrush.objects.Enemy;
 import com.spellrush.objects.GameObject;
@@ -26,9 +25,6 @@ import java.util.Queue;
 public class GameBoard extends GameObject{
 
     static final int BULLET_DEPTH = 20;
-    static final int COLLISION_DIST = 100;
-    static final int SMALL_POINTS = 50;
-    static final int BIG_POINTS = SMALL_POINTS * 2;
 
     //for simplified reference to an attack type (without all the in-method dot vomit)
     private static final AttackObject.AttackType FIRE = AttackObject.AttackType.Fire;
@@ -141,10 +137,38 @@ public class GameBoard extends GameObject{
             clearing = false;
         } else {
             for (AttackObject attack : attacks) {
-                updateAttack(attack);
+                attack.update();
+                checkAttackCollisionsFor(attack);
+                checkAttackReachedEnd(attack);
+                if (attack.wasDestroyed()) {
+                    onAttackDestroyed(attack);
+                }
             }
             deleteAttacks();
             addAttacks();
+        }
+    }
+
+    private void checkAttackCollisionsFor(AttackObject attack){
+        for (AttackObject otherAttack : attacks) {
+            if(AttackCollisionUtility.areColliding(attack, otherAttack, AttackCollisionUtility.COLLISION_DIST)){
+                AttackCollisionUtility.handleCollision(attack, otherAttack, PlayerController.getInstance());
+            }
+        }
+    }
+
+    private void checkAttackReachedEnd(AttackObject attack) {
+        if(attack.reachedEnd()){
+            if(attack.isPlayerAttack()){
+                Enemy enemy = Enemy.getInstance();
+                if(enemy != null){
+                    enemy.getHit(attack.getDamage());
+                }
+            }
+            else{
+                PlayerController.getInstance().getHit(attack.getDamage());
+            }
+            attack.setDestroyed(true);
         }
     }
 
@@ -161,89 +185,6 @@ public class GameBoard extends GameObject{
         }
     }
 
-    public boolean areColliding(AttackObject attack1, AttackObject attack2){
-        return Math.abs(attack1.getYPosition() - attack2.getYPosition()) <= COLLISION_DIST;
-    }
-
-    /**
-     * Updates an attack, checks for collisions, and acts on those collisions.
-     *
-     * @param attack attack to update.
-     *
-     * remarks:
-     * attacks kept around for a frame after destruction, to indicate destruction before it disappears.
-     */
-    private void updateAttack(AttackObject attack){
-
-        final AttackObject.AttackType ourType = attack.getType(); //type of this attack
-        AttackObject.AttackType enemyType; //type of other attack
-        AttackObject loser;
-
-        //Check if we collided with anyone.
-        if(!attack.wasDestroyed()) {
-            attack.update();
-
-            for (AttackObject enemyAttack : attacks) {
-                loser = null;
-                enemyType = enemyAttack.getType();
-
-                //when two attacks from separate teams have collided, destroy the one of a
-                // "weaker" type, unless they have the same type (destroy both)
-                if (!enemyAttack.wasDestroyed()
-                        && !enemyAttack.hasSameAllegiance(attack)
-                        && areColliding(attack, enemyAttack)) {
-
-                    loser = checkCollisionWinner(ourType, enemyType) ? attack : enemyAttack;
-                    if(ourType == enemyType){
-                        attack.setDestroyed(true);
-                        enemyAttack.setDestroyed(true);
-
-                        PlayerController.getInstance().addScore(SMALL_POINTS);
-                    }
-                    else if(loser != null){
-                        loser.setDestroyed(true);
-                        if (!loser.isPlayerAttack()) {
-                            PlayerController.getInstance().addScore(BIG_POINTS);
-                        }
-                    }
-                }
-            }
-        }
-
-        //if it was destroyed (could have been destroyed just now)
-        if (attack.wasDestroyed()) {
-            onAttackDestroyed(attack);
-        }
-        //if it was not destroyed and has reached the end.
-        else if(attack.reachedEnd()){
-            if(attack.isPlayerAttack()){
-                Enemy enemy = Enemy.getInstance();
-                if(enemy != null){
-                    enemy.getHit(attack.getDamage());
-                }
-            }
-            else{
-                PlayerController.getInstance().getHit(attack.getDamage());
-            }
-
-            onAttackDestroyed(attack);
-        }
-    }
-
-    /**
-     * tells you whether first attack type beats other attack type
-     *
-     * @param ourType attackType of "us"
-     * @param enemyType attackType of "them"
-     * @return true if ourType should win, else false (possibility of tie)
-     */
-    private boolean checkCollisionWinner(AttackObject.AttackType ourType, AttackObject.AttackType enemyType){
-        //return whether first type beats second type.
-        return (ourType == FIRE && enemyType == WATER) ||
-                (ourType == WATER && enemyType == GROUND) ||
-                (ourType == GROUND && enemyType == FIRE);
-    }
-
     /**
      * @return whether we have enough space to add a new attack
      */
@@ -257,7 +198,7 @@ public class GameBoard extends GameObject{
      *
      * @param attack the attack to operate on
      */
-    private void onAttackDestroyed(AttackObject attack) {
+     void onAttackDestroyed(AttackObject attack) {
         attacksToDelete.add(attack);
     }
 
