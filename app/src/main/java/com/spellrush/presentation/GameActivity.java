@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.spellrush.R;
 import com.spellrush.audio.AudioManager;
 import com.spellrush.audio.SoundEvent;
+import com.spellrush.business.GameView;
 
 public class GameActivity extends Activity {
     final static int[] GAME_SOUND_RES_IDS = {R.raw.act05_stage02_loop};
@@ -24,12 +25,14 @@ public class GameActivity extends Activity {
 
     @Override
     protected void onResume(){
+        GameView.getInstance().setPaused(false);
         AudioManager.play(SoundEvent.BATTLE_MUSIC);
         super.onResume();
     }
 
     @Override
     protected void onStop(){
+        GameView.getInstance().setPaused(true);
         AudioManager.pause(SoundEvent.BATTLE_MUSIC);
         super.onStop();
     }
