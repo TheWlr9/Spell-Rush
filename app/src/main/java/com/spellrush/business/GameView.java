@@ -235,6 +235,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
         Intent gameOverIntent = new Intent(this.getContext(), GameOverActivity.class);
         gameOverIntent.putExtra("score",player.getScore());
         this.getContext().startActivity(gameOverIntent);
+        player.reset();
+        levelManager.reset();
     }
 
     public void setPaused(boolean val){
