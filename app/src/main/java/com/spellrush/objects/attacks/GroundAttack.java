@@ -12,9 +12,10 @@ public class GroundAttack extends AttackObject {
      * package scope only! - only GameBoard may add attacks to the screen
      *
      * @param attackInfo information about this attack
+     * @param y Y Position to create the attack at
      */
-    GroundAttack(AttackInformation attackInfo) {
-        super(attackInfo, AttackType.Ground);
+    GroundAttack(AttackInformation attackInfo, int y) {
+        super(attackInfo, y);
     }
 
     @Override

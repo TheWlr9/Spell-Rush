@@ -49,17 +49,21 @@ public class AttackCollisionsUtilityTests extends TestCase {
     public void test_checkCollisionWinner_WinnersWin() {
         System.out.println(strPrintStart + "test_checkCollisionWinner_WinnersWin");
 
-        assert(AttackCollisionUtility.checkCollisionWinner(AttackObject.AttackType.Fire, AttackObject.AttackType.Water));
-        assert(AttackCollisionUtility.checkCollisionWinner(AttackObject.AttackType.Ground, AttackObject.AttackType.Fire));
-        assert(AttackCollisionUtility.checkCollisionWinner(AttackObject.AttackType.Water, AttackObject.AttackType.Ground));
+        AttackObject fire = Mockito.mock(FireAttack.class);
+        AttackObject water = Mockito.mock(WaterAttack.class);
+        AttackObject ground = Mockito.mock(GroundAttack.class);
 
-        assertFalse(AttackCollisionUtility.checkCollisionWinner(AttackObject.AttackType.Water, AttackObject.AttackType.Fire));
-        assertFalse(AttackCollisionUtility.checkCollisionWinner(AttackObject.AttackType.Fire, AttackObject.AttackType.Ground));
-        assertFalse(AttackCollisionUtility.checkCollisionWinner(AttackObject.AttackType.Ground, AttackObject.AttackType.Water));
+        assert(AttackCollisionUtility.checkCollisionWinner(fire, water));
+        assert(AttackCollisionUtility.checkCollisionWinner(ground, fire));
+        assert(AttackCollisionUtility.checkCollisionWinner(water, ground));
 
-        assertFalse(AttackCollisionUtility.checkCollisionWinner(AttackObject.AttackType.Water, AttackObject.AttackType.Water));
-        assertFalse(AttackCollisionUtility.checkCollisionWinner(AttackObject.AttackType.Fire, AttackObject.AttackType.Fire));
-        assertFalse(AttackCollisionUtility.checkCollisionWinner(AttackObject.AttackType.Ground, AttackObject.AttackType.Ground));
+        assertFalse(AttackCollisionUtility.checkCollisionWinner(water, fire));
+        assertFalse(AttackCollisionUtility.checkCollisionWinner(fire, ground));
+        assertFalse(AttackCollisionUtility.checkCollisionWinner(ground, water));
+
+        assertFalse(AttackCollisionUtility.checkCollisionWinner(water, water));
+        assertFalse(AttackCollisionUtility.checkCollisionWinner(fire, fire));
+        assertFalse(AttackCollisionUtility.checkCollisionWinner(ground, ground));
 
         System.out.println(strPrintFinish + "test_checkCollisionWinner_WinnersWin");
     }
@@ -70,8 +74,6 @@ public class AttackCollisionsUtilityTests extends TestCase {
 
         AttackObject cMock = Mockito.mock(WaterAttack.class);
         AttackObject dMock = Mockito.mock(FireAttack.class);
-        when(cMock.getType()).thenReturn(AttackObject.AttackType.Water);
-        when(dMock.getType()).thenReturn(AttackObject.AttackType.Fire);
         PlayerController pMock = Mockito.mock(PlayerController.class);
 
         AttackCollisionUtility.handleCollision(cMock, dMock, pMock);
@@ -86,8 +88,6 @@ public class AttackCollisionsUtilityTests extends TestCase {
 
         AttackObject cMock = Mockito.mock(GroundAttack.class);
         AttackObject dMock = Mockito.mock(GroundAttack.class);
-        when(cMock.getType()).thenReturn(AttackObject.AttackType.Ground);
-        when(dMock.getType()).thenReturn(AttackObject.AttackType.Ground);
         PlayerController pMock = Mockito.mock(PlayerController.class);
 
         AttackCollisionUtility.handleCollision(cMock, dMock, pMock);
@@ -104,11 +104,6 @@ public class AttackCollisionsUtilityTests extends TestCase {
         AttackObject bMock = Mockito.mock(FireAttack.class);
         AttackObject cMock = Mockito.mock(GroundAttack.class);
         AttackObject dMock = Mockito.mock(WaterAttack.class);
-
-        when(aMock.getType()).thenReturn(AttackObject.AttackType.Fire);
-        when(bMock.getType()).thenReturn(AttackObject.AttackType.Fire);
-        when(cMock.getType()).thenReturn(AttackObject.AttackType.Ground);
-        when(dMock.getType()).thenReturn(AttackObject.AttackType.Water);
 
         PlayerController pMock = Mockito.mock(PlayerController.class);
 

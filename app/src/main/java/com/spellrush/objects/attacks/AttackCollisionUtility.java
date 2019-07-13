@@ -19,29 +19,27 @@ public class AttackCollisionUtility {
      * @param enemyType attackType of "them"
      * @return true if ourType should win, else false (possibility of tie)
      */
-    public static boolean checkCollisionWinner(AttackObject.AttackType ourType, AttackObject.AttackType enemyType){
+    public static boolean checkCollisionWinner(AttackObject ourType, AttackObject enemyType){
         //return whether first type beats second type.
-        return (ourType == AttackObject.AttackType.Water && enemyType == AttackObject.AttackType.Fire) ||
-                (ourType == AttackObject.AttackType.Ground && enemyType == AttackObject.AttackType.Water) ||
-                (ourType == AttackObject.AttackType.Fire && enemyType == AttackObject.AttackType.Ground);
+        return (ourType instanceof WaterAttack && enemyType instanceof FireAttack) ||
+                (ourType instanceof GroundAttack && enemyType instanceof WaterAttack) ||
+                (ourType instanceof FireAttack && enemyType instanceof GroundAttack);
     }
 
     public static void handleCollision(AttackObject attackA, AttackObject attackB, PlayerController player){
-        AttackObject.AttackType aType = attackA.getType(); //type of other attack
-        AttackObject.AttackType bType = attackB.getType();
         AttackObject loser = null;
 
         //when two attacks from separate teams have collided, destroy the one of a
         // "weaker" type, unless they have the same type (destroy both)
         if (!attackA.wasDestroyed() && !attackB.wasDestroyed()
                 && !attackA.hasSameAllegiance(attackB)) {
-            if(aType == bType){
+            if(attackA.getClass() == attackB.getClass()){
                 attackA.setDestroyed(true);
                 attackB.setDestroyed(true);
                 player.addScore(SMALL_POINTS);
             }
             else {
-                loser = checkCollisionWinner(aType, bType) ? attackB : attackA;
+                loser = checkCollisionWinner(attackA, attackB) ? attackB : attackA;
                 loser.setDestroyed(true);
                 if (!loser.isPlayerAttack()) {
                     player.addScore(BIG_POINTS);

@@ -42,7 +42,7 @@ public class LevelManager extends GameObject {
         currLevel = Level.level_1;
         currEnemy=Enemy.getInstance();
         currEnemy.setAI(new MediumEnemyAI());
-        this.gameBoard = new GameBoard(1, Enemy.Y_POSITION, deviceHeight - Enemy.Y_POSITION - 100, MAX_BULLETS);
+        this.gameBoard = new GameBoard(1, Enemy.Y_POSITION, deviceHeight - (Enemy.Y_POSITION * 2), MAX_BULLETS);
     }
 
     public static LevelManager getInstance(){
