@@ -40,9 +40,9 @@ public class LevelManager extends GameObject {
         }
 
         currLevel = Level.level_1;
-        this.gameBoard = new GameBoard(1, 200, deviceHeight - 200, MAX_BULLETS);
         currEnemy=Enemy.getInstance();
         currEnemy.setAI(new MediumEnemyAI());
+        this.gameBoard = new GameBoard(1, Enemy.Y_POSITION, deviceHeight - Enemy.Y_POSITION - 100, MAX_BULLETS);
     }
 
     public static LevelManager getInstance(){
@@ -67,11 +67,11 @@ public class LevelManager extends GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        if(gameBoard != null) {
-            gameBoard.draw(canvas);
-        }
         if(currEnemy != null) {
             currEnemy.draw(canvas);
+        }
+        if(gameBoard != null) {
+            gameBoard.draw(canvas);
         }
     }
 

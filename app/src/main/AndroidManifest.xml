@@ -41,5 +41,5 @@
                 android:value="com.spellrush.presentation.GameOverActivity" />
         </activity>
     </application>
-
+    <supports-screens android:anyDensity="true" />
 </manifest>

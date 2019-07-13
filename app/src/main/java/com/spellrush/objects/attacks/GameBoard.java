@@ -24,7 +24,7 @@ import java.util.Queue;
 
 public class GameBoard extends GameObject{
 
-    static final int BULLET_DEPTH = 20;
+    static final int BULLET_DEPTH = -100;
 
     //for simplified reference to an attack type (without all the in-method dot vomit)
     private static final AttackObject.AttackType FIRE = AttackObject.AttackType.Fire;

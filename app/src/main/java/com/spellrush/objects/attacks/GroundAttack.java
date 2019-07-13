@@ -1,11 +1,8 @@
 package com.spellrush.objects.attacks;
 
-import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 
 import com.spellrush.R;
-import com.spellrush.business.GameView;
 
 public class GroundAttack extends AttackObject {
 
@@ -22,6 +19,6 @@ public class GroundAttack extends AttackObject {
 
     @Override
     public void draw(Canvas canvas) {
-        super.draw(canvas, R.drawable.ground_attack,R.drawable.ground_attack);
+        super.draw(canvas, R.drawable.ground_attack,R.drawable.ground_attack_enemy);
     }
 }
