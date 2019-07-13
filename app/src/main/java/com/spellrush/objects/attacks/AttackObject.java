@@ -32,11 +32,10 @@ public abstract class AttackObject {
     /**
      * Kept so current tests aren't broken.
      */
-    public AttackObject(boolean isPlayerAttack, int lane, int speed,
-                           int laneStart, int laneEnd, int damage, AttackType type){
-        this.attackInfo = new AttackInformation(isPlayerAttack, lane, speed, laneStart, laneEnd, damage);
+    AttackObject(boolean isPlayerAttack, int lane, int speed, int damage, AttackType type, int y){
+        this.attackInfo = new AttackInformation(isPlayerAttack, lane, speed, damage);
         this.type = type;
-        this.yPos = isPlayerAttack ? attackInfo.laneEnd : attackInfo.laneStart;
+        this.yPos = y;
         this.xPos = calculateCanvasXPosition(attackInfo.lane);
     }
 
@@ -46,15 +45,15 @@ public abstract class AttackObject {
      * @param attackInfo information about the attack.
      * @param type What type of attack is it?
      */
-    protected AttackObject(AttackInformation attackInfo, AttackType type) {
+    protected AttackObject(AttackInformation attackInfo, AttackType type, int y) {
         this.attackInfo = attackInfo;
         this.type = type;
-        this.yPos = attackInfo.laneStart;
+        this.yPos = y;
         this.xPos = calculateCanvasXPosition(attackInfo.lane);
     }
 
-    boolean reachedEnd(){
-        return isPlayerAttack() ? getYPosition() < getLaneEnd() : getYPosition() > getLaneEnd();
+    boolean reachedEnd(GameBoard board){
+        return isPlayerAttack() ? yPos < board.getLaneTopPosition() : yPos > board.getLaneBottomPosition();
     }
 
     boolean hasSameAllegiance(AttackObject attackToCheck){
@@ -83,9 +82,7 @@ public abstract class AttackObject {
 
     AttackType getType() { return type; }
 
-    int getLaneEnd(){
-        return attackInfo.laneEnd;
-    }
+    int getLane() { return attackInfo.lane; }
 
     /**
      * @return whether this attack has collided with another attack

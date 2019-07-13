@@ -1,11 +1,8 @@
 package com.spellrush.objects.attacks;
 
-import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 
 import com.spellrush.R;
-import com.spellrush.business.GameView;
 
 public class FireAttack extends AttackObject {
 
@@ -15,9 +12,10 @@ public class FireAttack extends AttackObject {
      * package scope only! - only GameBoard may add attacks to the screen
      *
      * @param attackInfo information about this attack
+     * @param y Y Position to create the attack at
      */
-    FireAttack(AttackInformation attackInfo) {
-        super(attackInfo, AttackType.Fire);
+    FireAttack(AttackInformation attackInfo, int y) {
+        super(attackInfo, AttackType.Fire, y);
     }
 
     @Override

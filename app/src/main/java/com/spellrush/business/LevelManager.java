@@ -40,7 +40,8 @@ public class LevelManager extends GameObject {
         }
 
         currLevel = Level.level_1;
-        this.gameBoard = new GameBoard(1, 200, deviceHeight - 200, MAX_BULLETS);
+        int laneStart = 200;
+        this.gameBoard = new GameBoard(1, laneStart, deviceHeight - (laneStart * 2), MAX_BULLETS);
         currEnemy=Enemy.getInstance();
         currEnemy.setAI(new MediumEnemyAI());
     }

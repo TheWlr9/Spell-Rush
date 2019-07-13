@@ -23,7 +23,7 @@ public class AttackObjectTests {
     class StubAttackObject extends AttackObject {
 
         public StubAttackObject(boolean isPlayerAttack){
-            super(isPlayerAttack, 0,spd,laneStart,laneEnd,dmg, AttackType.Fire);
+            super(new AttackInformation(isPlayerAttack, 0, spd, dmg), AttackType.Fire, 0);
         }
 
         @Override
@@ -36,14 +36,6 @@ public class AttackObjectTests {
     public void setUp() {
         pStubAttack = new StubAttackObject(true);
         eStubAttack = new StubAttackObject(false);
-    }
-
-    @Test
-    public void test_YPosition_should_initToStart() {
-        System.out.println(strPrintStart + "test_getYPosition_shouldGetYPos");
-        setUp();
-        assertEquals(laneEnd, pStubAttack.getYPosition());
-        System.out.println(strPrintFinish + "test_getYPosition_shouldGetYPos");
     }
 
     @Test
@@ -68,14 +60,6 @@ public class AttackObjectTests {
         setUp();
         assertFalse(pStubAttack.wasDestroyed());
         System.out.println(strPrintFinish + "test_wasDestroyed_shouldBeFalseOnInit");
-    }
-
-    @Test
-    public void test_reachedEnd_shouldBeFalseOnInit(){
-        System.out.println(strPrintStart + "test_reachedEnd_shouldBeFalseOnInit");
-        setUp();
-        assertFalse(pStubAttack.reachedEnd());
-        System.out.println(strPrintFinish+ "test_reachedEnd_shouldBeFalseOnInit");
     }
 
     @Test
