@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.spellrush.R;
 import com.spellrush.audio.AudioManager;
+import com.spellrush.audio.AudioManagerError;
 import com.spellrush.audio.SoundEvent;
 import com.spellrush.business.GameView;
 
@@ -14,33 +15,64 @@ public class GameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setupMyAudio();
+        setContentView(R.layout.activity_game);
+    }
+
+    private void setupMyAudio(){
         AudioManager.init(getApplicationContext());
         loadSoundsIntoAudioManager();
-        setContentView(R.layout.activity_game);
     }
 
     @Override
     protected void onResume(){
         GameView.getInstance().setPaused(false);
-        AudioManager.play(SoundEvent.BATTLE_MUSIC);
+
+        try {
+            AudioManager.play(SoundEvent.BATTLE_MUSIC);
+        }
+        catch (AudioManagerError ame){
+            System.err.println(ame);
+
+            setupMyAudio();
+        }
+
         super.onResume();
     }
 
     @Override
     protected void onStop(){
         GameView.getInstance().setPaused(true);
-        AudioManager.pause(SoundEvent.BATTLE_MUSIC);
+
+        try {
+            AudioManager.pause(SoundEvent.BATTLE_MUSIC);
+        }
+        catch (AudioManagerError ame){
+            System.err.println(ame);
+        }
+
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        AudioManager.stop(SoundEvent.BATTLE_MUSIC);
-        AudioManager.release(SoundEvent.BATTLE_MUSIC);
+        try {
+            AudioManager.stop(SoundEvent.BATTLE_MUSIC);
+            AudioManager.release(SoundEvent.BATTLE_MUSIC);
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+        }
+
         super.onDestroy();
     }
 
-    private static void loadSoundsIntoAudioManager(){
-        AudioManager.addSoundToLib(SoundEvent.BATTLE_MUSIC, GAME_SOUND_RES_IDS[0], true);
+    private void loadSoundsIntoAudioManager(){
+        try {
+            AudioManager.addSoundToLib(SoundEvent.BATTLE_MUSIC, GAME_SOUND_RES_IDS[0], true);
+        }
+        catch (AudioManagerError ame){
+            System.err.println(ame);
+        }
     }
 }
