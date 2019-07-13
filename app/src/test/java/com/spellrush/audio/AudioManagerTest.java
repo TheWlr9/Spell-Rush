@@ -23,22 +23,16 @@ public class AudioManagerTest {
         after a test method. So there is no way of reading state of the AudioManager
         without hardcoding it to test AudioManager.init before any other methods.
      */
-    public void test_init_should_do_only_once(){
-        System.out.println("Starting test - test init should do only once");
-
+    public void init(){
         myMap = new EnumMap<SoundEvent, MediaPlayer>(SoundEvent.class);
-        assertFalse(AudioManager.init(null, myMap));
-        assertTrue(AudioManager.init(null, myMap));
-        assertTrue(AudioManager.init(null));
+        AudioManager.init(null, myMap);
 
         hasInit = true;
-
-        System.out.println("Ending test - test init should do only once");
     }
 
     @Test
     public void test_adding_and_removing_songs_adds_and_removes_songs(){
-        test_init_should_do_only_once();
+        init();
 
         System.out.println("Starting test - test adding and removing songs adds and removes songs");
 

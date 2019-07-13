@@ -23,29 +23,19 @@ public abstract class AudioManager {
     private static Context context;
     private static boolean initialized = false;
 
-    public static boolean init(Context context){
+    public static void init(Context context){
         if(!initialized) {
             soundMap = new EnumMap<SoundEvent, MediaPlayer>(SoundEvent.class);
             AudioManager.context = context;
             initialized = true;
-
-            return false;
-        }
-        else{
-            return true;
         }
     }
 
-    public static boolean init(Context context, EnumMap<SoundEvent, MediaPlayer> cache){
+    public static void init(Context context, EnumMap<SoundEvent, MediaPlayer> cache){
         if(!initialized) {
             soundMap = cache;
             AudioManager.context = context;
             initialized = true;
-
-            return false;
-        }
-        else{
-            return true;
         }
     }
 
