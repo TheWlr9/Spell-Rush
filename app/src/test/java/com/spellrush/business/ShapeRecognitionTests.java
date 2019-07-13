@@ -4,15 +4,7 @@ import android.graphics.PointF;
 
 import junit.framework.TestCase;
 
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class ShapeRecognitionTests extends TestCase {
-    private static final String strPrintStart = "\nStarting ShapeRecognitionTests: ";
-    private static final String strPrintFinish = "\nFinished ShapeRecognitionTests: ";
-
     public static class StubPointF extends PointF {
         StubPointF(float x, float y) {
             this.x = x;
@@ -20,16 +12,7 @@ public class ShapeRecognitionTests extends TestCase {
         }
     }
 
-    final static PointF[] GROUND_SPELL_ARRAY_PATH = {new StubPointF(273, 1314),
-            new StubPointF(283, 1289), new StubPointF(313, 1244), new StubPointF(335, 1212),
-            new StubPointF(380, 1170), new StubPointF(418, 1143), new StubPointF(468, 1115),
-            new StubPointF(489, 1105), new StubPointF(547, 1086), new StubPointF(603, 1076),
-            new StubPointF(653, 1078), new StubPointF(685, 1086), new StubPointF(730, 1101),
-            new StubPointF(762, 1122), new StubPointF(779, 1135), new StubPointF(806, 1166),
-            new StubPointF(837, 1210), new StubPointF(856, 1241), new StubPointF(880, 1281),
-            new StubPointF(890, 1296)};
-
-    final static PointF[] FIRE_SPELL_ARRAY_PATH = {new StubPointF(263, 1082),
+    public final static PointF[] FIRE_SPELL_ARRAY_PATH = {new StubPointF(263, 1082),
             new StubPointF(267, 1026), new StubPointF(284, 957), new StubPointF(312, 882),
             new StubPointF(333, 836), new StubPointF(366, 790), new StubPointF(406, 754),
             new StubPointF(416, 749), new StubPointF(420, 755), new StubPointF(423, 790),
@@ -46,7 +29,16 @@ public class ShapeRecognitionTests extends TestCase {
             new StubPointF(396, 1600), new StubPointF(334, 1575), new StubPointF(291, 1515),
             new StubPointF(269, 1441), new StubPointF(264, 1363), new StubPointF(273, 1300)};
 
-    final static PointF[] WATER_SPELL_ARRAY_PATH = {new StubPointF(189, 1050),
+    public final static PointF[] GROUND_SPELL_ARRAY_PATH = {new StubPointF(273, 1314),
+            new StubPointF(283, 1289), new StubPointF(313, 1244), new StubPointF(335, 1212),
+            new StubPointF(380, 1170), new StubPointF(418, 1143), new StubPointF(468, 1115),
+            new StubPointF(489, 1105), new StubPointF(547, 1086), new StubPointF(603, 1076),
+            new StubPointF(653, 1078), new StubPointF(685, 1086), new StubPointF(730, 1101),
+            new StubPointF(762, 1122), new StubPointF(779, 1135), new StubPointF(806, 1166),
+            new StubPointF(837, 1210), new StubPointF(856, 1241), new StubPointF(880, 1281),
+            new StubPointF(890, 1296)};
+
+    public final static PointF[] WATER_SPELL_ARRAY_PATH = {new StubPointF(189, 1050),
             new StubPointF(204, 1026), new StubPointF(237, 980), new StubPointF(257, 954),
             new StubPointF(291, 921), new StubPointF(316, 904), new StubPointF(333, 898),
             new StubPointF(347, 896), new StubPointF(359, 902), new StubPointF(372, 915),
@@ -60,7 +52,7 @@ public class ShapeRecognitionTests extends TestCase {
             new StubPointF(963, 844), new StubPointF(1001, 873), new StubPointF(1051, 921),
             new StubPointF(1065, 930)};
 
-   final static PointF[] FIRE_TOPRIGHT_PATH = {
+   public final static PointF[] FIRE_TOPRIGHT_PATH = {
            new StubPointF(934, 892), new StubPointF(934, 869), new StubPointF(931, 843),
            new StubPointF(925, 814), new StubPointF(912, 787), new StubPointF(900, 764),
            new StubPointF(890, 742), new StubPointF(881, 726), new StubPointF(875, 718),
@@ -101,7 +93,7 @@ public class ShapeRecognitionTests extends TestCase {
            new StubPointF(956, 877), new StubPointF(959, 868), new StubPointF(959, 865),
            new StubPointF(959, 863), new StubPointF(956, 864) };
 
-    final static PointF[] FIRE_BOTRIGHT_PATH = {
+    public final static PointF[] FIRE_BOTRIGHT_PATH = {
             new StubPointF(716, 1140), new StubPointF(715, 1143), new StubPointF(715, 1146), new StubPointF(711, 1146),
             new StubPointF(708, 1149), new StubPointF(706, 1151), new StubPointF(703, 1152), new StubPointF(700, 1152),
             new StubPointF(694, 1155), new StubPointF(692, 1155), new StubPointF(690, 1155), new StubPointF(684, 1155),
@@ -121,7 +113,7 @@ public class ShapeRecognitionTests extends TestCase {
             new StubPointF(734, 1105), new StubPointF(737, 1115), new StubPointF(740, 1120), new StubPointF(740, 1124),
             new StubPointF(740, 1125), new StubPointF(740, 1128), new StubPointF(740, 1130), new StubPointF(737, 1130)};
 
-    final static PointF[] WATER_DOWNWARDS_PATH = {
+    public final static PointF[] WATER_DOWNWARDS_PATH = {
         new StubPointF(343, 1022), new StubPointF(352, 1044), new StubPointF(358, 1065), new StubPointF(368, 1090),
             new StubPointF(380, 1118), new StubPointF(396, 1146), new StubPointF(406, 1171), new StubPointF(415, 1184),
             new StubPointF(421, 1187), new StubPointF(428, 1191), new StubPointF(439, 1193), new StubPointF(450, 1196),
@@ -132,49 +124,4 @@ public class ShapeRecognitionTests extends TestCase {
             new StubPointF(740, 1212), new StubPointF(754, 1215), new StubPointF(768, 1215), new StubPointF(787, 1203),
             new StubPointF(815, 1177), new StubPointF(843, 1149), new StubPointF(875, 1118), new StubPointF(903, 1086),
             new StubPointF(929, 1061), new StubPointF(944, 1047), new StubPointF(947, 1043) };
-
-    @Test
-    public void test_draw_water(){
-        System.out.println(strPrintStart + "test_draw_water");
-
-        assertTrue(ShapeRecognition.hasDrawnWater(new ArrayList<>(Arrays.asList(WATER_SPELL_ARRAY_PATH))));
-        assertTrue(ShapeRecognition.hasDrawnWater(new ArrayList<>(Arrays.asList(WATER_DOWNWARDS_PATH))));
-
-        assertFalse(ShapeRecognition.hasDrawnWater(new ArrayList<>(Arrays.asList(FIRE_SPELL_ARRAY_PATH))));
-        assertFalse(ShapeRecognition.hasDrawnWater(new ArrayList<>(Arrays.asList(FIRE_BOTRIGHT_PATH))));
-        assertFalse(ShapeRecognition.hasDrawnWater(new ArrayList<>(Arrays.asList(FIRE_TOPRIGHT_PATH))));
-        assertFalse(ShapeRecognition.hasDrawnWater(new ArrayList<>(Arrays.asList(GROUND_SPELL_ARRAY_PATH))));
-
-        System.out.println(strPrintFinish + "test_draw_water");
-    }
-
-    @Test
-    public void test_draw_fire(){
-        System.out.println(strPrintStart + "test_draw_fire");
-
-        assertTrue(ShapeRecognition.hasDrawnFire(new ArrayList<>(Arrays.asList(FIRE_BOTRIGHT_PATH))));
-        assertTrue(ShapeRecognition.hasDrawnFire(new ArrayList<>(Arrays.asList(FIRE_TOPRIGHT_PATH))));
-        assertTrue(ShapeRecognition.hasDrawnFire(new ArrayList<>(Arrays.asList(FIRE_SPELL_ARRAY_PATH))));
-
-        assertFalse(ShapeRecognition.hasDrawnFire(new ArrayList<>(Arrays.asList(WATER_SPELL_ARRAY_PATH))));
-        assertFalse(ShapeRecognition.hasDrawnFire(new ArrayList<>(Arrays.asList(WATER_DOWNWARDS_PATH))));
-        assertFalse(ShapeRecognition.hasDrawnFire(new ArrayList<>(Arrays.asList(GROUND_SPELL_ARRAY_PATH))));
-
-        System.out.println(strPrintFinish + "test_draw_fire");
-    }
-
-    @Test
-    public void test_draw_ground(){
-        System.out.println(strPrintStart + "test_draw_ground");
-
-        assertTrue(ShapeRecognition.hasDrawnGround(new ArrayList<>(Arrays.asList(GROUND_SPELL_ARRAY_PATH))));
-
-        assertFalse(ShapeRecognition.hasDrawnGround(new ArrayList<>(Arrays.asList(FIRE_SPELL_ARRAY_PATH))));
-        assertFalse(ShapeRecognition.hasDrawnGround(new ArrayList<>(Arrays.asList(FIRE_BOTRIGHT_PATH))));
-        assertFalse(ShapeRecognition.hasDrawnGround(new ArrayList<>(Arrays.asList(FIRE_TOPRIGHT_PATH))));
-        assertFalse(ShapeRecognition.hasDrawnGround(new ArrayList<>(Arrays.asList(WATER_SPELL_ARRAY_PATH))));
-        assertFalse(ShapeRecognition.hasDrawnGround(new ArrayList<>(Arrays.asList(WATER_DOWNWARDS_PATH))));
-
-        System.out.println(strPrintFinish + "test_draw_ground");
-    }
 }
