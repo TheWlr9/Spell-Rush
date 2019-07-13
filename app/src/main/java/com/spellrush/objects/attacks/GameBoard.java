@@ -26,11 +26,6 @@ public class GameBoard extends GameObject{
 
     static final int BULLET_DEPTH = -100;
 
-    //for simplified reference to an attack type (without all the in-method dot vomit)
-    private static final AttackObject.AttackType FIRE = AttackObject.AttackType.Fire;
-    private static final AttackObject.AttackType WATER = AttackObject.AttackType.Water;
-    private static final AttackObject.AttackType GROUND = AttackObject.AttackType.Ground;
-
     //game board "rules"
     private ArrayList<AttackObject> attacks; //a list of all attacks on the board
 
@@ -89,41 +84,19 @@ public class GameBoard extends GameObject{
     /**
      * Adds an attack to the board at the start location of the specified lane.
      *
-     * @param type The attack type to create
-     * @param isPlayerAttack The attack's allegiance (and direction of movement).
-     * @param laneIndex The lane the attack will start in.
-     * @param speed what speed this attack will travel at
-     * @param damage How much is subtracted from the enemy/player HP on goal
+     * @param newAttack The pre-constructed attack to add to the board
      */
-    void addAttack(AttackObject.AttackType type, boolean isPlayerAttack, int laneIndex, int speed, int damage){
-
-        //if bad lane index or no space, quit.
-        if(laneIndex < 0 || laneIndex >= numLanes || !canAddAttack()){
-            return;
+    void addAttack(AttackObject newAttack) {
+        if (canAddAttack() && newAttack.getLane() >= 0 && newAttack.getLane() <= numLanes) {
+            attacksToAdd.add(newAttack);
         }
-        // Set laneStart / laneEnd according to direction
-        int laneStart = isPlayerAttack ? laneLength : laneTopPosition;
-        int laneEnd = isPlayerAttack ? laneTopPosition : laneLength;
+    }
 
-        // create attack object
-        AttackObject newAttack;
-        AttackInformation attackInfo = new AttackInformation(
-                isPlayerAttack, laneIndex, speed, laneStart, laneEnd, damage);
-        switch(type){
-            case Fire:
-                newAttack = new FireAttack(attackInfo);
-                break;
-            case Water:
-                newAttack = new WaterAttack(attackInfo);
-                break;
-            case Ground:
-                newAttack = new GroundAttack(attackInfo);
-                break;
-            default:
-                newAttack = new FireAttack(attackInfo);
-                break;
-        }
-        attacksToAdd.add(newAttack);
+    public int getLaneTopPosition() {
+        return laneTopPosition;
+    }
+    public int getLaneBottomPosition() {
+        return laneTopPosition + laneLength;
     }
 
     /**
@@ -158,7 +131,7 @@ public class GameBoard extends GameObject{
     }
 
     private void checkAttackReachedEnd(AttackObject attack) {
-        if(attack.reachedEnd()){
+        if(attack.reachedEnd(this)){
             if(attack.isPlayerAttack()){
                 Enemy enemy = Enemy.getInstance();
                 if(enemy != null){

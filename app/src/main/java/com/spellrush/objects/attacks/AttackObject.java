@@ -13,16 +13,10 @@ import com.spellrush.business.GameView;
 
 public abstract class AttackObject {
 
-    /* Used to tell the addAttack what type of attack it should create*/
-    public enum AttackType{
-        Fire, Water, Ground
-    }
-
     protected final int ATTACK_WIDTH = 128;
     protected final int ATTACK_HEIGHT = 128;
 
     protected AttackInformation attackInfo;
-    protected AttackType type;
 
     //public so accessible, final so cannot be changed.
     protected int yPos; //this attack's position within its lane.
@@ -32,27 +26,24 @@ public abstract class AttackObject {
     /**
      * Kept so current tests aren't broken.
      */
-    public AttackObject(boolean isPlayerAttack, int lane, int speed,
-                           int laneStart, int laneEnd, int damage, AttackType type){
-        this.attackInfo = new AttackInformation(isPlayerAttack, lane, speed, laneStart, laneEnd, damage);
-        this.type = type;
-        this.yPos = isPlayerAttack ? attackInfo.laneEnd : attackInfo.laneStart;
+    AttackObject(boolean isPlayerAttack, int lane, int speed, int damage, int y){
+        this.attackInfo = new AttackInformation(isPlayerAttack, lane, speed, damage);
+        this.yPos = y;
     }
 
     /**
      * Constructor
      *
      * @param attackInfo information about the attack.
-     * @param type What type of attack is it?
+     * @param y Starting Y Position of the object on the screen
      */
-    protected AttackObject(AttackInformation attackInfo, AttackType type) {
+    protected AttackObject(AttackInformation attackInfo, int y) {
         this.attackInfo = attackInfo;
-        this.type = type;
-        this.yPos = attackInfo.laneStart;
+        this.yPos = y;
     }
 
-    boolean reachedEnd(){
-        return isPlayerAttack() ? getYPosition() < getLaneEnd() : getYPosition() > getLaneEnd();
+    boolean reachedEnd(GameBoard board){
+        return isPlayerAttack() ? yPos < board.getLaneTopPosition() : yPos > board.getLaneBottomPosition();
     }
 
     boolean hasSameAllegiance(AttackObject attackToCheck){
@@ -79,11 +70,7 @@ public abstract class AttackObject {
         return attackInfo.damage;
     }
 
-    AttackType getType() { return type; }
-
-    int getLaneEnd(){
-        return attackInfo.laneEnd;
-    }
+    int getLane() { return attackInfo.lane; }
 
     /**
      * @return whether this attack has collided with another attack
