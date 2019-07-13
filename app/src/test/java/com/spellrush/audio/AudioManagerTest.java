@@ -36,13 +36,18 @@ public class AudioManagerTest {
 
         System.out.println("Starting test - test adding and removing songs adds and removes songs");
 
-        AudioManager.addSoundToLib(SoundEvent.TITLE_MUSIC, null);
-        assertFalse(myMap.isEmpty());
-        AudioManager.release(SoundEvent.TITLE_MUSIC);
-        assertTrue(myMap.isEmpty());
-        AudioManager.addSoundToLib(SoundEvent.BATTLE_MUSIC, null);
-        AudioManager.releaseAll();
-        assertTrue(myMap.isEmpty());
+        try {
+            AudioManager.addSoundToLib(SoundEvent.TITLE_MUSIC, null);
+            assertFalse(myMap.isEmpty());
+            AudioManager.release(SoundEvent.TITLE_MUSIC);
+            assertTrue(myMap.isEmpty());
+            AudioManager.addSoundToLib(SoundEvent.BATTLE_MUSIC, null);
+            AudioManager.releaseAll();
+            assertTrue(myMap.isEmpty());
+        }
+        catch (AudioManagerError ame){
+            fail("Audio manager has not yet been initialized");
+        }
 
         System.out.println("Ending test - test adding and removing songs adds and removes songs");
     }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.spellrush.R;
 import com.spellrush.audio.AudioManager;
+import com.spellrush.audio.AudioManagerError;
 import com.spellrush.audio.SoundEvent;
 import com.spellrush.persistence.utils.DBHelper;
 
@@ -22,17 +23,29 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        AudioManager.init(getApplicationContext());
-        loadSoundsIntoAudioManager();
+        setupMyAudio();
         createStartButton();
         //createSettingsButton();
         createLeaderboardButton();
         DBHelper.copyDatabaseToDevice(getApplicationContext());
     }
 
+    private void setupMyAudio(){
+        AudioManager.init(getApplicationContext());
+        loadSoundsIntoAudioManager();
+    }
+
     @Override
     protected void onResume(){
-        AudioManager.play(SoundEvent.TITLE_MUSIC);
+        try {
+            AudioManager.play(SoundEvent.TITLE_MUSIC);
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+
+            setupMyAudio();
+        }
+
         super.onResume();
     }
 
@@ -69,20 +82,39 @@ public class HomeActivity extends Activity {
         });
     }
 
-    private static void loadSoundsIntoAudioManager(){
-        AudioManager.addSoundToLib(SoundEvent.TITLE_MUSIC, HOME_SOUND_RES_IDS[0], true);
+    private void loadSoundsIntoAudioManager(){
+        try {
+            AudioManager.addSoundToLib(SoundEvent.TITLE_MUSIC, HOME_SOUND_RES_IDS[0], true);
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+        }
     }
 
     @Override
     protected void onStop(){
-        AudioManager.pause(SoundEvent.TITLE_MUSIC);
+        try {
+            AudioManager.pause(SoundEvent.TITLE_MUSIC);
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+
+            setupMyAudio();
+        }
+
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        AudioManager.stop(SoundEvent.TITLE_MUSIC);
-        AudioManager.release(SoundEvent.TITLE_MUSIC);
+        try {
+            AudioManager.stop(SoundEvent.TITLE_MUSIC);
+            AudioManager.release(SoundEvent.TITLE_MUSIC);
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+        }
+
         super.onDestroy();
     }
 
