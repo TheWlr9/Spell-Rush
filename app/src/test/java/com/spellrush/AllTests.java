@@ -8,7 +8,9 @@ import com.spellrush.business.GameViewTests;
 import com.spellrush.business.LeaderboardControllerTests;
 import com.spellrush.business.LevelManagerTests;
 import com.spellrush.business.PlayerControllerTests;
-import com.spellrush.business.ShapeRecognitionTests;
+import com.spellrush.business.spellRecognitionTests.FireRecognitionTests;
+import com.spellrush.business.spellRecognitionTests.GroundRecognitionTests;
+import com.spellrush.business.spellRecognitionTests.WaterRecognitionTests;
 import com.spellrush.objects.BasicEnemyAITests;
 import com.spellrush.objects.EnemyTests;
 import com.spellrush.objects.GameObjectTests;
@@ -36,7 +38,9 @@ import org.junit.runners.Suite;
         AttackFactoryTests.class,
         AttackObjectTests.class,
         GameBoardTests.class,
-        ShapeRecognitionTests.class,
+        FireRecognitionTests.class,
+        WaterRecognitionTests.class,
+        GroundRecognitionTests.class,
         GameThreadTests.class,
         GameViewTests.class,
         BasicEnemyAITests.class,
