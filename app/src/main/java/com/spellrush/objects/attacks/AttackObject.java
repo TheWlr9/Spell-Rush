@@ -37,7 +37,6 @@ public abstract class AttackObject {
         this.attackInfo = new AttackInformation(isPlayerAttack, lane, speed, laneStart, laneEnd, damage);
         this.type = type;
         this.yPos = isPlayerAttack ? attackInfo.laneEnd : attackInfo.laneStart;
-        this.xPos = calculateCanvasXPosition(attackInfo.lane);
     }
 
     /**
@@ -50,7 +49,6 @@ public abstract class AttackObject {
         this.attackInfo = attackInfo;
         this.type = type;
         this.yPos = attackInfo.laneStart;
-        this.xPos = calculateCanvasXPosition(attackInfo.lane);
     }
 
     boolean reachedEnd(){
@@ -105,21 +103,6 @@ public abstract class AttackObject {
         yPos += attackInfo.speed;
     }
 
-    /**
-     * This will tell us where to draw in the X-axis based on the width of the canvas and the lane
-     * of the attack.
-     *
-     * @param lane
-     * @return
-     */
-    private int calculateCanvasXPosition(int lane){
-        // TODO: dummy value for now, update this if we're doing lanes.
-        if(attackInfo.isPlayerAttack)
-            return 600;
-        else
-            return 620;
-    }
-
     public void update() {
         if(!this.wasDestroyed()) {
             updatePosition();
@@ -127,7 +110,6 @@ public abstract class AttackObject {
     }
 
     public abstract void draw(Canvas canvas);
-
 
     /**
      * Draws an attack object, after being told what to draw.
@@ -139,6 +121,7 @@ public abstract class AttackObject {
      */
     protected void draw(Canvas canvas, int playerSprite, int enemySprite) {
         Resources r = GameView.getInstance().getContext().getResources();
+        int xPos = (Resources.getSystem().getDisplayMetrics().widthPixels  / 2) - (ATTACK_WIDTH / 2);
         Drawable sprite = (attackInfo.isPlayerAttack) ? r.getDrawable(playerSprite) : r.getDrawable(enemySprite);
         sprite.setBounds(xPos, yPos, xPos + ATTACK_WIDTH, yPos + ATTACK_HEIGHT);
         sprite.draw(canvas);

@@ -3,6 +3,7 @@ package com.spellrush.business;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.os.Build;
@@ -14,10 +15,10 @@ import android.view.SurfaceView;
 
 import com.spellrush.objects.GameObject;
 import com.spellrush.objects.IGameObject;
+import com.spellrush.presentation.BackgroundImage;
 import com.spellrush.presentation.GameOverActivity;
 import com.spellrush.presentation.UI.FingerPathLayer;
 import com.spellrush.presentation.UI.GameHUD;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -104,8 +105,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
 
     @TargetApi(Build.VERSION_CODES.ECLAIR)
     private void setupView(){
+        this.setZOrderOnTop(true);
         getHolder().addCallback(this); // This allows the view to process changes and events
         getHolder().setFormat(PixelFormat.TRANSPARENT);
+
         setZOrderMediaOverlay(true);
         setFocusable(true);
     }
@@ -119,6 +122,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
         fingerPathLayer = new FingerPathLayer();
         drawingAI = new ShapeRecognition(fingerPathLayer);
 
+        newObjects.add(new BackgroundImage());
         newObjects.add(player);
         newObjects.add(fingerPathLayer);
         newObjects.add(levelManager);
@@ -176,7 +180,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
 
     @Override
     public void draw(Canvas canvas){
-        if (canvas != null) {
+        canvas.setDensity(Bitmap.DENSITY_NONE);
+        if(canvas != null) {
             super.draw(canvas);
             // Draw each of the GameViewLayer objects.a
             for (GameObject object : gameObjects) {

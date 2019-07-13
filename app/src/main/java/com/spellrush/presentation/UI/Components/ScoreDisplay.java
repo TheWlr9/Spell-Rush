@@ -9,6 +9,9 @@ import com.spellrush.objects.IDrawnObject;
 
 public class ScoreDisplay implements IDrawnObject {
     private final int NUM_DIGITS = 6;
+    private final String scoreTxt = "SCORE";
+    private String formattedScore;
+
     private int x;
     private int y;
 
@@ -18,13 +21,17 @@ public class ScoreDisplay implements IDrawnObject {
         x = xpos;
         y = ypos;
         myPaint = new Paint();
+        myPaint.setTextSize(64);
+        myPaint.setColor(Color.WHITE);
+        formattedScore =  "";
     }
 
     public void draw(Canvas canvas) {
+        canvas.drawText(scoreTxt + formattedScore, x, y, myPaint);
+    }
+
+    public void updatescoreTxt(){
         int playerScore = PlayerController.getInstance().getScore();
-        String formattedScore =  String.format("%0" + NUM_DIGITS + "d", playerScore);
-        myPaint.setTextSize(64);
-        myPaint.setColor(Color.WHITE);
-        canvas.drawText("SCORE: " + formattedScore, x, y, myPaint);
+        formattedScore =  String.format("%0" + NUM_DIGITS + "d", playerScore);
     }
 }
