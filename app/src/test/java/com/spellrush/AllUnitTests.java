@@ -47,6 +47,6 @@ import org.junit.runners.Suite;
         MediumEnemyAITests.class,
         LockButtonReceiverTests.class,
 })
-public class AllTests {
+public class AllUnitTests {
 
 }
