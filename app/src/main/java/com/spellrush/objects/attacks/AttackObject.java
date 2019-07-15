@@ -2,9 +2,9 @@ package com.spellrush.objects.attacks;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 
-import com.spellrush.business.GameView;
+import com.spellrush.presentation.ISpriteDrawer;
+import com.spellrush.presentation.SpriteDrawer;
 
 /**
  * Back end to track information about individual attacks.
@@ -96,6 +96,7 @@ public abstract class AttackObject {
         }
     }
 
+    // The draw method called by the GameBoard / Attack object manager
     public abstract void draw(Canvas canvas);
 
     /**
@@ -107,10 +108,9 @@ public abstract class AttackObject {
      * @param enemySprite sprite to draw if enemy
      */
     protected void draw(Canvas canvas, int playerSprite, int enemySprite) {
-        Resources r = GameView.getInstance().getContext().getResources();
+        ISpriteDrawer drawer = SpriteDrawer.getInstance();
         int xPos = (Resources.getSystem().getDisplayMetrics().widthPixels  / 2) - (ATTACK_WIDTH / 2);
-        Drawable sprite = (attackInfo.isPlayerAttack) ? r.getDrawable(playerSprite) : r.getDrawable(enemySprite);
-        sprite.setBounds(xPos, yPos, xPos + ATTACK_WIDTH, yPos + ATTACK_HEIGHT);
-        sprite.draw(canvas);
+        int spriteIndex = (attackInfo.isPlayerAttack) ? playerSprite : enemySprite;
+        drawer.drawSprite(canvas, spriteIndex, xPos, yPos, ATTACK_WIDTH, ATTACK_HEIGHT);
     }
 }
