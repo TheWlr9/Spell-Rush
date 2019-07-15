@@ -1,16 +1,14 @@
-package com.spellrush.business;
+package com.spellrush.business.LevelManager;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
 
+import com.spellrush.business.GameView;
+import com.spellrush.business.IEnemyAI;
 import com.spellrush.objects.Enemy;
 import com.spellrush.objects.GameObject;
-import com.spellrush.objects.MediumEnemyAI;
+import com.spellrush.objects.NullEnemyAI;
 import com.spellrush.objects.attacks.GameBoard;
-
-enum Level{
-    level_1
-}
 
 // TODO: flesh this out, make it modular for differant enemies... (see "level manager" story)
 public class LevelManager extends GameObject {
@@ -39,9 +37,10 @@ public class LevelManager extends GameObject {
             deviceHeight = 0;
         }
 
-        currLevel = Level.level_1;
-        currEnemy=Enemy.getInstance();
-        currEnemy.setAI(new MediumEnemyAI());
+        currLevel = Level.LEVEL_1;
+        currEnemy = Enemy.getInstance();
+        currEnemy.resetHP();
+        currEnemy.setAI(currLevel.getEnemy());
         this.gameBoard = new GameBoard(1, Enemy.Y_POSITION, deviceHeight - (Enemy.Y_POSITION * 2), MAX_BULLETS);
     }
 
@@ -57,11 +56,10 @@ public class LevelManager extends GameObject {
         if(gameBoard != null) {
             gameBoard.update();
         }
-        if(currEnemy.isAlive()){
         updateEnemy();
-        }
-        else{
-            GameView.getInstance().triggerGameOver();
+
+        if(currEnemy.getAI() instanceof NullEnemyAI) {
+            initNextLevel();
         }
     }
 
@@ -75,6 +73,10 @@ public class LevelManager extends GameObject {
         }
     }
 
+    public String getCurrentLevel(){
+        return this.currLevel.getName();
+    }
+
     public void setCurrentEnemyAI(IEnemyAI brain){
         currEnemy.setAI(brain);
     }
@@ -84,9 +86,26 @@ public class LevelManager extends GameObject {
             currEnemy.update();
      }
 
+    private void initNextLevel(){
+        if(currLevel.getNext() != null) {
+            currLevel = currLevel.getNext();
+            gameBoard.clear();
+            System.out.println("Current Level: " + currLevel.getName());
+
+            if(GameView.getInstance() != null){
+                GameView.getInstance().triggerNextLevel(currLevel.getScore());
+            }
+
+            currEnemy.resetHP();
+            setCurrentEnemyAI(currLevel.getEnemy());
+        }
+        else if(GameView.getInstance() != null) {
+            GameView.getInstance().triggerGameOver();
+        }
+    }
+
     // Called when restarting the game
     public void reset(){
-        currEnemy.reset();
         init();
     }
 }

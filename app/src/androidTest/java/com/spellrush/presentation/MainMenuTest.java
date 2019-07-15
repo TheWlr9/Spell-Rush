@@ -7,6 +7,7 @@ import androidx.test.filters.LargeTest;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.spellrush.R;
+import com.spellrush.presentation.UI.Components.LevelStartDisplay;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,7 +42,7 @@ public class MainMenuTest {
     public void startButtonTest() {
         onView(ViewMatchers.withId(R.id.startBtn)).check(matches(isDisplayed()));
         onView(ViewMatchers.withId(R.id.startBtn)).perform(click());
-        intended(hasComponent(GameActivity.class.getName()));
+        intended(hasComponent(LevelStartDisplay.class.getName()));
     }
 
     @Test
