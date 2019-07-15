@@ -1,6 +1,8 @@
 package com.spellrush.presentation;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.spellrush.R;
@@ -8,6 +10,9 @@ import com.spellrush.audio.AudioManager;
 import com.spellrush.audio.AudioManagerError;
 import com.spellrush.audio.SoundEvent;
 import com.spellrush.business.GameView;
+import com.spellrush.business.LevelManager.LevelManager;
+import com.spellrush.presentation.UI.Components.LevelCompleteDisplay;
+import com.spellrush.presentation.UI.Components.LevelStartDisplay;
 
 public class GameActivity extends Activity {
     final static int[] GAME_SOUND_RES_IDS = {R.raw.act05_stage02_loop};
@@ -22,6 +27,24 @@ public class GameActivity extends Activity {
     private void setupMyAudio(){
         AudioManager.init(getApplicationContext());
         loadSoundsIntoAudioManager();
+    }
+
+    // display the start level message
+    public static void displayStartLevel(Context context, int displayTime) {
+        if(LevelManager.getInstance() != null){
+            String level = LevelManager.getInstance().getCurrentLevel();
+            Intent levelStartDisplayIntent = new Intent(context, LevelStartDisplay.class);
+            levelStartDisplayIntent.putExtra("displayTime", displayTime);
+            levelStartDisplayIntent.putExtra("levelName", level);
+            context.startActivity(levelStartDisplayIntent);
+        }
+    }
+
+    // display the level complete message
+    public static void displayLevelComplete(Context context, int displayTime) {
+        Intent levelCompleteDisplayIntent = new Intent(context, LevelCompleteDisplay.class);
+        levelCompleteDisplayIntent.putExtra("displayTime", displayTime);
+        context.startActivity(levelCompleteDisplayIntent);
     }
 
     @Override

@@ -1,10 +1,8 @@
 package com.spellrush.business;
 
-import android.graphics.Canvas;
-
+import com.spellrush.business.LevelManager.LevelManager;
 import com.spellrush.objects.BasicEnemyAI;
 import com.spellrush.objects.Enemy;
-import com.spellrush.objects.NullEnemyAI;
 import com.spellrush.objects.NullEnemyAI;
 
 import junit.framework.TestCase;

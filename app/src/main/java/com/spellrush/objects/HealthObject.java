@@ -41,6 +41,10 @@ public abstract class HealthObject extends GameObject {
         return hp;
     }
 
+    public void resetHP(){
+        hp = MAX_HP;
+    }
+
     // Called once per frame by the GameView.
     @Override
     public abstract void update();

@@ -13,7 +13,9 @@ import com.spellrush.R;
 import com.spellrush.audio.AudioManager;
 import com.spellrush.audio.AudioManagerError;
 import com.spellrush.audio.SoundEvent;
+import com.spellrush.business.LevelManager.LevelManager;
 import com.spellrush.persistence.utils.DBHelper;
+import com.spellrush.presentation.UI.Components.LevelStartDisplay;
 
 public class HomeActivity extends Activity {
     final static int[] HOME_SOUND_RES_IDS = {R.raw.lines_of_code};
@@ -55,8 +57,14 @@ public class HomeActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent gameIntent = new Intent(HomeActivity.this, GameActivity.class);
-                HomeActivity.this.startActivity(gameIntent);
+                Intent levelStartDisplay = new Intent(HomeActivity.this, LevelStartDisplay.class);
+                if(LevelManager.getInstance() != null) {
+                    String level = LevelManager.getInstance().getCurrentLevel();
+                    levelStartDisplay.putExtra("levelName", level);
+                }
+                // display the start level message, then once its complete, start the game
+                startActivityForResult(levelStartDisplay, 1);
+
             }
         });
     }
@@ -121,5 +129,13 @@ public class HomeActivity extends Activity {
     @Override
     public void onBackPressed() {
         // Ensure it does nothing...
+    }
+
+    // start the game activity once the display intent is complete
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Intent gameIntent = new Intent(HomeActivity.this, GameActivity.class);
+        HomeActivity.this.startActivity(gameIntent);
     }
 }

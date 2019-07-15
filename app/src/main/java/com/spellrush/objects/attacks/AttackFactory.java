@@ -1,6 +1,6 @@
 package com.spellrush.objects.attacks;
 
-import com.spellrush.business.LevelManager;
+import com.spellrush.business.LevelManager.LevelManager;
 
 /**
  * AttackFactory

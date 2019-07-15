@@ -13,9 +13,11 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.spellrush.business.LevelManager.LevelManager;
 import com.spellrush.objects.GameObject;
 import com.spellrush.objects.IGameObject;
 import com.spellrush.presentation.BackgroundImage;
+import com.spellrush.presentation.GameActivity;
 import com.spellrush.presentation.GameOverActivity;
 import com.spellrush.presentation.UI.FingerPathLayer;
 import com.spellrush.presentation.UI.GameHUD;
@@ -37,6 +39,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
 {
 
     private static final int MAX_BULLETS = 100;
+    private static final int ONE_SECOND = 1000;
+    private static final int LEVEL_COMPLETE_DISPLAY_TIME = 3;
 
     // Follow Singleton design pattern
     private static GameView instance;
@@ -229,6 +233,24 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
         }
 
     } // end surfaceDestroyed()
+
+    public void triggerNextLevel(int addScore) {
+        thread.setRunning(false);
+        try {
+            GameActivity.displayLevelComplete(this.getContext(), LEVEL_COMPLETE_DISPLAY_TIME);
+            Thread.sleep(LEVEL_COMPLETE_DISPLAY_TIME * ONE_SECOND);
+            GameActivity.displayStartLevel(this.getContext(), LEVEL_COMPLETE_DISPLAY_TIME);
+            Thread.sleep(LEVEL_COMPLETE_DISPLAY_TIME * ONE_SECOND);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // reset player health and and the current fingerpath
+        player.resetHP();
+        player.addScore(addScore);
+        fingerPathLayer.resetPath();
+
+        thread.setRunning(true);
+    }
 
     public void triggerGameOver(){
         thread.setRunning(false);

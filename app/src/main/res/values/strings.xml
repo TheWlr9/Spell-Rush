@@ -26,4 +26,7 @@
     <string name="SubmitScore">Submit Score</string>
     <string name="Final_Score">Final Score</string>
     <string name="Game_Over">Game Over</string>
+    <string name="starting">STARTING</string>
+    <string name="level_1">LEVEL 1</string>
+    <string name="level_complete">LEVEL COMPLETE!</string>
 </resources>
