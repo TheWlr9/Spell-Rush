@@ -95,6 +95,12 @@ public class GameOverActivity extends Activity {
         });
     }
 
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(GameOverActivity.this, HomeActivity.class));
+        finish();
+    }
+
 
     @Override
     protected void onDestroy() {
