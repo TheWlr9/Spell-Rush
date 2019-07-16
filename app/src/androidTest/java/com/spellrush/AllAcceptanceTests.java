@@ -4,13 +4,15 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 
 import com.spellrush.presentation.MainMenuTest;
+import com.spellrush.presentation.UI.FingerPathLayerTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        MainMenuTest.class
+        MainMenuTest.class,
+        FingerPathLayerTest.class
 })
 
 /**
