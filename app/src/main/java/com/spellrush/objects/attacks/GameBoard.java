@@ -25,6 +25,7 @@ import java.util.Queue;
 public class GameBoard extends GameObject{
 
     static final int BULLET_DEPTH = -100;
+    static final int HIT_POINTS = 100;
 
     //game board "rules"
     private ArrayList<AttackObject> attacks; //a list of all attacks on the board
@@ -136,6 +137,8 @@ public class GameBoard extends GameObject{
                 Enemy enemy = Enemy.getInstance();
                 if(enemy != null){
                     enemy.getHit(attack.getDamage());
+
+                    PlayerController.getInstance().addScore(HIT_POINTS);
                 }
             }
             else{
