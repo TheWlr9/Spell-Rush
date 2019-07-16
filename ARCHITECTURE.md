@@ -17,6 +17,10 @@
 
 ## ITERATION 3 ADDITIONS
 
+## Links
+
+* LevelManager (business/LevelManager) needs a reference to PlayerController (business) to increment the score
+
 ## Presentation Layer
 
 * BackgroundImage (Presentation)
