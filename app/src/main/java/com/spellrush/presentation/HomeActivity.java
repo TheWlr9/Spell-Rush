@@ -11,15 +11,11 @@ import android.widget.Toast;
 
 import com.spellrush.R;
 import com.spellrush.audio.AudioManager;
+import com.spellrush.audio.AudioManagerError;
 import com.spellrush.audio.SoundEvent;
-import com.spellrush.services.Services;
-
-import java.sql.SQLOutput;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.spellrush.business.LevelManager.LevelManager;
+import com.spellrush.persistence.utils.DBHelper;
+import com.spellrush.presentation.UI.Components.LevelStartDisplay;
 
 public class HomeActivity extends Activity {
     final static int[] HOME_SOUND_RES_IDS = {R.raw.lines_of_code};
@@ -29,17 +25,29 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        AudioManager.init(getApplicationContext());
-        loadSoundsIntoAudioManager();
+        setupMyAudio();
         createStartButton();
         //createSettingsButton();
         createLeaderboardButton();
-        copyDatabaseToDevice();
+        DBHelper.copyDatabaseToDevice(getApplicationContext());
+    }
+
+    private void setupMyAudio(){
+        AudioManager.init(getApplicationContext());
+        loadSoundsIntoAudioManager();
     }
 
     @Override
     protected void onResume(){
-        AudioManager.play(SoundEvent.TITLE_MUSIC);
+        try {
+            AudioManager.play(SoundEvent.TITLE_MUSIC);
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+
+            setupMyAudio();
+        }
+
         super.onResume();
     }
 
@@ -49,8 +57,14 @@ public class HomeActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent gameIntent = new Intent(HomeActivity.this, GameActivity.class);
-                HomeActivity.this.startActivity(gameIntent);
+                Intent levelStartDisplay = new Intent(HomeActivity.this, LevelStartDisplay.class);
+                if(LevelManager.getInstance() != null) {
+                    String level = LevelManager.getInstance().getCurrentLevel();
+                    levelStartDisplay.putExtra("levelName", level);
+                }
+                // display the start level message, then once its complete, start the game
+                startActivityForResult(levelStartDisplay, 1);
+
             }
         });
     }
@@ -76,20 +90,39 @@ public class HomeActivity extends Activity {
         });
     }
 
-    private static void loadSoundsIntoAudioManager(){
-        AudioManager.addSoundToLib(SoundEvent.TITLE_MUSIC, HOME_SOUND_RES_IDS[0], true);
+    private void loadSoundsIntoAudioManager(){
+        try {
+            AudioManager.addSoundToLib(SoundEvent.TITLE_MUSIC, HOME_SOUND_RES_IDS[0], true);
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+        }
     }
 
     @Override
     protected void onStop(){
-        AudioManager.pause(SoundEvent.TITLE_MUSIC);
+        try {
+            AudioManager.pause(SoundEvent.TITLE_MUSIC);
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+
+            setupMyAudio();
+        }
+
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        AudioManager.stop(SoundEvent.TITLE_MUSIC);
-        AudioManager.release(SoundEvent.TITLE_MUSIC);
+        try {
+            AudioManager.stop(SoundEvent.TITLE_MUSIC);
+            AudioManager.release(SoundEvent.TITLE_MUSIC);
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+        }
+
         super.onDestroy();
     }
 
@@ -98,58 +131,11 @@ public class HomeActivity extends Activity {
         // Ensure it does nothing...
     }
 
-    // FROM SAMPLE PROJECT - Copies database to the device
-    private void copyDatabaseToDevice() {
-        final String DB_PATH = "db";
-
-        String[] assetNames;
-        Context context = getApplicationContext();
-        File dataDirectory = context.getDir(DB_PATH, Context.MODE_PRIVATE);
-        AssetManager assetManager = getAssets();
-
-        try {
-            assetNames = assetManager.list(DB_PATH);
-            for (int i = 0; i < assetNames.length; i++) {
-                assetNames[i] = DB_PATH + "/" + assetNames[i];
-            }
-
-            copyAssetsToDirectory(assetNames, dataDirectory);
-
-            Services.setDBPathName(dataDirectory.toString() + "/" + Services.getDBPathName());
-
-            System.out.println("Database Path: " + Services.getDBPathName());
-
-        } catch (final IOException ioe) {
-            throw new RuntimeException(ioe);
-        }
-    }
-
-    // FROM SAMPLE PROJECT - goes through each database asset and copies into device
-    private void copyAssetsToDirectory(String[] assets, File directory) throws IOException {
-        AssetManager assetManager = getAssets();
-
-        for (String asset : assets) {
-            String[] components = asset.split("/");
-            String copyPath = directory.toString() + "/" + components[components.length - 1];
-
-            char[] buffer = new char[1024];
-            int count;
-
-            File outFile = new File(copyPath);
-
-            if (!outFile.exists()) {
-                InputStreamReader in = new InputStreamReader(assetManager.open(asset));
-                FileWriter out = new FileWriter(outFile);
-
-                count = in.read(buffer);
-                while (count != -1) {
-                    out.write(buffer, 0, count);
-                    count = in.read(buffer);
-                }
-
-                out.close();
-                in.close();
-            }
-        }
+    // start the game activity once the display intent is complete
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Intent gameIntent = new Intent(HomeActivity.this, GameActivity.class);
+        HomeActivity.this.startActivity(gameIntent);
     }
 }

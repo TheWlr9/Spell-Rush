@@ -1,6 +1,6 @@
 package com.spellrush.objects.attacks;
 
-import com.spellrush.business.LevelManager;
+import com.spellrush.business.LevelManager.LevelManager;
 
 import junit.framework.TestCase;
 
@@ -22,7 +22,7 @@ public class AttackFactoryTests extends TestCase {
         AttackFactory.createFireAttack(true, 0);
         AttackObject result = LevelManager.getInstance().getGameBoard().getAttacksToAdd().remove();
         assert(result instanceof FireAttack);
-        assert(result.isPlayerAttack);
+        assert(result.isPlayerAttack());
         System.out.println(strPrintFinish + "test_createFireAttack_shouldCreatePlayerFireAttack");
     }
 
@@ -32,7 +32,7 @@ public class AttackFactoryTests extends TestCase {
         AttackFactory.createWaterAttack(true, 0);
         AttackObject result = LevelManager.getInstance().getGameBoard().getAttacksToAdd().remove();
         assert(result instanceof WaterAttack);
-        assert(result.isPlayerAttack);
+        assert(result.isPlayerAttack());
         System.out.println(strPrintFinish + "test_createWaterAttack_shouldCreatePlayerWaterAttack");
     }
 
@@ -42,7 +42,7 @@ public class AttackFactoryTests extends TestCase {
         AttackFactory.createGroundAttack(true, 0);
         AttackObject result = LevelManager.getInstance().getGameBoard().getAttacksToAdd().remove();
         assert(result instanceof GroundAttack);
-        assert(result.isPlayerAttack);
+        assert(result.isPlayerAttack());
         System.out.println(strPrintFinish + "test_createGroundAttack_shouldCreatePlayerGroundAttack");
     }
 
@@ -53,7 +53,7 @@ public class AttackFactoryTests extends TestCase {
         AttackFactory.createFireAttack(false, 0);
         AttackObject result = LevelManager.getInstance().getGameBoard().getAttacksToAdd().remove();
         assert(result instanceof FireAttack);
-        assert(!result.isPlayerAttack);
+        assert(!result.isPlayerAttack());
         System.out.println(strPrintFinish + "test_createFireAttack_shouldCreateEnemyFireAttack");
     }
 
@@ -63,7 +63,7 @@ public class AttackFactoryTests extends TestCase {
         AttackFactory.createWaterAttack(false, 0);
         AttackObject result = LevelManager.getInstance().getGameBoard().getAttacksToAdd().remove();
         assert(result instanceof WaterAttack);
-        assert(!result.isPlayerAttack);
+        assert(!result.isPlayerAttack());
         System.out.println(strPrintFinish + "test_createWaterAttack_shouldCreateEnemyWaterAttack");
     }
 
@@ -73,7 +73,7 @@ public class AttackFactoryTests extends TestCase {
         AttackFactory.createGroundAttack(false, 0);
         AttackObject result = LevelManager.getInstance().getGameBoard().getAttacksToAdd().remove();
         assert(result instanceof GroundAttack);
-        assert(!result.isPlayerAttack);
+        assert(!result.isPlayerAttack());
         System.out.println(strPrintFinish + "test_createGroundAttack_shouldCreateEnemyGroundAttack");
     }
 

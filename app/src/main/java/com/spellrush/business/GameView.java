@@ -1,18 +1,26 @@
 package com.spellrush.business;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.spellrush.business.LevelManager.LevelManager;
 import com.spellrush.objects.GameObject;
+import com.spellrush.objects.IGameObject;
+import com.spellrush.presentation.BackgroundImage;
+import com.spellrush.presentation.GameActivity;
+import com.spellrush.presentation.GameOverActivity;
 import com.spellrush.presentation.UI.FingerPathLayer;
 import com.spellrush.presentation.UI.GameHUD;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,10 +35,12 @@ import java.util.Queue;
  * Maintains all game objects within the view, and calls
  * their update and draw methods once per frame.
 *******************************************************/
-public class GameView extends SurfaceView implements SurfaceHolder.Callback
+public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGameObject
 {
 
     private static final int MAX_BULLETS = 100;
+    private static final int ONE_SECOND = 1000;
+    private static final int LEVEL_COMPLETE_DISPLAY_TIME = 3;
 
     // Follow Singleton design pattern
     private static GameView instance;
@@ -41,6 +51,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private GameThread thread;
     private FingerPathLayer fingerPathLayer;
     private ShapeRecognition drawingAI;
+    private boolean paused;
+
 
     // Temporary lists to avoid concurrent GameObject array access
     private static Queue<GameObject> objectsToDelete;
@@ -63,8 +75,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         init();
     }
 
+    // Unit testing / DI constructor
+    GameView(Context context, ArrayList<GameObject> objList, Queue<GameObject> addList, Queue<GameObject> delList, ShapeRecognition drawingAI) {
+        super(context);
+        gameObjects = objList;
+        objectsToAdd = addList;
+        objectsToDelete = delList;
+        this.drawingAI = drawingAI;
+        instance = this;
+    }
+
     // GameView Constructor. Create the initial Game Objects and the main game thread.
     private void init(){
+
         // Setup the View
         this.setupView();
 
@@ -77,15 +100,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         objectsToAdd = new LinkedList<>();
 
         instance = this;
+        paused = false;
     } // end init()
 
     public static GameView getInstance(){
         return instance;
     }
 
+    @TargetApi(Build.VERSION_CODES.ECLAIR)
     private void setupView(){
+        this.setZOrderOnTop(true);
         getHolder().addCallback(this); // This allows the view to process changes and events
         getHolder().setFormat(PixelFormat.TRANSPARENT);
+
         setZOrderMediaOverlay(true);
         setFocusable(true);
     }
@@ -99,6 +126,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         fingerPathLayer = new FingerPathLayer();
         drawingAI = new ShapeRecognition(fingerPathLayer);
 
+        newObjects.add(new BackgroundImage());
         newObjects.add(player);
         newObjects.add(fingerPathLayer);
         newObjects.add(levelManager);
@@ -128,14 +156,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void update(){
-        // Update each of the GameViewLayer objects.
-        for (GameObject object : gameObjects) {
-            object.update();
+        if(!paused) {
+            // Update each of the GameViewLayer objects.
+            for (GameObject object : gameObjects) {
+                object.update();
+            }
+            drawingAI.hasValidDrawnEvent();
+            deleteObjects();
+            addObjects();
         }
-        drawingAI.hasValidDrawnEvent();
-        deleteObjects();
-        addObjects();
-
     } // end update()
 
     // Delete all objects added to Object Deleting Queue in this Update Frame
@@ -148,15 +177,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private void addObjects(){
         while(!objectsToAdd.isEmpty()){
             GameObject newObj = objectsToAdd.remove();
-            gameObjects.add(newObj.drawDepth, newObj);
+            gameObjects.add(newObj);
         }
+        Collections.sort(gameObjects, Collections.reverseOrder()); // Set order based on depth
     }
 
     @Override
     public void draw(Canvas canvas){
+        canvas.setDensity(Bitmap.DENSITY_NONE);
         if(canvas != null) {
             super.draw(canvas);
-            // Draw each of the GameViewLayer objects.
+            // Draw each of the GameViewLayer objects.a
             for (GameObject object : gameObjects) {
                 object.draw(canvas);
             }
@@ -201,8 +232,37 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             e.printStackTrace();
         }
 
+    } // end surfaceDestroyed()
+
+    public void triggerNextLevel(int addScore) {
+        thread.setRunning(false);
+        try {
+            GameActivity.displayLevelComplete(this.getContext(), LEVEL_COMPLETE_DISPLAY_TIME);
+            Thread.sleep(LEVEL_COMPLETE_DISPLAY_TIME * ONE_SECOND);
+            GameActivity.displayStartLevel(this.getContext(), LEVEL_COMPLETE_DISPLAY_TIME);
+            Thread.sleep(LEVEL_COMPLETE_DISPLAY_TIME * ONE_SECOND);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // reset player health and and the current fingerpath
+        player.resetHP();
+        player.addScore(addScore);
+        fingerPathLayer.resetPath();
+
+        thread.setRunning(true);
+    }
+
+    public void triggerGameOver(){
+        thread.setRunning(false);
+        Intent gameOverIntent = new Intent(this.getContext(), GameOverActivity.class);
+        gameOverIntent.putExtra("score",player.getScore());
+        this.getContext().startActivity(gameOverIntent);
         player.reset();
         levelManager.reset();
-    } // end surfaceDestroyed()
+    }
+
+    public void setPaused(boolean val){
+        paused = val;
+    }
 
 }

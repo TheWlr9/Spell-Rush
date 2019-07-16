@@ -3,7 +3,6 @@ package com.spellrush.presentation.UI;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 
-import com.spellrush.business.LevelManager;
 import com.spellrush.business.PlayerController;
 import com.spellrush.objects.Enemy;
 import com.spellrush.objects.GameObject;
@@ -26,24 +25,24 @@ public class GameHUD extends GameObject {
         int deviceHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
 
         int barIndent = 50;
-        int barTopMargin = 100;
+        int barTopMargin = 130;
         int barHeight = 50;
         int barBorder = 15;
 
         hpUI = new HealthBar(barIndent,deviceHeight - barTopMargin,deviceWidth - 75,barHeight, barBorder, true);
-        score = new ScoreDisplay(deviceWidth - 475, deviceHeight - 130);
-        enemyHpUI = new HealthBar(barIndent,barTopMargin,deviceWidth - 75,barHeight, barBorder, false);
+        score = new ScoreDisplay(deviceWidth - 475, deviceHeight - (barTopMargin + 30));
+        enemyHpUI = new HealthBar(barIndent,barHeight,deviceWidth - 75,barHeight, barBorder, false);
     }
 
     @Override
     public void update(){
-        // Nothing to do yet.
+        score.updatescoreTxt();
     } // end update()
 
     @Override
     public void draw(Canvas canvas){
         PlayerController player = PlayerController.getInstance();
-        Enemy enemy = LevelManager.getInstance().getCurrentEnemy();
+        Enemy enemy = Enemy.getInstance();
 
         if(canvas != null) {
             score.draw(canvas);

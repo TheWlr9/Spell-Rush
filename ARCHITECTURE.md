@@ -13,17 +13,12 @@
 
 ![Architecture Diagram](architecture_diagram.png)
 
-| **Presentation** | **Business** | **Persistence** |  **Audio**   |
-| ---------------- | ------------ | --------------- | ------------ |
-|                  | LevelManager |                 | AudioManager |
-|                  |              |                 |  SoundEvent  |
-|                  |              |                 |              |
-
-| **Application** | **Objects**                              |
-| --------------- | ---------------------------------------- |
-|                 | BasicEnemy (extends enemy)               |
-|                 | HealthObject (extended by player, enemy) |
-|                 | IDrawnObject (imp. by gameobject)        |
 
 
-![Architecture Diagram](architecture_diagram.png)
+## ITERATION 3 ADDITIONS
+
+## Presentation Layer
+
+* BackgroundImage (Presentation)
+* LockButtonReceiver (Presentation)
+* AttackCollisionUtility (Objects/Attacks)

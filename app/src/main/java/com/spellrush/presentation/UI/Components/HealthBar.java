@@ -16,6 +16,8 @@ public class HealthBar {
     private int hpColor;
     private boolean showText;
 
+    private final String healthTxt = "HEALTH";
+
     public HealthBar(int xpos, int ypos, int width, int height, int borderWidth, boolean forPlayer) {
         x = xpos;
         y = ypos;
@@ -52,7 +54,7 @@ public class HealthBar {
 
         if(showText) {
             myPaint.setColor(Color.WHITE);
-            canvas.drawText("HEALTH", x, y - 32, myPaint);
+            canvas.drawText(healthTxt, x, y - 32, myPaint);
         }
     }
 }

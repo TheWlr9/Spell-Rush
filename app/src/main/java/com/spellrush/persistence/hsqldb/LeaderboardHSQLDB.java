@@ -2,6 +2,7 @@ package com.spellrush.persistence.hsqldb;
 
 import com.spellrush.application.ScoreEntry;
 import com.spellrush.persistence.ILeaderboardPersistence;
+import com.spellrush.services.JavaTestUtility;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,7 +21,9 @@ public class LeaderboardHSQLDB implements ILeaderboardPersistence {
             this.databaseConnection = DriverManager.getConnection("jdbc:hsqldb:file:" + path, "SA", "");
         }
         catch(SQLException e) {
-            throw new RuntimeException(e);
+            if(!JavaTestUtility.isRunningEspressoTest()) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

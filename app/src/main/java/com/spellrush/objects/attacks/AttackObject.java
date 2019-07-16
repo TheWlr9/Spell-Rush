@@ -2,9 +2,9 @@ package com.spellrush.objects.attacks;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 
-import com.spellrush.business.GameView;
+import com.spellrush.presentation.ISpriteDrawer;
+import com.spellrush.presentation.SpriteDrawer;
 
 /**
  * Back end to track information about individual attacks.
@@ -13,48 +13,45 @@ import com.spellrush.business.GameView;
 
 public abstract class AttackObject {
 
-    /* Used to tell the addAttack what type of attack it should create*/
-    public enum AttackType{
-        Fire, Water, Ground
-    }
-
     protected final int ATTACK_WIDTH = 128;
     protected final int ATTACK_HEIGHT = 128;
 
-    //public so accessible, final so cannot be changed.
-    final boolean isPlayerAttack; //the "allegiance" of this attack.
-    final int lane; //the lane this attack belongs to
-    private final int laneEnd;
+    protected AttackInformation attackInfo;
 
+    //public so accessible, final so cannot be changed.
     protected int yPos; //this attack's position within its lane.
     protected int xPos; // X position on the screen
-    private int speed;
-    private int damage;
     private boolean destroyed = false;
-    private AttackType type;
+
+    /**
+     * Kept so current tests aren't broken.
+     */
+    AttackObject(boolean isPlayerAttack, int lane, int speed, int damage, int y){
+        this.attackInfo = new AttackInformation(isPlayerAttack, lane, speed, damage);
+        this.yPos = y;
+    }
 
     /**
      * Constructor
      *
-     * @param isPlayerAttack whether this is a player attack
-     * @param lane which lane this belongs to
-     * @param speed what speed this attack will travel at
-     * @param laneStart Y value of the bullet's spawning position
-     * @param laneEnd Y value of the "goal zone"
-     * @param damage How much is subtracted from the enemy/player HP on goal
+     * @param attackInfo information about the attack.
+     * @param y Starting Y Position of the object on the screen
      */
-    protected AttackObject(boolean isPlayerAttack, int lane, int speed, int laneStart, int laneEnd, int damage, AttackType type) {
-        this.isPlayerAttack = isPlayerAttack;
-        if(isPlayerAttack){
-            speed = -speed; // Set direction of bullet to upwards
-        }
-        this.lane = lane;
-        this.speed = speed;
-        this.yPos = laneStart;
-        this.laneEnd = laneEnd;
-        this.damage = damage;
-        this.xPos = calculateCanvasXPosition(lane);
-        this.type = type;
+    protected AttackObject(AttackInformation attackInfo, int y) {
+        this.attackInfo = attackInfo;
+        this.yPos = y;
+    }
+
+    boolean reachedEnd(GameBoard board){
+        return isPlayerAttack() ? yPos < board.getLaneTopPosition() : yPos > board.getLaneBottomPosition();
+    }
+
+    boolean hasSameAllegiance(AttackObject attackToCheck){
+        return isPlayerAttack() == attackToCheck.isPlayerAttack();
+    }
+
+    boolean isPlayerAttack(){
+        return attackInfo.isPlayerAttack;
     }
 
     /**
@@ -66,18 +63,14 @@ public abstract class AttackObject {
      * @return the current speed of this attack
      */
     int getSpeed(){
-        return speed;
+        return attackInfo.speed;
     }
 
     int getDamage(){
-        return damage;
+        return attackInfo.damage;
     }
 
-    AttackType getType() { return type; }
-
-    int getLaneEnd(){
-        return laneEnd;
-    }
+    int getLane() { return attackInfo.lane; }
 
     /**
      * @return whether this attack has collided with another attack
@@ -94,31 +87,17 @@ public abstract class AttackObject {
      * Update attack position and location, destroy if we have gone past the end of the lane.
      */
     private void updatePosition(){
-        yPos += speed;
-    }
-
-
-    /**
-     * This will tell us where to draw in the X-axis based on the width of the canvas and the lane
-     * of the attack.
-     *
-     * @param lane
-     * @return
-     */
-    private int calculateCanvasXPosition(int lane){
-        // TODO: dummy value for now, update this if we're doing lanes.
-        if(isPlayerAttack)
-            return 600;
-        else
-            return 620;
+        yPos += attackInfo.speed;
     }
 
     public void update() {
-        updatePosition();
+        if(!this.wasDestroyed()) {
+            updatePosition();
+        }
     }
 
+    // The draw method called by the GameBoard / Attack object manager
     public abstract void draw(Canvas canvas);
-
 
     /**
      * Draws an attack object, after being told what to draw.
@@ -129,9 +108,9 @@ public abstract class AttackObject {
      * @param enemySprite sprite to draw if enemy
      */
     protected void draw(Canvas canvas, int playerSprite, int enemySprite) {
-        Resources r = GameView.getInstance().getContext().getResources();
-        Drawable sprite = (isPlayerAttack) ? r.getDrawable(playerSprite) : r.getDrawable(enemySprite);
-        sprite.setBounds(xPos, yPos, xPos + ATTACK_WIDTH, yPos + ATTACK_HEIGHT);
-        sprite.draw(canvas);
+        ISpriteDrawer drawer = SpriteDrawer.getInstance();
+        int xPos = (Resources.getSystem().getDisplayMetrics().widthPixels  / 2) - (ATTACK_WIDTH / 2);
+        int spriteIndex = (attackInfo.isPlayerAttack) ? playerSprite : enemySprite;
+        drawer.drawSprite(canvas, spriteIndex, xPos, yPos, ATTACK_WIDTH, ATTACK_HEIGHT);
     }
 }

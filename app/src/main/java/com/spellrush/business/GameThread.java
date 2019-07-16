@@ -1,10 +1,9 @@
 package com.spellrush.business;
 
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
-import static android.content.ContentValues.TAG;
+import com.spellrush.objects.IGameObject;
 
 /*******************************************
  * GameThread
@@ -19,7 +18,7 @@ public class GameThread extends Thread {
     public static final int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
 
     private SurfaceHolder surfaceHolder; // Holds the GameView SurfaceView object
-    private GameView gameView;
+    private IGameObject gameView;
     private boolean isRunning;
 
     public static Canvas canvas;
@@ -30,7 +29,7 @@ public class GameThread extends Thread {
      * @param surfaceHolder Holds the GameView SurfaceView object
      * @param gameView
      */
-    public GameThread(SurfaceHolder surfaceHolder, GameView gameView){
+    public GameThread(SurfaceHolder surfaceHolder, IGameObject gameView){
         super();
         this.surfaceHolder = surfaceHolder;
         this.gameView = gameView;
@@ -44,12 +43,17 @@ public class GameThread extends Thread {
     @Override
     public void run(){
         long timeAtFrameStart;
-
+        try{
+            this.setPriority(MAX_PRIORITY);
+        } catch(SecurityException e){
+            System.err.println("Security Exception: " + e.getMessage());
+        }
         //Perform all game updates, then sleep until next frame
         while (isRunning){
-            timeAtFrameStart = System.nanoTime();
-            this.runGameFrame();
-            sleepUntilNextFrame(timeAtFrameStart);
+
+                timeAtFrameStart = System.nanoTime();
+                this.runGameFrame();
+                sleepUntilNextFrame(timeAtFrameStart);
 
         }
     } // end run()
@@ -75,17 +79,16 @@ public class GameThread extends Thread {
     } // end sleepUntilNextFrame()
 
     // runGameFrame - Called once per frame. Update all game objects, and draw the canvas.
-    private void runGameFrame(){
+    void runGameFrame(){
         canvas = null;
         try{
             // Lock the canvas and surface holder to this Thread to ensure concurrency. (See COMP 3430)
             canvas = surfaceHolder.lockCanvas();
-
             this.updateGame();
             this.displayGame(canvas);
 
         } catch(Exception e) {
-            Log.e(TAG, "run: ",e);
+            System.err.println("ERROR: " + e.toString());
         }
         finally {
             if (canvas != null){
@@ -93,8 +96,8 @@ public class GameThread extends Thread {
                     // Unlock (free) the canvas after this thread is done with them.
                     surfaceHolder.unlockCanvasAndPost(canvas);
                 } catch(Exception e) {
-                    Log.e("ERROR", "run: ",e);
-                    e.printStackTrace();
+                  System.err.println("ERROR: " + e.toString());
+                  e.printStackTrace();
                 }
             }
         }
@@ -114,5 +117,8 @@ public class GameThread extends Thread {
     public void setRunning(boolean isRunning){
         this.isRunning = isRunning;
     }
+
+    // Accessor method for isRunning - Package scoped for use in tests
+    boolean getRunning() {return isRunning;}
 
 } // end GameThread class

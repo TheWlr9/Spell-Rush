@@ -1,11 +1,8 @@
 package com.spellrush.objects.attacks;
 
-import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 
 import com.spellrush.R;
-import com.spellrush.business.GameView;
 
 public class GroundAttack extends AttackObject {
 
@@ -14,19 +11,15 @@ public class GroundAttack extends AttackObject {
      *
      * package scope only! - only GameBoard may add attacks to the screen
      *
-     * @param isPlayerAttack whether this is a player attack
-     * @param lane which lane this belongs to
-     * @param speed what speed this attack will travel at
-     * @param laneStart Y value of the bullet's spawning position
-     * @param laneEnd Y value of the "goal zone"
-     * @param damage How much is subtracted from the enemy/player HP on goal
+     * @param attackInfo information about this attack
+     * @param y Y Position to create the attack at
      */
-    GroundAttack(boolean isPlayerAttack, int lane, int speed, int laneStart, int laneEnd, int damage) {
-        super(isPlayerAttack, lane, speed, laneStart, laneEnd, damage, AttackType.Ground);
+    GroundAttack(AttackInformation attackInfo, int y) {
+        super(attackInfo, y);
     }
 
     @Override
     public void draw(Canvas canvas) {
-        super.draw(canvas, R.drawable.ground_attack,R.drawable.ground_attack);
+        super.draw(canvas, R.drawable.ground_attack,R.drawable.ground_attack_enemy);
     }
 }
