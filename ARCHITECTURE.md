@@ -22,3 +22,4 @@
 * BackgroundImage (Presentation)
 * LockButtonReceiver (Presentation)
 * AttackCollisionUtility (Objects/Attacks)
+* HardEnemyAI (Objects)
