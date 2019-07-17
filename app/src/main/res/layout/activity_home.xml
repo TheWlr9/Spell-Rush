@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
@@ -115,6 +114,16 @@
             android:ems="10"
             android:textAlignment="center"
             android:text="@string/Trevor_Lentz" />
+
+        <TextView
+            android:labelFor="@id/Avgvst"
+            android:id="@+id/Avgvst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textAlignment="center"
+            android:text="@string/Avgvst" />
     </LinearLayout>
 
 

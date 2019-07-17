@@ -1,5 +1,8 @@
 package com.spellrush.objects.attacks;
 
+import com.spellrush.audio.AudioManager;
+import com.spellrush.audio.AudioManagerError;
+import com.spellrush.audio.SoundEvent;
 import com.spellrush.business.PlayerController;
 
 public class AttackCollisionUtility {
@@ -33,6 +36,13 @@ public class AttackCollisionUtility {
         // "weaker" type, unless they have the same type (destroy both)
         if (!attackA.wasDestroyed() && !attackB.wasDestroyed()
                 && !attackA.hasSameAllegiance(attackB)) {
+            try{
+                AudioManager.play(SoundEvent.SPELLS_COLLIDED, true);
+            }
+            catch(AudioManagerError ame){
+                System.err.println("Error playing SPELLS_COLLIDED; non-linked file");
+            }
+
             if(attackA.getClass() == attackB.getClass()){
                 attackA.setDestroyed(true);
                 attackB.setDestroyed(true);
