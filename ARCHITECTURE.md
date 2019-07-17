@@ -17,6 +17,15 @@
 
 ## ITERATION 3 ADDITIONS
 
+## Links
+
+* All activity classes (presentation) call AudioManager (audio) heavily, except for the Leaderboard activity (presentation)
+and the StartingNewLevel activity (presentation)
+* GameView (business) calls AudioManager.play (audio)
+* GameBoard (objects/attacks) calls AudioManager.play (audio)
+* AttackCollisionUtility (objects/attacks) calls AudioManager.play (audio)
+* AttackFactory (objects/attacks) calls AudioManager.play (audio)
+
 ## Presentation Layer
 
 * BackgroundImage (Presentation)
