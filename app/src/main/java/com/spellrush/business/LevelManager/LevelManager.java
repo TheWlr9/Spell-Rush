@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 
 import com.spellrush.business.GameView;
 import com.spellrush.business.IEnemyAI;
+import com.spellrush.business.PlayerController;
 import com.spellrush.objects.Enemy;
 import com.spellrush.objects.GameObject;
 import com.spellrush.objects.NullEnemyAI;
@@ -14,6 +15,8 @@ import com.spellrush.objects.attacks.GameBoard;
 public class LevelManager extends GameObject {
     // Follow Singleton Design Pattern
     private static final LevelManager instance = new LevelManager();
+
+    private static final int LVL_COMPLETE_BONUS = 1000;
 
     public static final int ENEMY_DEPTH = 50;
     public static final int MAX_BULLETS = 10; // Max bullets at a time for each player
@@ -59,6 +62,9 @@ public class LevelManager extends GameObject {
         updateEnemy();
 
         if(currEnemy.getAI() instanceof NullEnemyAI) {
+            //The level has been beaten
+            PlayerController.getInstance().addScore(LVL_COMPLETE_BONUS);
+
             initNextLevel();
         }
     }

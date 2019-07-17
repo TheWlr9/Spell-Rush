@@ -19,6 +19,7 @@
 
 ## Links
 
+* LevelManager (business/LevelManager) needs a reference to PlayerController (business) to increment the score
 * All activity classes (presentation) call AudioManager (audio) heavily, except for the Leaderboard activity (presentation)
 and the StartingNewLevel activity (presentation)
 * GameView (business) calls AudioManager.play (audio)
