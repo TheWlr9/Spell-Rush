@@ -64,15 +64,15 @@ public class GameBoard extends GameObject{
     }
 
     // return read-only attack list for testing and otherwise
-    ArrayList<AttackObject> getAttacks() {
+    public ArrayList<AttackObject> getAttacks() {
         return attacks;
     }
     // return read-only attack list for testing and otherwise
-    Queue<AttackObject> getAttacksToAdd() {
+    public Queue<AttackObject> getAttacksToAdd() {
         return attacksToAdd;
     }
     // return read-only attack list for testing and otherwise
-    Queue<AttackObject> getAttacksToDelete() {
+    public Queue<AttackObject> getAttacksToDelete() {
         return attacksToDelete;
     }
 
