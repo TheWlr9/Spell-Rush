@@ -126,8 +126,7 @@ public abstract class AudioManager {
         if(!initialized){
             throw new AudioManagerError(NOT_INIT_ERROR_MSG + "pause");
         }
-
-        if(soundMap.get(type).isPlaying()) {
+        if(soundMap.get(type) != null && soundMap.get(type).isPlaying()) {
             soundMap.get(type).pause();
         }
     }
@@ -136,8 +135,9 @@ public abstract class AudioManager {
         if(!initialized) {
             throw new AudioManagerError(NOT_INIT_ERROR_MSG + "stop");
         }
-
-        soundMap.get(type).stop();
+        if(soundMap.get(type) != null) {
+            soundMap.get(type).stop();
+        }
     }
 
     public static void setVolume(SoundEvent type, float newVolume) throws AudioManagerError {
