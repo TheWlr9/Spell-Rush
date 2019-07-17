@@ -47,6 +47,9 @@
         <activity android:name=".presentation.UI.Components.LevelStartDisplay"
             android:theme="@style/AppTheme.LevelDisplayMessage">
         </activity>
-    </application>
+        <activity android:name=".presentation.TutorialActivity"
+            android:label="@string/Tutorial"
+            android:screenOrientation="portrait"/>
+</application>
     <supports-screens android:anyDensity="true" />
 </manifest>
