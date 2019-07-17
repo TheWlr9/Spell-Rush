@@ -31,7 +31,7 @@ public class HardEnemyAI implements IEnemyAI {
             }
             else{
                 newWait();
-                multiShot= (new Random()).nextInt(MAX_SHOTS)+MIN_SHOTS;
+                multiShot= (new Random()).nextInt(MAX_SHOTS-1)+MIN_SHOTS;
             }
 
             doAttack();
@@ -41,7 +41,7 @@ public class HardEnemyAI implements IEnemyAI {
 
     @Override
     public void doAttack() {
-        int chooseAttack= (new Random()).nextInt(3);
+        int chooseAttack= (new Random()).nextInt(attacks.length);
         AttackFactory.createAttack(attacks[chooseAttack],false,1);
     }
 

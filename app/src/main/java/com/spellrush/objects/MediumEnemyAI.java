@@ -40,7 +40,7 @@ public class MediumEnemyAI implements IEnemyAI {
 
     @Override
     public void doAttack() {
-        int chooseAttack= (new Random()).nextInt(3);
+        int chooseAttack= (new Random()).nextInt(attacks.length);
         AttackFactory.createAttack(attacks[chooseAttack],false,1);
     }
 
