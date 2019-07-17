@@ -4,6 +4,7 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 
 import com.spellrush.presentation.GameOverTest;
+import com.spellrush.presentation.LeaderboardActivityTest;
 import com.spellrush.presentation.MainMenuTest;
 
 import org.junit.runner.RunWith;
@@ -11,6 +12,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        LeaderboardActivityTest.class,
         MainMenuTest.class,
         GameOverTest.class,
 })
