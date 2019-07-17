@@ -1,9 +1,7 @@
 package com.spellrush.presentation;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +38,7 @@ public class HomeActivity extends Activity {
     @Override
     protected void onResume(){
         try {
-            AudioManager.play(SoundEvent.TITLE_MUSIC);
+            AudioManager.play(SoundEvent.TITLE_MUSIC, false);
         }
         catch(AudioManagerError ame){
             System.err.println(ame);

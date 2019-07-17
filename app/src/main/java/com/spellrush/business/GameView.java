@@ -13,6 +13,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.spellrush.audio.AudioManager;
+import com.spellrush.audio.AudioManagerError;
+import com.spellrush.audio.SoundEvent;
 import com.spellrush.business.LevelManager.LevelManager;
 import com.spellrush.objects.GameObject;
 import com.spellrush.objects.IGameObject;
@@ -250,6 +253,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
         fingerPathLayer.resetPath();
 
         thread.setRunning(true);
+
+        try{
+            AudioManager.play(SoundEvent.BATTLE_MUSIC, false);
+        }
+        catch(AudioManagerError ame){
+            System.err.println("Error, BATTLE_MUSIC unlinked from file");
+        }
     }
 
     public void triggerGameOver(){

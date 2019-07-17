@@ -2,6 +2,9 @@ package com.spellrush.objects.attacks;
 
 import android.graphics.Canvas;
 
+import com.spellrush.audio.AudioManager;
+import com.spellrush.audio.AudioManagerError;
+import com.spellrush.audio.SoundEvent;
 import com.spellrush.business.PlayerController;
 import com.spellrush.objects.Enemy;
 import com.spellrush.objects.GameObject;
@@ -65,15 +68,15 @@ public class GameBoard extends GameObject{
     }
 
     // return read-only attack list for testing and otherwise
-    ArrayList<AttackObject> getAttacks() {
+    public ArrayList<AttackObject> getAttacks() {
         return attacks;
     }
     // return read-only attack list for testing and otherwise
-    Queue<AttackObject> getAttacksToAdd() {
+    public Queue<AttackObject> getAttacksToAdd() {
         return attacksToAdd;
     }
     // return read-only attack list for testing and otherwise
-    Queue<AttackObject> getAttacksToDelete() {
+    public Queue<AttackObject> getAttacksToDelete() {
         return attacksToDelete;
     }
 
@@ -139,10 +142,24 @@ public class GameBoard extends GameObject{
                     enemy.getHit(attack.getDamage());
 
                     PlayerController.getInstance().addScore(HIT_POINTS);
+                    
+                    try{
+                        AudioManager.play(SoundEvent.ENEMY_DAMAGED, true);
+                    }
+                    catch(AudioManagerError ame){
+                        System.err.println("Error playing ENEMY_DAMAGED; non-linked file");
+                    }
                 }
             }
             else{
                 PlayerController.getInstance().getHit(attack.getDamage());
+
+                try{
+                    AudioManager.play(SoundEvent.PLAYER_DAMAGED, true);
+                }
+                catch(AudioManagerError ame){
+                    System.err.println("Error playing PLAYER_DAMAGED; non-linked file");
+                }
             }
             attack.setDestroyed(true);
         }

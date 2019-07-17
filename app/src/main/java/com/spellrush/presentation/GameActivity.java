@@ -15,7 +15,16 @@ import com.spellrush.presentation.UI.Components.LevelCompleteDisplay;
 import com.spellrush.presentation.UI.Components.LevelStartDisplay;
 
 public class GameActivity extends Activity {
-    final static int[] GAME_SOUND_RES_IDS = {R.raw.act05_stage02_loop};
+
+    //Must be updated and kept in sync with below array(s)
+    final static int NUM_LOOPING_SOUNDS = 1;
+    //These two arrays must be parallel
+    //Looping sounds must be ordered before non-looping sounds
+    final static SoundEvent[] GAME_SOUND_SOUNDEVENTS = {SoundEvent.BATTLE_MUSIC, SoundEvent.SPAWN_FIRE,
+    SoundEvent.SPAWN_WATER, SoundEvent.SPAWN_GRASS, SoundEvent.PLAYER_DAMAGED, SoundEvent.ENEMY_DAMAGED,
+    SoundEvent.SPELLS_COLLIDED};
+    final static int[] GAME_SOUND_RES_IDS = {R.raw.act05_stage02_loop, R.raw.fire_attack,
+    R.raw.water_attack, R.raw.ground_attack, R.raw.hit_player, R.raw.hit_enemy, R.raw.spell_collision};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +51,13 @@ public class GameActivity extends Activity {
 
     // display the level complete message
     public static void displayLevelComplete(Context context, int displayTime) {
+        try{
+            AudioManager.stop(SoundEvent.BATTLE_MUSIC);
+        }
+        catch(AudioManagerError ame){
+            System.err.println("Stopping non-linked BATTLE_MUSIC, proceeding as normal.");
+        }
+
         Intent levelCompleteDisplayIntent = new Intent(context, LevelCompleteDisplay.class);
         levelCompleteDisplayIntent.putExtra("displayTime", displayTime);
         context.startActivity(levelCompleteDisplayIntent);
@@ -52,7 +68,7 @@ public class GameActivity extends Activity {
         GameView.getInstance().setPaused(false);
 
         try {
-            AudioManager.play(SoundEvent.BATTLE_MUSIC);
+            AudioManager.play(SoundEvent.BATTLE_MUSIC, false);
         }
         catch (AudioManagerError ame){
             System.err.println(ame);
@@ -80,8 +96,14 @@ public class GameActivity extends Activity {
     @Override
     protected void onDestroy() {
         try {
-            AudioManager.stop(SoundEvent.BATTLE_MUSIC);
-            AudioManager.release(SoundEvent.BATTLE_MUSIC);
+            //Stop all
+            for(int i = 0; i < GAME_SOUND_SOUNDEVENTS.length; i++) {
+                AudioManager.stop(GAME_SOUND_SOUNDEVENTS[i]);
+            }
+            //Release all
+            for (int i = 0; i < GAME_SOUND_SOUNDEVENTS.length; i++){
+                AudioManager.release(GAME_SOUND_SOUNDEVENTS[i]);
+            }
         }
         catch(AudioManagerError ame){
             System.err.println(ame);
@@ -92,7 +114,16 @@ public class GameActivity extends Activity {
 
     private void loadSoundsIntoAudioManager(){
         try {
-            AudioManager.addSoundToLib(SoundEvent.BATTLE_MUSIC, GAME_SOUND_RES_IDS[0], true);
+            int i = 0;
+
+            //For looping sounds
+            for (; i < NUM_LOOPING_SOUNDS; i++){
+                AudioManager.addSoundToLib(GAME_SOUND_SOUNDEVENTS[0], GAME_SOUND_RES_IDS[i], true);
+            }
+            //For non-looping sounds
+            for(; i < GAME_SOUND_SOUNDEVENTS.length; i++){
+                AudioManager.addSoundToLib(GAME_SOUND_SOUNDEVENTS[i], GAME_SOUND_RES_IDS[i], false);
+            }
         }
         catch (AudioManagerError ame){
             System.err.println(ame);
