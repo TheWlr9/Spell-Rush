@@ -46,6 +46,13 @@ public class MainMenuTest {
     }
 
     @Test
+    public void settingsButtonTest() {
+        onView(ViewMatchers.withId(R.id.settingsBtn)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.settingsBtn)).perform(click());
+        intended(hasComponent(SettingsActivity.class.getName()));
+    }
+
+    @Test
     public void leaderboardButtonTest() {
         onView(ViewMatchers.withId(R.id.leaderBoardBtn)).check(matches(isDisplayed()));
         onView(ViewMatchers.withId(R.id.leaderBoardBtn)).perform(click());

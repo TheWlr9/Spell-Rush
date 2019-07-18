@@ -17,6 +17,7 @@ import java.util.EnumMap;
  */
 public abstract class AudioManager {
     final public static float MAX_VOLUME = 30.0f;
+    final public static float DEFAULT_VOLUME = 15.0f;
     final private static String NOT_INIT_ERROR_MSG = "The audio manager was not yet initialized " +
             "before calling: ";
     public static float sfxVolume;
@@ -27,7 +28,7 @@ public abstract class AudioManager {
     public static void init(Context context){
         if(!initialized) {
             soundMap = new EnumMap<SoundEvent, MediaPlayer>(SoundEvent.class);
-            sfxVolume = 15.0f;
+            sfxVolume = DEFAULT_VOLUME;
             AudioManager.context = context;
             initialized = true;
         }
@@ -153,11 +154,12 @@ public abstract class AudioManager {
         if(!initialized) {
             throw new AudioManagerError(NOT_INIT_ERROR_MSG + "stop");
         }
+        if(soundMap.get(type) != null) {
+            soundMap.get(type).seekTo(0);
 
-        soundMap.get(type).seekTo(0);
-
-        if(soundMap.get(type).isPlaying()) {
-            soundMap.get(type).pause();
+            if (soundMap.get(type).isPlaying()) {
+                soundMap.get(type).pause();
+            }
         }
     }
 
