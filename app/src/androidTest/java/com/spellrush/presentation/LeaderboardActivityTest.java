@@ -43,7 +43,7 @@ public class LeaderboardActivityTest {
                                         childAtPosition(
                                                 withId(android.R.id.content),
                                                 0)),
-                                3),
+                                4),
                         isDisplayed()));
         button.check(matches(isDisplayed()));
 
@@ -54,7 +54,7 @@ public class LeaderboardActivityTest {
                                         childAtPosition(
                                                 withId(android.R.id.content),
                                                 0)),
-                                3),
+                                4),
                         isDisplayed()));
         button2.perform(click());
 
