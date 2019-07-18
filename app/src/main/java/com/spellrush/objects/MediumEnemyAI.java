@@ -9,6 +9,7 @@ public class MediumEnemyAI implements IEnemyAI {
 
     final int MAX_WAIT=120; // the most amount of frames between attacks
     final int MIN_WAIT=30; // the smallest amount of frames...
+    public final int MULTI_SHOT_WAIT = 10;
     private int frameCount=0;
     private int wait=30; //default wait between attacks in frames
     private int multiShot = 1;
@@ -25,7 +26,7 @@ public class MediumEnemyAI implements IEnemyAI {
         frameCount+=1;
         if(frameCount>=wait){
             if(multiShot>1){
-                wait = 10;
+                wait = MULTI_SHOT_WAIT;
                 multiShot-=1;
             }
             else{

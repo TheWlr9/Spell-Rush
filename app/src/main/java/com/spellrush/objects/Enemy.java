@@ -16,7 +16,7 @@ public class Enemy extends HealthObject {
     public static final int SPRITE_WIDTH = 360;
     public static final int SPRITE_HEIGHT = 328;
 
-    private static final int MAX_HP = 100;
+    private static final int MAX_HP = 30;
     private static final int ANIMATION_SPEED = GameThread.FRAMES_PER_SECOND / 2;
 
     protected static boolean alive;
