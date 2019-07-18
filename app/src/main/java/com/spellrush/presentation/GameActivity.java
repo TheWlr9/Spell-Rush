@@ -123,6 +123,7 @@ public class GameActivity extends Activity {
             //For non-looping sounds
             for(; i < GAME_SOUND_SOUNDEVENTS.length; i++){
                 AudioManager.addSoundToLib(GAME_SOUND_SOUNDEVENTS[i], GAME_SOUND_RES_IDS[i], false);
+                AudioManager.setVolume(GAME_SOUND_SOUNDEVENTS[i], AudioManager.sfxVolume);
             }
         }
         catch (AudioManagerError ame){
