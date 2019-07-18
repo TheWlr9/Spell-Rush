@@ -41,6 +41,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.spellrush.presentation.GameOverActivity" />
         </activity>
+        <activity
+            android:name=".presentation.SettingsActivity"
+            android:label="@string/Settings"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.spellrush.presentation.GameOverActivity" />
+        </activity>
         <activity android:name=".presentation.UI.Components.LevelCompleteDisplay"
             android:theme="@style/AppTheme.LevelDisplayMessage">
         </activity>

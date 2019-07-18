@@ -15,7 +15,7 @@ public class PlayerController extends HealthObject {
     // Follow Singleton design pattern
     private static final PlayerController instance = new PlayerController();
 
-    public static final int MAX_HP = 100;
+    public static final int MAX_HP = 30;
     private int score;
 
     private PlayerController() {

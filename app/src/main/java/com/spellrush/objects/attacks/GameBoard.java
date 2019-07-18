@@ -2,6 +2,9 @@ package com.spellrush.objects.attacks;
 
 import android.graphics.Canvas;
 
+import com.spellrush.audio.AudioManager;
+import com.spellrush.audio.AudioManagerError;
+import com.spellrush.audio.SoundEvent;
 import com.spellrush.business.PlayerController;
 import com.spellrush.objects.Enemy;
 import com.spellrush.objects.GameObject;
@@ -25,6 +28,7 @@ import java.util.Queue;
 public class GameBoard extends GameObject{
 
     static final int BULLET_DEPTH = -100;
+    static final int HIT_POINTS = 100;
 
     //game board "rules"
     private ArrayList<AttackObject> attacks; //a list of all attacks on the board
@@ -65,15 +69,15 @@ public class GameBoard extends GameObject{
     }
 
     // return read-only attack list for testing and otherwise
-    ArrayList<AttackObject> getAttacks() {
+    public ArrayList<AttackObject> getAttacks() {
         return attacks;
     }
     // return read-only attack list for testing and otherwise
-    Queue<AttackObject> getAttacksToAdd() {
+    public Queue<AttackObject> getAttacksToAdd() {
         return attacksToAdd;
     }
     // return read-only attack list for testing and otherwise
-    Queue<AttackObject> getAttacksToDelete() {
+    public Queue<AttackObject> getAttacksToDelete() {
         return attacksToDelete;
     }
 
@@ -143,10 +147,26 @@ public class GameBoard extends GameObject{
                 Enemy enemy = Enemy.getInstance();
                 if(enemy != null){
                     enemy.getHit(attack.getDamage());
+
+                    PlayerController.getInstance().addScore(HIT_POINTS);
+                    
+                    try{
+                        AudioManager.play(SoundEvent.ENEMY_DAMAGED, true);
+                    }
+                    catch(AudioManagerError ame){
+                        System.err.println("Error playing ENEMY_DAMAGED; non-linked file");
+                    }
                 }
             }
             else{
                 PlayerController.getInstance().getHit(attack.getDamage());
+
+                try{
+                    AudioManager.play(SoundEvent.PLAYER_DAMAGED, true);
+                }
+                catch(AudioManagerError ame){
+                    System.err.println("Error playing PLAYER_DAMAGED; non-linked file");
+                }
             }
             attack.setDestroyed(true);
         }

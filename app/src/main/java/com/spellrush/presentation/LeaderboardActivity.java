@@ -11,6 +11,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.spellrush.persistence.ILeaderboardPersistence;
 import com.spellrush.services.Services;
 import com.spellrush.business.LeaderboardController;
 import com.spellrush.application.ScoreEntry;
@@ -19,7 +20,6 @@ import java.util.List;
 import com.spellrush.R;
 
 public class LeaderboardActivity extends Activity {
-    private final int MAX_NUM_OF_ROWS = 10;
     private LeaderboardController leaderboardController;
     private List<ScoreEntry> scoreEntries;
 
@@ -41,7 +41,8 @@ public class LeaderboardActivity extends Activity {
             TableRow currRow;
             TableLayout scoresTable = (TableLayout)findViewById(R.id.leaderboard_table);
 
-            int maxRows = (scoreEntries.size() < MAX_NUM_OF_ROWS) ? scoreEntries.size() : MAX_NUM_OF_ROWS;
+            int maxRows = (scoreEntries.size() <  ILeaderboardPersistence.MAX_ROWS)
+                    ? scoreEntries.size() :  ILeaderboardPersistence.MAX_ROWS;
 
             for(int i = 0; i < maxRows; i++){
                 currScoreEntry = scoreEntries.get(i);

@@ -1,44 +1,17 @@
-# What went well
+# Our Retrospective Discussion
 
-* Got alotta shit done (board almost totally done — only 2 issues carried over, way more hours spent in velocity diagram)
-* Communication on slack
-* Meetings well attended, structured, got things done
-* Scoping Down
-* Testing was better
-* Getting things done earlier (Starting earlier)
+## What went well
 
+This previous iteration, we got a lot of issues done, which was a great improvement over the last iteration. We only had two issues carried over into the next iteration and spent way more hours total on the project. Part of this was how we started working on the iteration earlier, rather than the week before it was due. Our communication on slack has also continued to be open and sufficient. Our team meetings were very well attended, very structured, and productive. We found that one of the best things we did this past iteration was limiting our scope. Our amount of testing had also improved greatly.
 
+## Part of the project in the last iteration that's not been successful
 
-## Part of project in last iteration that's not been succesfull
+One problem we faced was having several issues that were 'blocked' by other issues not being completed yet. Likewise, some issues would sit waiting for a review, and so nothing would be getting done at certain times. To improve this, we discussed checking the gitlab and slack more frequently, and suggested more communication when waiting for a review. We also discussed planning our user stories in a way that they wouldn't block each other. To evaluate this, we will see that no issues have ever been assigned the `Blocked` tag in gitlab, and the time from an issue being assigned `In Progress` to being closed is always less than two days.
 
-* Blocking (empty backlog for things in review / blocked — limbo state of not getting stuff done)
-  * Delays in review process - things sitting in "ready for review" — 
-* Missing cohesive vision of the project —.both  features and down to specific classes/implementations
-* Merge conflicts creating problems, taking time to fix them
-* Remembering to update architecture and time spent after completing an issue
+Merge conflicts were another issue we faced. Our last day of the previous iteration we were cramming to solve merge conflicts. We decided to improve this by discussing how to do them properly in our meeting. We made the requirement of only using an IDE which shows you the `HEAD` and `CHANGE` columns when doing them. We also made the requirement of running the app and all tests afterward, and suggested making smaller commits and merge requests, and merging develop into the branches we're working on <u>often</u>. We'll measure this by seeing if, on the due date, we aren't spending any time dealing with merge conflicts because they were all solved in their respective branches.
 
-### How it can be improved this iteration
+A smaller issue this past iteration was that sometimes when we finished issues, we forgot to update them with the actual time spent, and forgot to add new classes to our architecture diagram. We discussed addressing this by (remembering to do them), and specifically looking out for these things whenever we reviewed a merge request. We will measure this success by ensuring that no new classes missing from the architecture diagram when making it, and no issues missing hours when we do our final 'sweep'.
 
-* For things blocking / waiting for review
-  * Check the gitlab and slack more frequently, Once you see something, get it out of the way right away, Put a message in slack saying hey, I've reviewed a few other things, someone else mind reviewing that thing by that other dude?
-  * Not have issues that block eachother — arrange or plan issues in a way that the work can be contained
-* Missing cohesion
-  * Talking / keeping up the communication — Not just in meetings, if you ever have a question about implementation, bring it up in a public slack channel, start a thread about it, we'll discuss
-* Merge conflicts (on merging `develop` **INTO** a branch)
-  * Make sure we know how to do them — Use some IDE tool that shows you the `develop>>>>` `this<<<<<<`, and "use mine / use develop" buttons. Don't use plain text editor. **BE CAREFUL WHEN DOING THIS, THINK ABOUT IT, sometimes you need to take code from both sections!**
-    * If unsure about which one to use, put up a quick slack message
-  * TEST AFTER YOU FIX THE MERGE CONFLICTS! Run all tests, Play the app, make sure all the new develop features still work.
-  * Make smaller commits. Make small merge requests. **MERGE DEVELOP INTO YOUR BRANCH OFTEN!**
-* Remembering to Update Architecture
-  * just do it. please remember.
-  * Watch for this when you're reviewing, make sure they have the architecture.md update, (friendly reminder)
+## Velocity
 
-### How this improvement will be evaluated at end of iteration
-
-* Blocking
-  * We can see time from when PR was created to time PR was merged, and nothings over 1-2 days
-  * Little to no issues that have a "blocked" tag
-* Cohesion — It's a little late to improve this…. We'll know if it was improved… Survey the team.
-* Merge conflicts — We don't have 3 hours where we're racing to fix this before the release due date
-* If we're ready to update the architecture diagram and nothing's missing, or we're looking through all the issues before submitting, and they all have time spent
-
+![Project_Velocity](Project_Velocity.png)
