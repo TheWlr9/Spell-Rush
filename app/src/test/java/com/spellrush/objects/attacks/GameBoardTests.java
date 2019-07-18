@@ -12,7 +12,8 @@ public class GameBoardTests extends TestCase {
     private static final String strPrintStart = "\nStarting testGameBoard: ";
     private static final String strPrintFinish = "\nFinished testGameBoard: ";
 
-    static final int maxObjects = 3;
+    static final int maxObjects = 3; //max objects per side
+    static final int totalMaxObjects = 2 * maxObjects; //max objects on board in total
     static final int numLanes = 3;
 
     GameBoard stubBoard;
@@ -45,10 +46,11 @@ public class GameBoardTests extends TestCase {
     public void test_addAttack_shouldAllowMaxBullets() {
         System.out.println(strPrintStart + "test_addAttack_shouldNotExceedMaxBullets");
         setup();
-        for (int i = 0; i < maxObjects; i++) {
+        for (int i = 0; i < totalMaxObjects; i++) {
             stubBoard.addAttack(Mockito.mock(AttackObject.class));
         }
-        assert(stubBoard.getAttacksToAdd().size() == maxObjects);
+        System.out.println("\n\n"+stubBoard.getAttacksToAdd().size());
+        assert(stubBoard.getAttacksToAdd().size() == totalMaxObjects);
         System.out.println(strPrintFinish + "test_addAttack_shouldNotExceedMaxBullets");
     }
 
@@ -59,11 +61,12 @@ public class GameBoardTests extends TestCase {
         setup();
 
         // Setup
-        for (int i = 0; i < maxObjects; i++) {
+        for (int i = 0; i < totalMaxObjects; i++) {
             stubBoard.addAttack(Mockito.mock(AttackObject.class));
+
         }
         stubBoard.addAttack(Mockito.mock(AttackObject.class));
-        assert(stubBoard.getAttacksToAdd().size() == maxObjects);
+        assert(stubBoard.getAttacksToAdd().size() == totalMaxObjects);
 
         System.out.println(strPrintFinish + "test_addAttack_shouldNotExceedMaxBullets");
     }
