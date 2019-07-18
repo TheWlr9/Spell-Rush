@@ -3,9 +3,11 @@ package com.spellrush;
 import android.app.Application;
 import android.test.ApplicationTestCase;
 
+import com.spellrush.presentation.CombatSysTest;
 import com.spellrush.presentation.GameOverTest;
 import com.spellrush.presentation.LeaderboardActivityTest;
 import com.spellrush.presentation.MainMenuTest;
+import com.spellrush.presentation.SettingsActivityTest;
 import com.spellrush.presentation.UI.FingerPathLayerTest;
 
 import org.junit.runner.RunWith;
@@ -17,6 +19,8 @@ import org.junit.runners.Suite;
         MainMenuTest.class,
         FingerPathLayerTest.class,
         GameOverTest.class,
+        CombatSysTest.class,
+        SettingsActivityTest.class
 })
 
 /**
