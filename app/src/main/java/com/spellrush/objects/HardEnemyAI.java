@@ -5,19 +5,20 @@ import com.spellrush.objects.attacks.AttackFactory;
 
 import java.util.Random;
 
-public class MediumEnemyAI implements IEnemyAI {
+public class HardEnemyAI implements IEnemyAI {
 
-    final int MAX_WAIT=120; // the most amount of frames between attacks
-    final int MIN_WAIT=30; // the smallest amount of frames...
-    public final int MULTI_SHOT_WAIT = 10;
+
+    public final int MAX_WAIT=100; // the most amount of frames between attacks
+    public final int MIN_WAIT=15; // the smallest amount of frames...
+    public final int MULTI_SHOT_WAIT = 10;// frames between multishot shots
     private int frameCount=0;
     private int wait=30; //default wait between attacks in frames
     private int multiShot = 1;
-    private final int MIN_SHOTS=1;
-    private final int MAX_SHOTS = 3;
+    private final int MIN_SHOTS = 2;
+    private final int MAX_SHOTS = 4;
     private AttackFactory.AttackType[] attacks;
 
-    public MediumEnemyAI(){
+    public HardEnemyAI(){
         attacks = AttackFactory.getAttacks();
     }
 
@@ -31,7 +32,7 @@ public class MediumEnemyAI implements IEnemyAI {
             }
             else{
                 newWait();
-                multiShot= (new Random()).nextInt(MAX_SHOTS)+MIN_SHOTS;
+                multiShot= (new Random()).nextInt(MAX_SHOTS-1)+MIN_SHOTS;
             }
 
             doAttack();
@@ -57,3 +58,4 @@ public class MediumEnemyAI implements IEnemyAI {
         return frameCount;
     }
 }
+
