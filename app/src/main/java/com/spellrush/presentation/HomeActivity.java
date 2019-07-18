@@ -51,7 +51,7 @@ public class HomeActivity extends Activity {
     @Override
     protected void onResume(){
         try {
-            AudioManager.play(SoundEvent.TITLE_MUSIC);
+            AudioManager.play(SoundEvent.TITLE_MUSIC, false);
         }
         catch(AudioManagerError ame){
             System.err.println(ame);

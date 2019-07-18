@@ -42,16 +42,16 @@ public abstract class AttackObject {
         this.yPos = y;
     }
 
+    public boolean isPlayerAttack(){
+        return attackInfo.isPlayerAttack;
+    }
+
     boolean reachedEnd(GameBoard board){
         return isPlayerAttack() ? yPos < board.getLaneTopPosition() : yPos > board.getLaneBottomPosition();
     }
 
     boolean hasSameAllegiance(AttackObject attackToCheck){
         return isPlayerAttack() == attackToCheck.isPlayerAttack();
-    }
-
-    boolean isPlayerAttack(){
-        return attackInfo.isPlayerAttack;
     }
 
     /**

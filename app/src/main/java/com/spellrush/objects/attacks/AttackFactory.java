@@ -1,5 +1,8 @@
 package com.spellrush.objects.attacks;
 
+import com.spellrush.audio.AudioManager;
+import com.spellrush.audio.AudioManagerError;
+import com.spellrush.audio.SoundEvent;
 import com.spellrush.business.LevelManager.LevelManager;
 
 /**
@@ -19,6 +22,13 @@ public class AttackFactory {
         GameBoard board = LevelManager.getInstance().getGameBoard();
         int startPos = isPlayerAttack? board.getLaneBottomPosition() : board.getLaneTopPosition();
         board.addAttack(new FireAttack(createAttackInformation(isPlayerAttack, laneIndex), startPos));
+
+        try {
+            AudioManager.play(SoundEvent.SPAWN_FIRE, true);
+        }
+        catch(AudioManagerError ame){
+            System.err.println("SPAWN_FIRE link not found");
+        }
     }
 
     /**
@@ -29,6 +39,13 @@ public class AttackFactory {
         GameBoard board = LevelManager.getInstance().getGameBoard();
         int startPos = isPlayerAttack? board.getLaneBottomPosition() : board.getLaneTopPosition();
         board.addAttack(new WaterAttack(createAttackInformation(isPlayerAttack, laneIndex), startPos));
+
+        try {
+            AudioManager.play(SoundEvent.SPAWN_WATER, true);
+        }
+        catch(AudioManagerError ame){
+            System.err.println("SPAWN_WATER link not found");
+        }
     }
 
     /**
@@ -39,6 +56,13 @@ public class AttackFactory {
         GameBoard board = LevelManager.getInstance().getGameBoard();
         int startPos = isPlayerAttack? board.getLaneBottomPosition() : board.getLaneTopPosition();
         board.addAttack(new GroundAttack(createAttackInformation(isPlayerAttack, laneIndex), startPos));
+
+        try {
+            AudioManager.play(SoundEvent.SPAWN_GRASS, true);
+        }
+        catch(AudioManagerError ame){
+            System.err.println("SPAWN_GRASS link not found");
+        }
     }
 
     private static AttackInformation createAttackInformation(boolean isPlayerAttack, int laneIndex){

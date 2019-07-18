@@ -2,9 +2,7 @@ package com.spellrush.audio;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.provider.MediaStore;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.EnumMap;
 
@@ -114,20 +112,38 @@ public abstract class AudioManager {
         }
     }
 
-    public static void play(SoundEvent type) throws AudioManagerError {
+    /**
+     * Plays the sound
+     * @param type The SoundEvent key that is linked to the resource ID of the sound file
+     * @param overwrite Should the sound cancel itself if its already playing and then start again?
+     *                  Usually all sound effects should be set to true, otherwise all music
+     *                  should be set to false
+     * @throws AudioManagerError If the AudioManager has not been initialized yet by calling AudioManager.init()
+     */
+    public static void play(SoundEvent type, boolean overwrite) throws AudioManagerError {
         if(!initialized) {
             throw new AudioManagerError(NOT_INIT_ERROR_MSG + "play");
         }
 
-        soundMap.get(type).start();
+        //This try-catch block is so our tests don't have to worry about setting up the audio
+        //manager before testing
+        try {
+            if(overwrite){
+                soundMap.get(type).seekTo(0);
+            }
+
+            soundMap.get(type).start();
+        }
+        catch(NullPointerException npe){
+            System.err.println(npe);
+        }
     }
 
     public static void pause(SoundEvent type) throws AudioManagerError {
         if(!initialized){
             throw new AudioManagerError(NOT_INIT_ERROR_MSG + "pause");
         }
-
-        if(soundMap.get(type).isPlaying()) {
+        if(soundMap.get(type) != null && soundMap.get(type).isPlaying()) {
             soundMap.get(type).pause();
         }
     }
@@ -137,7 +153,11 @@ public abstract class AudioManager {
             throw new AudioManagerError(NOT_INIT_ERROR_MSG + "stop");
         }
 
-        soundMap.get(type).stop();
+        soundMap.get(type).seekTo(0);
+
+        if(soundMap.get(type).isPlaying()) {
+            soundMap.get(type).pause();
+        }
     }
 
     public static void setVolume(SoundEvent type, float newVolume) throws AudioManagerError {

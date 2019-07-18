@@ -10,10 +10,15 @@ import android.widget.TextView;
 
 import com.spellrush.R;
 import com.spellrush.application.ScoreEntry;
+import com.spellrush.audio.AudioManager;
+import com.spellrush.audio.AudioManagerError;
+import com.spellrush.audio.SoundEvent;
 import com.spellrush.business.LeaderboardController;
 import com.spellrush.services.Services;
 
 public class GameOverActivity extends Activity {
+
+    final static int[] GAME_OVER_SOUND_RES_IDS = {R.raw.sanctuary};
 
     private LeaderboardController leaderboardController;
     private String playerName;
@@ -23,6 +28,9 @@ public class GameOverActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setupMyAudio();
+
         setContentView(R.layout.activity_game_over);
 
 
@@ -41,9 +49,25 @@ public class GameOverActivity extends Activity {
         createLeaderBoardButton();
         createExitButton();
         leaderboardController = new LeaderboardController(Services.getLeaderboardPersistence());
+    }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
 
-}
+        try{
+            AudioManager.play(SoundEvent.GAME_OVER_MUSIC, false);
+        }
+        catch(AudioManagerError ame){
+            System.err.println("Error with linking GAME_OVER_MUSIC to file");
+            setupMyAudio();
+        }
+    }
+
+    private void setupMyAudio(){
+        AudioManager.init(getApplicationContext());
+        loadSoundsIntoAudioManager();
+    }
 
     public void createSubmitScoreButton(){
         Button submitScoreButton = (Button) findViewById(R.id.Submit_score);
@@ -95,6 +119,15 @@ public class GameOverActivity extends Activity {
         });
     }
 
+    private void loadSoundsIntoAudioManager(){
+        try {
+            AudioManager.addSoundToLib(SoundEvent.GAME_OVER_MUSIC, GAME_OVER_SOUND_RES_IDS[0], true);
+        }
+        catch (AudioManagerError ame){
+            System.err.println(ame);
+        }
+    }
+
     @Override
     public void onBackPressed(){
         startActivity(new Intent(GameOverActivity.this, HomeActivity.class));
@@ -103,7 +136,27 @@ public class GameOverActivity extends Activity {
 
 
     @Override
+    protected void onStop() {
+        try {
+            AudioManager.stop(SoundEvent.GAME_OVER_MUSIC);
+        }
+        catch(AudioManagerError ame){
+            System.err.println("Stopping non-linked GAME_OVER_SCREEN; proceeding as normal.");
+        }
+
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
+        try {
+            AudioManager.stop(SoundEvent.GAME_OVER_MUSIC);
+            AudioManager.release(SoundEvent.GAME_OVER_MUSIC);
+        }
+        catch(AudioManagerError ame){
+            System.err.println("Error in destroying GAME_OVER_MUSIC: Unlinked from file");
+        }
+
         super.onDestroy();
     }
 }
