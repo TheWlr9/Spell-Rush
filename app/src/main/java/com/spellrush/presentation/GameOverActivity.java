@@ -13,6 +13,7 @@ import com.spellrush.application.ScoreEntry;
 import com.spellrush.audio.AudioManager;
 import com.spellrush.audio.AudioManagerError;
 import com.spellrush.audio.SoundEvent;
+import com.spellrush.business.GameVolumeSettings;
 import com.spellrush.business.LeaderboardController;
 import com.spellrush.services.Services;
 
@@ -57,6 +58,7 @@ public class GameOverActivity extends Activity {
 
         try{
             AudioManager.play(SoundEvent.GAME_OVER_MUSIC, false);
+            AudioManager.setVolume(SoundEvent.GAME_OVER_MUSIC, GameVolumeSettings.getMusicVolume());
         }
         catch(AudioManagerError ame){
             System.err.println("Error with linking GAME_OVER_MUSIC to file");
@@ -122,6 +124,7 @@ public class GameOverActivity extends Activity {
     private void loadSoundsIntoAudioManager(){
         try {
             AudioManager.addSoundToLib(SoundEvent.GAME_OVER_MUSIC, GAME_OVER_SOUND_RES_IDS[0], true);
+            AudioManager.setVolume(SoundEvent.GAME_OVER_MUSIC, GameVolumeSettings.getMusicVolume());
         }
         catch (AudioManagerError ame){
             System.err.println(ame);

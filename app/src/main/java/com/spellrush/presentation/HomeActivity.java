@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.spellrush.R;
 import com.spellrush.audio.AudioManager;
 import com.spellrush.audio.AudioManagerError;
 import com.spellrush.audio.SoundEvent;
+import com.spellrush.business.GameVolumeSettings;
 import com.spellrush.business.LevelManager.LevelManager;
 import com.spellrush.persistence.utils.DBHelper;
 import com.spellrush.presentation.UI.Components.LevelStartDisplay;
@@ -25,7 +25,7 @@ public class HomeActivity extends Activity {
 
         setupMyAudio();
         createStartButton();
-        //createSettingsButton();
+        createSettingsButton();
         createLeaderboardButton();
         DBHelper.copyDatabaseToDevice(getApplicationContext());
     }
@@ -39,6 +39,7 @@ public class HomeActivity extends Activity {
     protected void onResume(){
         try {
             AudioManager.play(SoundEvent.TITLE_MUSIC, false);
+            AudioManager.setVolume(SoundEvent.TITLE_MUSIC, GameVolumeSettings.getMusicVolume());
         }
         catch(AudioManagerError ame){
             System.err.println(ame);
@@ -72,7 +73,8 @@ public class HomeActivity extends Activity {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Settings Button clicked", Toast.LENGTH_SHORT).show();
+                Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
+                HomeActivity.this.startActivity((settingsIntent));
             }
         });
     }
@@ -91,6 +93,7 @@ public class HomeActivity extends Activity {
     private void loadSoundsIntoAudioManager(){
         try {
             AudioManager.addSoundToLib(SoundEvent.TITLE_MUSIC, HOME_SOUND_RES_IDS[0], true);
+            AudioManager.setVolume(SoundEvent.TITLE_MUSIC, GameVolumeSettings.getMusicVolume());
         }
         catch(AudioManagerError ame){
             System.err.println(ame);

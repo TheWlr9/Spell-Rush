@@ -10,6 +10,7 @@ import com.spellrush.audio.AudioManager;
 import com.spellrush.audio.AudioManagerError;
 import com.spellrush.audio.SoundEvent;
 import com.spellrush.business.GameView;
+import com.spellrush.business.GameVolumeSettings;
 import com.spellrush.business.LevelManager.LevelManager;
 import com.spellrush.presentation.UI.Components.LevelCompleteDisplay;
 import com.spellrush.presentation.UI.Components.LevelStartDisplay;
@@ -119,10 +120,12 @@ public class GameActivity extends Activity {
             //For looping sounds
             for (; i < NUM_LOOPING_SOUNDS; i++){
                 AudioManager.addSoundToLib(GAME_SOUND_SOUNDEVENTS[0], GAME_SOUND_RES_IDS[i], true);
+                AudioManager.setVolume(GAME_SOUND_SOUNDEVENTS[i], GameVolumeSettings.getMusicVolume());
             }
             //For non-looping sounds
             for(; i < GAME_SOUND_SOUNDEVENTS.length; i++){
                 AudioManager.addSoundToLib(GAME_SOUND_SOUNDEVENTS[i], GAME_SOUND_RES_IDS[i], false);
+                AudioManager.setVolume(GAME_SOUND_SOUNDEVENTS[i], GameVolumeSettings.getSfxVolume());
             }
         }
         catch (AudioManagerError ame){
