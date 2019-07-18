@@ -14,4 +14,4 @@ A smaller issue this past iteration was that sometimes when we finished issues, 
 
 ## Velocity
 
-![Project_Velocity](C:\Users\jmulholl\3350\project\0xc0de---12\Project_Velocity.png)
+![Project_Velocity](Project_Velocity.png)
