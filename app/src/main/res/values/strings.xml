@@ -30,4 +30,8 @@
     <string name="starting">STARTING</string>
     <string name="level_1">LEVEL 1</string>
     <string name="level_complete">LEVEL COMPLETE!</string>
+    <string name="settings_default_max_volume">100</string>
+    <string name="settings_master_volume">Master Volume</string>
+    <string name="settings_sound_effects_volume">Sound Effects Volume</string>
+    <string name="settings_music_volume">Music Volume</string>
 </resources>
