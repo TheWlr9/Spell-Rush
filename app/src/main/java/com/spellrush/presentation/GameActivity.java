@@ -116,6 +116,13 @@ public class GameActivity extends Activity {
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed(){
+        LevelManager.getInstance().reset();
+
+        super.onBackPressed();
+    }
+
     private void loadSoundsIntoAudioManager(){
         try {
             int i = 0;
