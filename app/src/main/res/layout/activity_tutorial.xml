@@ -11,5 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="518dp" />
+        tools:layout_editor_absoluteY="769dp" />
+
+    <LinearLayout
+        android:id="@+id/tutDots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="bottom|center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/tutorial"
+        tools:layout_centerHorizontal="true"></LinearLayout>
 </android.support.constraint.ConstraintLayout>
