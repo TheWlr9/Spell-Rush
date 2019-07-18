@@ -65,7 +65,7 @@
             android:id="@+id/masterVolumeSliderText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings_max_volume"
+            android:text="@string/settings_default_max_volume"
             android:textAlignment="center"
             android:layout_weight="7"/>
     </LinearLayout>
@@ -109,7 +109,7 @@
             android:id="@+id/soundEffectsVolumeSliderText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings_max_volume"
+            android:text="@string/settings_default_max_volume"
             android:textAlignment="center"
             android:layout_weight="7"/>
     </LinearLayout>
