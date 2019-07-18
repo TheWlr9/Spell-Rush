@@ -3,7 +3,10 @@ package com.spellrush.presentation;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
+import android.widget.TextView;
 
 import com.spellrush.R;
 import com.spellrush.audio.AudioManager;
