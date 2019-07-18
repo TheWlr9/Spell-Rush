@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <style>
+    header {
+      padding: 156px 0 100px;
+    }
+
+    section {
+      padding: 75px 0;
+    }
+    img {
+      padding: 15px;
+    }
+    .bg-primary {
+      background-image: url("img/bg.jpg");
+      background-position: center;
+      background-size: cover;
+    }
+    .link-icon img{
+      padding: 0;
+      margin: 2px;
+      margin-left: 7px;
+    }
+  </style>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Spell Rush - Group 12 Project</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body id="page-top">
+    <!-- Navigation -->
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+      id="mainNav"
+    >
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top"
+          >Spell Rush (Group 12)</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#functionality"
+                >Functionality</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#Video">Video</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#Contributors"
+                >Contributors</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#Postmortem"
+                >Postmortem</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="bg-primary text-white">
+      <div
+        class="container text-center align-middle col-lg-6 title-box"
+        style="background-color:#555; padding:5pt;border-radius: 10px;"
+      >
+        <h1>Spell Rush</h1>
+        <p class="lead">
+          Software Engineering project — Group 12 — Summer 2019
+        </p>
+      </div>
+    </header>
+
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <img src="img/enemy.png" alt="fire" class="float-left" />
+            <h2>Overview</h2>
+            <p class="lead">
+              Spell Rush is an action game with a focus on an innovative battle
+              system that uses gesture recognition.
+            </p>
+            <br />
+            <hr />
+            <br />
+            <img src="img/player.png" alt="fire" class="float-right" />
+            <h3 class="text-right">Intended Users</h3>
+            <p class="lead text-right">
+              Our intended audience is casual android users anywhere from 7 - 90 years of age with as little as 5 minutes to spare to play a fast-paced, challenging game.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="functionality" class="bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Functionality</h2>
+            <p class="lead">
+              Spell rush is a game where you draw different shapes on the screen to create different "spells". Your goal is to get your attack to the opposite end of the screen and damage your opponent.
+            </p>
+            <p class="lead">
+              These shapes can be viewed from the games tutorial menu on the
+              main menu screen.
+            </p>
+            <br />
+            <hr />
+            <br />
+            <h3>There are 3 spells:</h3>
+            <br />
+            <div class="clearfix">
+              <img src="img/fire.png" alt="fire" class="float-left" />
+              <p>
+                <b style="color:red">Fire</b> beats
+                <b style="color:green">Ground</b> and Loses to
+                <b style="color:blue">Water</b>
+              </p>
+            </div>
+            <br />
+            <div class="clearfix">
+              <img src="img/water.png" alt="water" class="float-left" />
+              <p>
+                <b style="color:blue">Water</b> beats
+                <b style="color:red">Fire</b> and Loses to
+                <b style="color:green">Ground</b>
+              </p>
+            </div>
+            <br />
+            <div class="clearfix">
+              <img src="img/ground.png" alt="grund" class="float-left" />
+              <p>
+                <b style="color:green">Ground</b> beats
+                <b style="color:blue">Water</b> and Loses to
+                <b style="color:red">Fire</b>
+              </p>
+            </div>
+            <br />
+            <hr />
+            <br />
+            <h2>Other Major functionality</h2>
+            <br />
+            <ul>
+              <li>3 Distinct levels with increasinly difficult opponents</li>
+              <li>A leaderboard that stores your highest scores</li>
+            </ul>
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="Video" class="text-light bg-dark">
+      <div class="container">
+        <div class="row">
+          <div class="col mx-auto">
+            <h1>Video</h1>
+            <div style="padding:50% 0 0 0;position:relative; "><iframe src="https://player.vimeo.com/video/348908236?title=0&byline=0&portrait=0" 
+              style="position:absolute;top:0;left:0;width:100%;height:100%;max-height:600px!important" frameborder="0" allow="autoplay; fullscreen" 
+              allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="Contributors">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 mx-auto">
+            <h1 class="text-center lrg">Contributors</h1>
+            <br />
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="text-center col-lg-4 mx-auto">
+            <h3><u>Chad Hillary</u><a class="link-icon" href="http://www.chadhillary.com"><img height="25px" src="img/web.png"></a></h3>
+            
+            <p class="lead">
+              "I gained some great practice working with the Mockito and Espresso
+              testing frameworks, as well as facilitating project planning
+              within GitLab!"
+            </p>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="text-center col-lg-4 mx-auto">
+            <h3><u>William Ritchie</u><a class="link-icon" href="https://github.com/TheWlr9"><img height="25px" src="img/web.png"></a></h3>
+            <p class="lead">"I gained a lot of knowledge when it comes to Android development, especially with activities and Views!"</p>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="text-center col-lg-4 mx-auto">
+            <h3><u>Earl John Placido</u></h3>
+            <p class="lead">"I Never had taken part in making a game before, so it was really cool to see and learn the process of creating a game from the ground up. I also thought the HSQLDB stuff was really neat and getting to play around with your own local database was pretty cool to do and learn!"</p>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="text-center col-lg-4 mx-auto">
+            <h3><u>Michael Winkler</u></h3>
+            <p class="lead">"I learned how to write code without having to know every facet of the code base!"</p>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="text-center col-lg-4 mx-auto">
+            <h3><u>Nathan Carriere</u></h3>
+            <p class="lead">"The quality of my code has vastly improved, just by reviewing other team members' code and having them look through my code."</p>
+          </div>
+        </div>
+        <br />
+        <em class="align-center">Menu and level music courtesy of Trevor Lentz</em>
+        <br>
+        <em class="align-center">Level complete music courtesy of Avgvst</em>
+      </div>
+    </section>
+
+    <section id="Postmortem" class="bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 mx-auto">
+            <h1>Postmortem</h1>
+            <hr />
+            <h4>What went right in the development process?</h4>
+            <p class="main">Our group did very well at team and project organization. We were able to set up consistent team meetings, twice a week, which were always productive. We also set up a slack group with an integrated GitLab bot.</p>
+            <p class="main">Early on, we decided on our merge request and review process and documented our programming practices, which helped to organize our efforts. We also made use of the GitLab tags feature to organize our work on the planning board.</p>
+            
+            <h4>What went "wrong" in the development process?</h4>
+            <p class="main">
+              There were times when we did not collectively have a cohesive vision of the project, both architecture-wise and vision-wise. For about the first half of the project, we lacked a cohesive vision of the game mechanics — wheater it would be two human players, or a space-invaders type game, a bullet-hell style game, or a speed-based game with multiple lanes. This lead to some confusion on how to implement our code in a way that would be modular enough for these future mechanics. We addressed this by spending time in meetings, talking about what each of our visions for the game was, and workshopping the idea while keeping scope in mind.
+              </li>
+            </p>
+            <h4>
+              How did the project change from the initial vision?
+            </h4>
+            <p class="main">In the first few iterations of the project, we were planning on creating a more shoot-em-up style game, with multiple levels, enemies, and bosses. After we came significantly short on our iteration 1 velocity, we decided that it would be best to limit our scope, and create a much simpler game that used a rock-paper-scissors mechanic.</p>
+            <p class="main"></p>We also thought of adding features like a "Rate our game" popup, and the option to share your score on social media. These features were decided to be low-priority, however, and were closed to limit our scope.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">
+          Group 12 - 0xC0DE - Summer 2019
+        </p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    <script>
+      (function($) {
+        "use strict"; // Start of use strict
+
+        // Smooth scrolling using jQuery easing
+        $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
+          if (
+            location.pathname.replace(/^\//, "") ==
+              this.pathname.replace(/^\//, "") &&
+            location.hostname == this.hostname
+          ) {
+            var target = $(this.hash);
+            target = target.length
+              ? target
+              : $("[name=" + this.hash.slice(1) + "]");
+            if (target.length) {
+              $("html, body").animate(
+                {
+                  scrollTop: target.offset().top - 56
+                },
+                1000,
+                "easeInOutExpo"
+              );
+              return false;
+            }
+          }
+        });
+
+        // Closes responsive menu when a scroll trigger link is clicked
+        $(".js-scroll-trigger").click(function() {
+          $(".navbar-collapse").collapse("hide");
+        });
+
+        // Activate scrollspy to add active class to navbar items on scroll
+        $("body").scrollspy({
+          target: "#mainNav",
+          offset: 56
+        });
+      })(jQuery); // End of use strict
+    </script>
+  </body>
+</html>
