@@ -108,4 +108,8 @@ public class LeaderboardActivity extends Activity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        // Ensure it does nothing...
+    }
 }
