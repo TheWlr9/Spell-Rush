@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/0xc0de---12.iml" filepath="$PROJECT_DIR$/0xc0de---12.iml" />
+      <module fileurl="file://$PROJECT_DIR$/0xc0de---12(3).iml" filepath="$PROJECT_DIR$/0xc0de---12(3).iml" />
+      <module fileurl="file://$PROJECT_DIR$/Spell-Rush.iml" filepath="$PROJECT_DIR$/Spell-Rush.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -65,6 +65,7 @@ public class LeaderboardActivity extends Activity {
 
         // create textView for the name in this row
         TextView rowName = new TextView(this);
+        rowName.setTextSize(30);
         rowName.setText(name);
         rowName.setLayoutParams(new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
@@ -72,6 +73,7 @@ public class LeaderboardActivity extends Activity {
 
         // create textView for the score in this row
         TextView rowScore = new TextView(this);
+        rowScore.setTextSize(30);
         rowScore.setText(score);
         rowScore.setLayoutParams(new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
@@ -105,5 +107,9 @@ public class LeaderboardActivity extends Activity {
                 LeaderboardActivity.this.startActivity(exitIntent);
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        // Ensure it does nothing...
     }
 }

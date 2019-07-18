@@ -3,7 +3,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0f3f5"
+    android:background="@android:color/black"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -15,10 +15,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="#0b7a75"
+        android:background="#C55204"
+        android:fontFamily="@font/ancient_modern_tales"
         android:padding="20dp"
         android:text="@string/Spell_Rush"
         android:textAlignment="center"
+        android:textAppearance="@style/AppTheme"
         android:textColor="#BFFFFFFF"
         android:textSize="36sp"
         android:typeface="monospace" />
@@ -27,113 +29,148 @@
         android:id="@+id/startBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_above="@+id/settingsBtn"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="11dp"
+        android:background="@android:color/holo_blue_dark"
         android:text="@string/Start" />
 
     <Button
         android:id="@+id/tutBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/leaderBoardBtn"
-        android:layout_centerInParent="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/holo_blue_dark"
         android:text="@string/Tutorial" />
     <Button
         android:id="@+id/settingsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/startBtn"
-        android:layout_centerHorizontal="true"
-        android:text="@string/Settings"
-        android:visibility="gone"
-        tools:visibility="gone" />
+        android:layout_above="@+id/leaderBoardBtn"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="11dp"
+        android:background="@android:color/holo_blue_dark"
+        android:text="@string/Settings" />
 
     <Button
         android:id="@+id/leaderBoardBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/settingsBtn"
-        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/tutBtn"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="11dp"
+        android:background="@android:color/holo_blue_dark"
         android:text="@string/Leader_Board" />
 
     <LinearLayout
-        android:layout_width="577dp"
-        android:layout_height="255dp"
+        android:layout_width="386dp"
+        android:layout_height="192dp"
         android:layout_above="@id/startBtn"
-        android:orientation="vertical">
+        android:layout_below="@+id/textTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp"
+        android:orientation="vertical"
+        tools:layout_centerHorizontal="true">
 
 
         <TextView
-            android:labelFor="@id/willName"
             android:id="@+id/willName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="10"
+            android:labelFor="@id/willName"
+            android:text="@string/Will_Ritchie"
             android:textAlignment="center"
-            android:text="@string/Will_Ritchie" />
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
         <TextView
-            android:labelFor="@id/earlName"
             android:id="@+id/earlName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="10"
+            android:labelFor="@id/earlName"
+            android:text="@string/Earl_John_Placido"
             android:textAlignment="center"
-            android:text="@string/Earl_John_Placido" />
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
         <TextView
-            android:labelFor="@id/nathanName"
             android:id="@+id/nathanName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="10"
+            android:labelFor="@id/nathanName"
+            android:text="@string/Nathan_Carrier"
             android:textAlignment="center"
-            android:text="@string/Nathan_Carrier" />
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
         <TextView
-            android:labelFor="@id/chadName"
             android:id="@+id/chadName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="10"
+            android:labelFor="@id/chadName"
+            android:text="@string/Chad_Hillary"
             android:textAlignment="center"
-            android:text="@string/Chad_Hillary" />
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
         <TextView
-            android:labelFor="@id/mikeName"
             android:id="@+id/mikeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="10"
+            android:labelFor="@id/mikeName"
+            android:text="@string/Mike_Winkler"
             android:textAlignment="center"
-            android:text="@string/Mike_Winkler" />
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
         <TextView
-            android:labelFor="@id/trevorName"
             android:id="@+id/trevorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="10"
+            android:labelFor="@id/trevorName"
+            android:text="@string/Trevor_Lentz"
             android:textAlignment="center"
-            android:text="@string/Trevor_Lentz" />
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
         <TextView
-            android:labelFor="@id/Avgvst"
             android:id="@+id/Avgvst"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="10"
+            android:labelFor="@id/Avgvst"
+            android:text="@string/Avgvst"
             android:textAlignment="center"
-            android:text="@string/Avgvst" />
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
     </LinearLayout>
-
-
 
 
 </RelativeLayout>

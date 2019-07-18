@@ -39,6 +39,8 @@ public class LevelManager extends GameObject {
             deviceHeight = 0;
         }
 
+        PlayerController.getInstance().reset();
+
         currLevel = Level.LEVEL_1;
         currEnemy = Enemy.getInstance();
         currEnemy.resetHP();
