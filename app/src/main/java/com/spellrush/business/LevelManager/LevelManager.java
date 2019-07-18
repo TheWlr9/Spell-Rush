@@ -11,7 +11,6 @@ import com.spellrush.objects.GameObject;
 import com.spellrush.objects.NullEnemyAI;
 import com.spellrush.objects.attacks.GameBoard;
 
-// TODO: flesh this out, make it modular for differant enemies... (see "level manager" story)
 public class LevelManager extends GameObject {
     // Follow Singleton Design Pattern
     private static final LevelManager instance = new LevelManager();
