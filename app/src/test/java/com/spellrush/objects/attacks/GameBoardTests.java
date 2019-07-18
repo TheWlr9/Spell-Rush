@@ -49,7 +49,6 @@ public class GameBoardTests extends TestCase {
         for (int i = 0; i < totalMaxObjects; i++) {
             stubBoard.addAttack(Mockito.mock(AttackObject.class));
         }
-        System.out.println("\n\n"+stubBoard.getAttacksToAdd().size());
         assert(stubBoard.getAttacksToAdd().size() == totalMaxObjects);
         System.out.println(strPrintFinish + "test_addAttack_shouldNotExceedMaxBullets");
     }
