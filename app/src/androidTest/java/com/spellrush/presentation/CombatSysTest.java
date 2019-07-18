@@ -80,12 +80,13 @@ public class CombatSysTest {
     }
 
     @Test
-    public void test_fire_spell() throws InterruptedException {
+    public void test_Collision() throws InterruptedException {
 
         GameBoard theBoard = LevelManager.getInstance().getGameBoard();
          ArrayList<AttackObject> attacks = theBoard.getAttacks();
 
         theBoard.clear(); //Reset the game board
+        while(attacks.size()>0);//wait for the board to clear
         while(attacks.size()<1){
             attacks = theBoard.getAttacks();
         }
