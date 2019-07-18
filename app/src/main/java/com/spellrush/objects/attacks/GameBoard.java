@@ -40,9 +40,10 @@ public class GameBoard extends GameObject{
     private final int numLanes;
     private final int laneTopPosition; // Y Position of the top of the lane (Enemy goal zone)
     private final int laneLength; //number of discrete units between lane start and end
-    private final int maxObjects; //maximum number of objects the board will allow.
+    private final int maxObjects; //maximum number of objects the board will allow per side
 
     private boolean clearing;
+    private int playerAttackCount = 0; //number of player attacks on board (may not exceed maxObjects/2)
 
     /**
      * Constructor
@@ -83,7 +84,9 @@ public class GameBoard extends GameObject{
     /**
      * Clears the board of all attacks.
      */
-    public void clear(){ this.clearing = true; }
+    public void clear(){
+        this.clearing = true;
+    }
 
     /**
      * Adds an attack to the board at the start location of the specified lane.
@@ -91,8 +94,11 @@ public class GameBoard extends GameObject{
      * @param newAttack The pre-constructed attack to add to the board
      */
     void addAttack(AttackObject newAttack) {
-        if (canAddAttack() && newAttack.getLane() >= 0 && newAttack.getLane() <= numLanes) {
+        if (canAddAttack(newAttack)) {
             attacksToAdd.add(newAttack);
+            if(newAttack.isPlayerAttack()){
+                playerAttackCount++;
+            }
         }
     }
 
@@ -111,6 +117,7 @@ public class GameBoard extends GameObject{
             attacks.clear();
             attacksToAdd.clear();
             attacksToDelete.clear();
+            playerAttackCount = 0;
             clearing = false;
         } else {
             for (AttackObject attack : attacks) {
@@ -179,10 +186,22 @@ public class GameBoard extends GameObject{
     }
 
     /**
-     * @return whether we have enough space to add a new attack
+     * @param attack The attack you want to try to add
+     * @return Whether attack can be added (both player and enemy attack counts
      */
-    private boolean canAddAttack(){
-        return (attacks.size() + attacksToAdd.size() - attacksToDelete.size()) < maxObjects;
+    private boolean canAddAttack(AttackObject attack){
+        //if: adding player attack, ensure player attack count not too high
+        //then ensure total attack count and lane index are appropriate
+        return (!attack.isPlayerAttack() || (playerAttackCount < maxObjects)) &&
+                (getAttackCount() < (maxObjects*2) - playerAttackCount) //2 sides of maxObjects each
+                && attack.getLane() >= 0 && attack.getLane() <= numLanes;
+    }
+
+    /**
+     * @return count of attacks currently accounted for on the board.
+     */
+    private int getAttackCount(){
+        return attacks.size() + attacksToAdd.size() - attacksToDelete.size();
     }
 
     /**
@@ -192,7 +211,10 @@ public class GameBoard extends GameObject{
      * @param attack the attack to operate on
      */
      void onAttackDestroyed(AttackObject attack) {
-        attacksToDelete.add(attack);
+         attacksToDelete.add(attack);
+         if(attack.isPlayerAttack()){
+             playerAttackCount--;
+         }
     }
 
     /**
