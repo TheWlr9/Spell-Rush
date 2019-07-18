@@ -46,7 +46,7 @@ public abstract class AttackObject {
         return attackInfo.isPlayerAttack;
     }
 
-    boolean reachedEnd(GameBoard board){
+    public boolean reachedEnd(GameBoard board){
         return isPlayerAttack() ? yPos < board.getLaneTopPosition() : yPos > board.getLaneBottomPosition();
     }
 
@@ -75,7 +75,7 @@ public abstract class AttackObject {
     /**
      * @return whether this attack has collided with another attack
      */
-    boolean wasDestroyed(){
+    public boolean wasDestroyed(){
         return destroyed;
     }
 
