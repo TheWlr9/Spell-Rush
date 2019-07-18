@@ -20,6 +20,8 @@ public abstract class AudioManager {
     final private static String NOT_INIT_ERROR_MSG = "The audio manager was not yet initialized " +
             "before calling: ";
 
+    public static int sfxVolume;
+
     private static EnumMap<SoundEvent, MediaPlayer> soundMap;
     private static Context context;
     private static boolean initialized = false;
