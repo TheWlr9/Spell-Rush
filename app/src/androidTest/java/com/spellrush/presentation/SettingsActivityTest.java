@@ -35,6 +35,11 @@ public class SettingsActivityTest {
         onView(ViewMatchers.withId(R.id.masterVolumeSlider)).check(matches(isDisplayed()));
         onView(withId(R.id.masterVolumeSlider)).perform(setProgress(0));
         onView(withId(R.id.masterVolumeSlider)).perform(setProgress(15));
+
+        onView(ViewMatchers.withId(R.id.musicVolumeSlider)).check(matches(isDisplayed()));
+        onView(withId(R.id.musicVolumeSlider)).perform(setProgress(0));
+        onView(withId(R.id.musicVolumeSlider)).perform(setProgress(15));
+
         onView(ViewMatchers.withId(R.id.soundEffectsVolumeSlider)).check(matches(isDisplayed()));
         onView(withId(R.id.soundEffectsVolumeSlider)).perform(setProgress(0));
         onView(withId(R.id.soundEffectsVolumeSlider)).perform(setProgress(15));
