@@ -153,7 +153,12 @@ public abstract class AudioManager {
             throw new AudioManagerError(NOT_INIT_ERROR_MSG + "stop");
         }
 
-        soundMap.get(type).seekTo(0);
+        try {
+            soundMap.get(type).seekTo(0);
+        }
+        catch (Exception e) {
+            throw new AudioManagerError("Could not perform seek on " + type +":" + e.toString());
+        }
 
         if(soundMap.get(type).isPlaying()) {
             soundMap.get(type).pause();
