@@ -3,6 +3,7 @@ package com.spellrush;
 import android.app.Application;
 import android.test.ApplicationTestCase;
 
+import com.spellrush.presentation.CombatSysTest;
 import com.spellrush.presentation.GameOverTest;
 import com.spellrush.presentation.LeaderboardActivityTest;
 import com.spellrush.presentation.MainMenuTest;
@@ -18,7 +19,8 @@ import org.junit.runners.Suite;
         MainMenuTest.class,
         FingerPathLayerTest.class,
         GameOverTest.class,
-        SettingsActivityTest.class
+        SettingsActivityTest.class,
+        CombatSysTest.class
 })
 
 /**
