@@ -3,6 +3,7 @@ package com.spellrush.presentation.UI.Components;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 
 public class HealthBar {
 
@@ -15,6 +16,8 @@ public class HealthBar {
     private Paint myPaint;
     private int hpColor;
     private boolean showText;
+
+    private final String healthTxt = "HEALTH";
 
     public HealthBar(int xpos, int ypos, int width, int height, int borderWidth, boolean forPlayer) {
         x = xpos;
@@ -52,7 +55,7 @@ public class HealthBar {
 
         if(showText) {
             myPaint.setColor(Color.WHITE);
-            canvas.drawText("HEALTH", x, y - 32, myPaint);
+            canvas.drawText(healthTxt, x, y - 32, myPaint);
         }
     }
 }

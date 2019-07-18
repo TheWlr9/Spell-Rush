@@ -22,7 +22,7 @@ public class GameThread extends Thread {
     private boolean isRunning;
 
     public static Canvas canvas;
-    
+
     /**
      * Constructor
      *
@@ -43,7 +43,11 @@ public class GameThread extends Thread {
     @Override
     public void run(){
         long timeAtFrameStart;
-
+        try{
+            this.setPriority(MAX_PRIORITY);
+        } catch(SecurityException e){
+            System.err.println("Security Exception: " + e.getMessage());
+        }
         //Perform all game updates, then sleep until next frame
         while (isRunning){
 
@@ -80,7 +84,6 @@ public class GameThread extends Thread {
         try{
             // Lock the canvas and surface holder to this Thread to ensure concurrency. (See COMP 3430)
             canvas = surfaceHolder.lockCanvas();
-
             this.updateGame();
             this.displayGame(canvas);
 

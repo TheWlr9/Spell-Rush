@@ -1,18 +1,19 @@
 package com.spellrush.presentation;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.spellrush.R;
 import com.spellrush.audio.AudioManager;
+import com.spellrush.audio.AudioManagerError;
 import com.spellrush.audio.SoundEvent;
+import com.spellrush.business.GameVolumeSettings;
+import com.spellrush.business.LevelManager.LevelManager;
 import com.spellrush.persistence.utils.DBHelper;
+import com.spellrush.presentation.UI.Components.LevelStartDisplay;
 
 public class HomeActivity extends Activity {
     final static int[] HOME_SOUND_RES_IDS = {R.raw.lines_of_code};
@@ -22,17 +23,42 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        setupMyAudio();
+        createStartButton();
+        createSettingsButton();
+        createLeaderboardButton();
+        createTutorialButton();
+        DBHelper.copyDatabaseToDevice(getApplicationContext());
+    }
+
+    private void createTutorialButton() {
+        Button tutButton = (Button) findViewById(R.id.tutBtn);
+        tutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent tutorialIntent = new Intent(HomeActivity.this, TutorialActivity.class);
+                HomeActivity.this.startActivity((tutorialIntent));
+            }
+        });
+    }
+
+    private void setupMyAudio(){
         AudioManager.init(getApplicationContext());
         loadSoundsIntoAudioManager();
-        createStartButton();
-        //createSettingsButton();
-        createLeaderboardButton();
-        DBHelper.copyDatabaseToDevice(getApplicationContext());
     }
 
     @Override
     protected void onResume(){
-        AudioManager.play(SoundEvent.TITLE_MUSIC);
+        try {
+            AudioManager.play(SoundEvent.TITLE_MUSIC, false);
+            AudioManager.setVolume(SoundEvent.TITLE_MUSIC, GameVolumeSettings.getMusicVolume());
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+
+            setupMyAudio();
+        }
+
         super.onResume();
     }
 
@@ -42,8 +68,14 @@ public class HomeActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent gameIntent = new Intent(HomeActivity.this, GameActivity.class);
-                HomeActivity.this.startActivity(gameIntent);
+                Intent levelStartDisplay = new Intent(HomeActivity.this, LevelStartDisplay.class);
+                if(LevelManager.getInstance() != null) {
+                    String level = LevelManager.getInstance().getCurrentLevel();
+                    levelStartDisplay.putExtra("levelName", level);
+                }
+                // display the start level message, then once its complete, start the game
+                startActivityForResult(levelStartDisplay, 1);
+
             }
         });
     }
@@ -53,7 +85,8 @@ public class HomeActivity extends Activity {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Settings Button clicked", Toast.LENGTH_SHORT).show();
+                Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
+                HomeActivity.this.startActivity((settingsIntent));
             }
         });
     }
@@ -69,25 +102,53 @@ public class HomeActivity extends Activity {
         });
     }
 
-    private static void loadSoundsIntoAudioManager(){
-        AudioManager.addSoundToLib(SoundEvent.TITLE_MUSIC, HOME_SOUND_RES_IDS[0], true);
+    private void loadSoundsIntoAudioManager(){
+        try {
+            AudioManager.addSoundToLib(SoundEvent.TITLE_MUSIC, HOME_SOUND_RES_IDS[0], true);
+            AudioManager.setVolume(SoundEvent.TITLE_MUSIC, GameVolumeSettings.getMusicVolume());
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+        }
     }
 
     @Override
     protected void onStop(){
-        AudioManager.pause(SoundEvent.TITLE_MUSIC);
+        try {
+            AudioManager.pause(SoundEvent.TITLE_MUSIC);
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+
+            setupMyAudio();
+        }
+
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        AudioManager.stop(SoundEvent.TITLE_MUSIC);
-        AudioManager.release(SoundEvent.TITLE_MUSIC);
+        try {
+            AudioManager.stop(SoundEvent.TITLE_MUSIC);
+            AudioManager.release(SoundEvent.TITLE_MUSIC);
+        }
+        catch(AudioManagerError ame){
+            System.err.println(ame);
+        }
+
         super.onDestroy();
     }
 
     @Override
     public void onBackPressed() {
         // Ensure it does nothing...
+    }
+
+    // start the game activity once the display intent is complete
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Intent gameIntent = new Intent(HomeActivity.this, GameActivity.class);
+        HomeActivity.this.startActivity(gameIntent);
     }
 }

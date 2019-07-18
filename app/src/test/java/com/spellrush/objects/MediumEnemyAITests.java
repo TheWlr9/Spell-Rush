@@ -29,14 +29,17 @@ public class MediumEnemyAITests extends TestCase {
 
     @Test
     public void test_newWait_shouldGenerateWaitInBounds() {
-        System.out.println(strPrintStart + "test_update_shouldGenerateNewWaitAfterTime");
+        System.out.println(strPrintStart + "test_update_shouldGenerateNewWaitWithinBounds");
         MediumEnemyAI ai = new MediumEnemyAI();
         ai.getWait();
         for(int i = 0 ; i < 50; i++) {
             int wait = ai.getWait();
-            assertTrue(wait >= ai.MIN_WAIT && wait <= ai.MAX_WAIT);
-        }
-        System.out.println(strPrintFinish + "test_update_shouldGenerateNewWaitAfterTime");
+            assertTrue((wait >= ai.MIN_WAIT && wait <= ai.MAX_WAIT)||(wait==ai.MULTI_SHOT_WAIT));
+            for(int j = 0; j<wait;j++){
+                ai.update();
+            }
+        System.out.println(strPrintFinish + "test_update_shouldGenerateNewWaitWithinBounds");
     }
+}
 }
 

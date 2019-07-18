@@ -9,22 +9,29 @@ public class MediumEnemyAI implements IEnemyAI {
 
     final int MAX_WAIT=120; // the most amount of frames between attacks
     final int MIN_WAIT=30; // the smallest amount of frames...
+    public final int MULTI_SHOT_WAIT = 10;
     private int frameCount=0;
     private int wait=30; //default wait between attacks in frames
     private int multiShot = 1;
+    private final int MIN_SHOTS=1;
     private final int MAX_SHOTS = 3;
+    private AttackFactory.AttackType[] attacks;
+
+    public MediumEnemyAI(){
+        attacks = AttackFactory.getAttacks();
+    }
 
     @Override
     public void update() {
         frameCount+=1;
         if(frameCount>=wait){
             if(multiShot>1){
-                wait = 10;
+                wait = MULTI_SHOT_WAIT;
                 multiShot-=1;
             }
             else{
                 newWait();
-                multiShot= (new Random()).nextInt(MAX_SHOTS)+1;
+                multiShot= (new Random()).nextInt(MAX_SHOTS)+MIN_SHOTS;
             }
 
             doAttack();
@@ -34,15 +41,11 @@ public class MediumEnemyAI implements IEnemyAI {
 
     @Override
     public void doAttack() {
-        int chooseAttack= (new Random()).nextInt(3);
-        switch(chooseAttack ){
-            case 0:AttackFactory.createFireAttack(false,0);break;
-            case 1:AttackFactory.createWaterAttack(false,0);break;
-            case 2:AttackFactory.createGroundAttack(false,0);break;
-        }
+        int chooseAttack= (new Random()).nextInt(attacks.length);
+        AttackFactory.createAttack(attacks[chooseAttack],false,1);
     }
 
-    public void newWait(){
+    private void newWait(){
         wait = (new Random()).nextInt(MAX_WAIT-MIN_WAIT+1)+MIN_WAIT;
     }
 

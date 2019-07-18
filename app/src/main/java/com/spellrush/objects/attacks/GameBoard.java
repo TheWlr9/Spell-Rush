@@ -2,7 +2,9 @@ package com.spellrush.objects.attacks;
 
 import android.graphics.Canvas;
 
-import com.spellrush.business.LevelManager;
+import com.spellrush.audio.AudioManager;
+import com.spellrush.audio.AudioManagerError;
+import com.spellrush.audio.SoundEvent;
 import com.spellrush.business.PlayerController;
 import com.spellrush.objects.Enemy;
 import com.spellrush.objects.GameObject;
@@ -25,15 +27,8 @@ import java.util.Queue;
 
 public class GameBoard extends GameObject{
 
-    static final int BULLET_DEPTH = 20;
-    static final int COLLISION_DIST = 100;
-    static final int SMALL_POINTS = 50;
-    static final int BIG_POINTS = SMALL_POINTS * 2;
-
-    //for simplified reference to an attack type (without all the in-method dot vomit)
-    private static final AttackObject.AttackType FIRE = AttackObject.AttackType.Fire;
-    private static final AttackObject.AttackType WATER = AttackObject.AttackType.Water;
-    private static final AttackObject.AttackType GROUND = AttackObject.AttackType.Ground;
+    static final int BULLET_DEPTH = -100;
+    static final int HIT_POINTS = 100;
 
     //game board "rules"
     private ArrayList<AttackObject> attacks; //a list of all attacks on the board
@@ -45,9 +40,10 @@ public class GameBoard extends GameObject{
     private final int numLanes;
     private final int laneTopPosition; // Y Position of the top of the lane (Enemy goal zone)
     private final int laneLength; //number of discrete units between lane start and end
-    private final int maxObjects; //maximum number of objects the board will allow.
+    private final int maxObjects; //maximum number of objects the board will allow per side
 
     private boolean clearing;
+    private int playerAttackCount = 0; //number of player attacks on board (may not exceed maxObjects/2)
 
     /**
      * Constructor
@@ -73,61 +69,44 @@ public class GameBoard extends GameObject{
     }
 
     // return read-only attack list for testing and otherwise
-    ArrayList<AttackObject> getAttacks() {
+    public ArrayList<AttackObject> getAttacks() {
         return attacks;
     }
     // return read-only attack list for testing and otherwise
-    Queue<AttackObject> getAttacksToAdd() {
+    public Queue<AttackObject> getAttacksToAdd() {
         return attacksToAdd;
     }
     // return read-only attack list for testing and otherwise
-    Queue<AttackObject> getAttacksToDelete() {
+    public Queue<AttackObject> getAttacksToDelete() {
         return attacksToDelete;
     }
 
     /**
      * Clears the board of all attacks.
      */
-    public void clear(){ this.clearing = true; }
+    public void clear(){
+        this.clearing = true;
+    }
 
     /**
      * Adds an attack to the board at the start location of the specified lane.
      *
-     * @param type The attack type to create
-     * @param isPlayerAttack The attack's allegiance (and direction of movement).
-     * @param laneIndex The lane the attack will start in.
-     * @param speed what speed this attack will travel at
-     * @param damage How much is subtracted from the enemy/player HP on goal
+     * @param newAttack The pre-constructed attack to add to the board
      */
-    void addAttack(AttackObject.AttackType type, boolean isPlayerAttack, int laneIndex, int speed, int damage){
-
-        //if bad lane index or no space, quit.
-        if(laneIndex < 0 || laneIndex >= numLanes || !canAddAttack()){
-            return;
+    void addAttack(AttackObject newAttack) {
+        if (canAddAttack(newAttack)) {
+            attacksToAdd.add(newAttack);
+            if(newAttack.isPlayerAttack()){
+                playerAttackCount++;
+            }
         }
-        // Set laneStart / laneEnd according to direction
-        int laneStart = isPlayerAttack ? laneLength : laneTopPosition;
-        int laneEnd = isPlayerAttack ? laneTopPosition : laneLength;
+    }
 
-        // create attack object
-        AttackObject newAttack;
-        AttackInformation attackInfo = new AttackInformation(
-                isPlayerAttack, laneIndex, speed, laneStart, laneEnd, damage);
-        switch(type){
-            case Fire:
-                newAttack = new FireAttack(attackInfo);
-                break;
-            case Water:
-                newAttack = new WaterAttack(attackInfo);
-                break;
-            case Ground:
-                newAttack = new GroundAttack(attackInfo);
-                break;
-            default:
-                newAttack = new FireAttack(attackInfo);
-                break;
-        }
-        attacksToAdd.add(newAttack);
+    public int getLaneTopPosition() {
+        return laneTopPosition;
+    }
+    public int getLaneBottomPosition() {
+        return laneTopPosition + laneLength;
     }
 
     /**
@@ -138,13 +117,58 @@ public class GameBoard extends GameObject{
             attacks.clear();
             attacksToAdd.clear();
             attacksToDelete.clear();
+            playerAttackCount = 0;
             clearing = false;
         } else {
             for (AttackObject attack : attacks) {
-                updateAttack(attack);
+                attack.update();
+                checkAttackCollisionsFor(attack);
+                checkAttackReachedEnd(attack);
+                if (attack.wasDestroyed()) {
+                    onAttackDestroyed(attack);
+                }
             }
             deleteAttacks();
             addAttacks();
+        }
+    }
+
+    private void checkAttackCollisionsFor(AttackObject attack){
+        for (AttackObject otherAttack : attacks) {
+            if(AttackCollisionUtility.areColliding(attack, otherAttack, AttackCollisionUtility.COLLISION_DIST)){
+                AttackCollisionUtility.handleCollision(attack, otherAttack, PlayerController.getInstance());
+            }
+        }
+    }
+
+    private void checkAttackReachedEnd(AttackObject attack) {
+        if(attack.reachedEnd(this)){
+            if(attack.isPlayerAttack()){
+                Enemy enemy = Enemy.getInstance();
+                if(enemy != null){
+                    enemy.getHit(attack.getDamage());
+
+                    PlayerController.getInstance().addScore(HIT_POINTS);
+                    
+                    try{
+                        AudioManager.play(SoundEvent.ENEMY_DAMAGED, true);
+                    }
+                    catch(AudioManagerError ame){
+                        System.err.println("Error playing ENEMY_DAMAGED; non-linked file");
+                    }
+                }
+            }
+            else{
+                PlayerController.getInstance().getHit(attack.getDamage());
+
+                try{
+                    AudioManager.play(SoundEvent.PLAYER_DAMAGED, true);
+                }
+                catch(AudioManagerError ame){
+                    System.err.println("Error playing PLAYER_DAMAGED; non-linked file");
+                }
+            }
+            attack.setDestroyed(true);
         }
     }
 
@@ -161,94 +185,23 @@ public class GameBoard extends GameObject{
         }
     }
 
-    public boolean areColliding(AttackObject attack1, AttackObject attack2){
-        return Math.abs(attack1.getYPosition() - attack2.getYPosition()) <= COLLISION_DIST;
+    /**
+     * @param attack The attack you want to try to add
+     * @return Whether attack can be added (both player and enemy attack counts
+     */
+    private boolean canAddAttack(AttackObject attack){
+        //if: adding player attack, ensure player attack count not too high
+        //then ensure total attack count and lane index are appropriate
+        return (!attack.isPlayerAttack() || (playerAttackCount < maxObjects)) &&
+                (getAttackCount() < (maxObjects*2) - playerAttackCount) //2 sides of maxObjects each
+                && attack.getLane() >= 0 && attack.getLane() <= numLanes;
     }
 
     /**
-     * Updates an attack, checks for collisions, and acts on those collisions.
-     *
-     * @param attack attack to update.
-     *
-     * remarks:
-     * attacks kept around for a frame after destruction, to indicate destruction before it disappears.
+     * @return count of attacks currently accounted for on the board.
      */
-    private void updateAttack(AttackObject attack){
-
-        final AttackObject.AttackType ourType = attack.getType(); //type of this attack
-        AttackObject.AttackType enemyType; //type of other attack
-        AttackObject loser;
-
-        //Check if we collided with anyone.
-        if(!attack.wasDestroyed()) {
-            attack.update();
-
-            for (AttackObject enemyAttack : attacks) {
-                loser = null;
-                enemyType = enemyAttack.getType();
-
-                //when two attacks from separate teams have collided, destroy the one of a
-                // "weaker" type, unless they have the same type (destroy both)
-                if (!enemyAttack.wasDestroyed()
-                        && !enemyAttack.hasSameAllegiance(attack)
-                        && areColliding(attack, enemyAttack)) {
-
-                    loser = checkCollisionWinner(ourType, enemyType) ? attack : enemyAttack;
-                    if(ourType == enemyType){
-                        attack.setDestroyed(true);
-                        enemyAttack.setDestroyed(true);
-
-                        PlayerController.getInstance().addScore(SMALL_POINTS);
-                    }
-                    else if(loser != null){
-                        loser.setDestroyed(true);
-                        if (!loser.isPlayerAttack()) {
-                            PlayerController.getInstance().addScore(BIG_POINTS);
-                        }
-                    }
-                }
-            }
-        }
-
-        //if it was destroyed (could have been destroyed just now)
-        if (attack.wasDestroyed()) {
-            onAttackDestroyed(attack);
-        }
-        //if it was not destroyed and has reached the end.
-        else if(attack.reachedEnd()){
-            if(attack.isPlayerAttack()){
-                Enemy enemy = Enemy.getInstance();
-                if(enemy != null){
-                    enemy.getHit(attack.getDamage());
-                }
-            }
-            else{
-                PlayerController.getInstance().getHit(attack.getDamage());
-            }
-
-            onAttackDestroyed(attack);
-        }
-    }
-
-    /**
-     * tells you whether first attack type beats other attack type
-     *
-     * @param ourType attackType of "us"
-     * @param enemyType attackType of "them"
-     * @return true if ourType should win, else false (possibility of tie)
-     */
-    private boolean checkCollisionWinner(AttackObject.AttackType ourType, AttackObject.AttackType enemyType){
-        //return whether first type beats second type.
-        return (ourType == FIRE && enemyType == WATER) ||
-                (ourType == WATER && enemyType == GROUND) ||
-                (ourType == GROUND && enemyType == FIRE);
-    }
-
-    /**
-     * @return whether we have enough space to add a new attack
-     */
-    private boolean canAddAttack(){
-        return (attacks.size() + attacksToAdd.size() - attacksToDelete.size()) < maxObjects;
+    private int getAttackCount(){
+        return attacks.size() + attacksToAdd.size() - attacksToDelete.size();
     }
 
     /**
@@ -257,8 +210,11 @@ public class GameBoard extends GameObject{
      *
      * @param attack the attack to operate on
      */
-    private void onAttackDestroyed(AttackObject attack) {
-        attacksToDelete.add(attack);
+     void onAttackDestroyed(AttackObject attack) {
+         attacksToDelete.add(attack);
+         if(attack.isPlayerAttack()){
+             playerAttackCount--;
+         }
     }
 
     /**

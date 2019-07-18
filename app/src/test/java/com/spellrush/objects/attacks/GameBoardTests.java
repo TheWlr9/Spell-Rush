@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
-
+import org.mockito.Mockito;
 
 
 public class GameBoardTests extends TestCase {
@@ -12,7 +12,8 @@ public class GameBoardTests extends TestCase {
     private static final String strPrintStart = "\nStarting testGameBoard: ";
     private static final String strPrintFinish = "\nFinished testGameBoard: ";
 
-    static final int maxObjects = 3;
+    static final int maxObjects = 3; //max objects per side
+    static final int totalMaxObjects = 2 * maxObjects; //max objects on board in total
     static final int numLanes = 3;
 
     GameBoard stubBoard;
@@ -32,11 +33,11 @@ public class GameBoardTests extends TestCase {
     public void test_addAttack_shouldAddAttack() {
         System.out.println(strPrintStart + "test_addAttack_shouldAddAttack");
         setup();
-        stubBoard.addAttack(AttackObject.AttackType.Fire,true,0,10,10);
+        stubBoard.addAttack(Mockito.mock(AttackObject.class));
 
         assert(stubBoard.getAttacksToAdd().size() == 1);
         AttackObject result = stubBoard.getAttacksToAdd().remove();
-        assert(result instanceof FireAttack);
+        assert(result instanceof AttackObject);
 
         System.out.println(strPrintFinish + "test_addAttack_shouldAddAttack");
     }
@@ -45,10 +46,10 @@ public class GameBoardTests extends TestCase {
     public void test_addAttack_shouldAllowMaxBullets() {
         System.out.println(strPrintStart + "test_addAttack_shouldNotExceedMaxBullets");
         setup();
-        for (int i = 0; i < maxObjects; i++) {
-            stubBoard.addAttack(AttackObject.AttackType.Fire,true,0,10,10);
+        for (int i = 0; i < totalMaxObjects; i++) {
+            stubBoard.addAttack(Mockito.mock(AttackObject.class));
         }
-        assert(stubBoard.getAttacksToAdd().size() == maxObjects);
+        assert(stubBoard.getAttacksToAdd().size() == totalMaxObjects);
         System.out.println(strPrintFinish + "test_addAttack_shouldNotExceedMaxBullets");
     }
 
@@ -59,11 +60,12 @@ public class GameBoardTests extends TestCase {
         setup();
 
         // Setup
-        for (int i = 0; i < maxObjects; i++) {
-            stubBoard.addAttack(AttackObject.AttackType.Fire,true,0,10,10);
+        for (int i = 0; i < totalMaxObjects; i++) {
+            stubBoard.addAttack(Mockito.mock(AttackObject.class));
+
         }
-        stubBoard.addAttack(AttackObject.AttackType.Fire,true,0,10,10);
-        assert(stubBoard.getAttacksToAdd().size() == maxObjects);
+        stubBoard.addAttack(Mockito.mock(AttackObject.class));
+        assert(stubBoard.getAttacksToAdd().size() == totalMaxObjects);
 
         System.out.println(strPrintFinish + "test_addAttack_shouldNotExceedMaxBullets");
     }
@@ -73,7 +75,7 @@ public class GameBoardTests extends TestCase {
         System.out.println(strPrintStart + "test_addAttack_LaneIndexShouldNotExceedNumLanes");
         setup();
 
-        stubBoard.addAttack(AttackObject.AttackType.Fire,true,numLanes + 1,10,10);
+        stubBoard.addAttack(new FireAttack(new AttackInformation(true, numLanes + 1, 0, 0), 0));
         assert(stubBoard.getAttacksToAdd().size() == 0);
 
         System.out.println(strPrintFinish + "test_addAttack_LaneIndexShouldNotExceedNumLanes");
@@ -84,7 +86,7 @@ public class GameBoardTests extends TestCase {
         System.out.println(strPrintStart + "test_addAttack_LaneIndexShouldNotExceedNumLanes");
         setup();
 
-        stubBoard.addAttack(AttackObject.AttackType.Fire,true,-1,10,10);
+        stubBoard.addAttack(new FireAttack(new AttackInformation(true,  -1, 0, 0), 0));
         assert(stubBoard.getAttacksToAdd().size() == 0);
 
         System.out.println(strPrintFinish + "test_addAttack_LaneIndexShouldNotExceedNumLanes");
@@ -96,7 +98,7 @@ public class GameBoardTests extends TestCase {
 
         setup();
 
-        stubBoard.addAttack(AttackObject.AttackType.Fire,true,0,10,10);
+        stubBoard.addAttack(new FireAttack(new AttackInformation(true,  1, 0, 0), 0));
         stubBoard.update();
         assert(stubBoard.getAttacks().size() == 1);
 
@@ -110,10 +112,10 @@ public class GameBoardTests extends TestCase {
         setup();
 
         // setup
-        stubBoard.addAttack(AttackObject.AttackType.Fire,true,0,10,10);
-        stubBoard.addAttack(AttackObject.AttackType.Fire,true,0,10,10);
+        stubBoard.addAttack(Mockito.mock(AttackObject.class));
+        stubBoard.addAttack(Mockito.mock(AttackObject.class));
         stubBoard.update();
-        stubBoard.addAttack(AttackObject.AttackType.Fire,true,0,10,10);
+        stubBoard.addAttack(Mockito.mock(AttackObject.class));
         // test
         stubBoard.clear();
         stubBoard.update();
@@ -131,45 +133,44 @@ public class GameBoardTests extends TestCase {
         setup();
 
         //Fire VS. Ground
-        stubBoard.addAttack(AttackObject.AttackType.Fire, true, 0, 1, 10);
-        stubBoard.addAttack(AttackObject.AttackType.Ground, false, 0, 1, 50);
+        stubBoard.addAttack(new FireAttack(new AttackInformation(true,  0, 10, 10), 50));
+        stubBoard.addAttack(new GroundAttack(new AttackInformation(false,  1, 10, 10), 60));
 
         for(int i = 0; i < 5; i++) {
             stubBoard.update();
         }
 
         assertEquals(1, stubBoard.getAttacks().size());
-        assertEquals(AttackObject.AttackType.Fire, stubBoard.getAttacks().get(0).getType());
+        assert(stubBoard.getAttacks().get(0) instanceof FireAttack);
 
         stubBoard.clear();
         stubBoard.update();
 
-
         //Fire VS. Water
-        stubBoard.addAttack(AttackObject.AttackType.Fire, true, 0, 1, 10);
-        stubBoard.addAttack(AttackObject.AttackType.Water, false, 0, 1, 50);
+        stubBoard.addAttack(new WaterAttack(new AttackInformation(true,  0, 10, 10), 50));
+        stubBoard.addAttack(new FireAttack(new AttackInformation(false,  1, 10, 10), 60));
 
         for(int i = 0; i < 5; i++) {
             stubBoard.update();
         }
 
         assertEquals(1, stubBoard.getAttacks().size());
-        assertEquals(AttackObject.AttackType.Water, stubBoard.getAttacks().get(0).getType());
+        assert(stubBoard.getAttacks().get(0) instanceof WaterAttack);
 
         stubBoard.clear();
         stubBoard.update();
 
 
         //Water VS. Ground
-        stubBoard.addAttack(AttackObject.AttackType.Water, true, 0, 1, 10);
-        stubBoard.addAttack(AttackObject.AttackType.Ground, false, 0, 1, 50);
+        stubBoard.addAttack(new GroundAttack(new AttackInformation(true,  0, 10, 10), 50));
+        stubBoard.addAttack(new WaterAttack(new AttackInformation(false,  1, 10, 10), 60));
 
         for(int i = 0; i < 5; i++) {
             stubBoard.update();
         }
 
         assertEquals(1, stubBoard.getAttacks().size());
-        assertEquals(AttackObject.AttackType.Ground, stubBoard.getAttacks().get(0).getType());
+        assert(stubBoard.getAttacks().get(0) instanceof GroundAttack);
 
         stubBoard.clear();
 
@@ -183,8 +184,8 @@ public class GameBoardTests extends TestCase {
         setup();
 
         //Fire VS. Fire
-        stubBoard.addAttack(AttackObject.AttackType.Fire, true, 0, 1, 10);
-        stubBoard.addAttack(AttackObject.AttackType.Fire, false, 0, 1, 50);
+        stubBoard.addAttack(new FireAttack(new AttackInformation(true,  0, 10, 10), 50));
+        stubBoard.addAttack(new FireAttack(new AttackInformation(false,  1, 10, 10), 60));
 
         for(int i = 0; i < 5; i++) {
             stubBoard.update();
@@ -197,8 +198,8 @@ public class GameBoardTests extends TestCase {
 
 
         //Water VS. Water
-        stubBoard.addAttack(AttackObject.AttackType.Water, true, 0, 1, 10);
-        stubBoard.addAttack(AttackObject.AttackType.Water, false, 0, 1, 50);
+        stubBoard.addAttack(new WaterAttack(new AttackInformation(true,  0, 10, 10), 50));
+        stubBoard.addAttack(new WaterAttack(new AttackInformation(false,  1, 10, 10), 60));
 
         for(int i = 0; i < 5; i++) {
             stubBoard.update();
@@ -211,8 +212,8 @@ public class GameBoardTests extends TestCase {
 
 
         //Ground VS. Ground
-        stubBoard.addAttack(AttackObject.AttackType.Ground, true, 0, 1, 10);
-        stubBoard.addAttack(AttackObject.AttackType.Ground, false, 0, 1, 50);
+        stubBoard.addAttack(new GroundAttack(new AttackInformation(true,  0, 10, 10), 50));
+        stubBoard.addAttack(new GroundAttack(new AttackInformation(false,  1, 10, 10), 60));
 
         for(int i = 0; i < 5; i++) {
             stubBoard.update();

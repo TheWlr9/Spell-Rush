@@ -110,4 +110,9 @@ public class FingerPathLayer extends GameObject {
     public ArrayList<PointF> getPath(){
         return lastPath;
     }
+
+    public void resetPath(){
+        path.clear();
+        lastPath.clear();
+    }
 }

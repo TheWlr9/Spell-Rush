@@ -11,6 +11,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.spellrush.persistence.ILeaderboardPersistence;
 import com.spellrush.services.Services;
 import com.spellrush.business.LeaderboardController;
 import com.spellrush.application.ScoreEntry;
@@ -19,7 +20,6 @@ import java.util.List;
 import com.spellrush.R;
 
 public class LeaderboardActivity extends Activity {
-    private final int MAX_NUM_OF_ROWS = 10;
     private LeaderboardController leaderboardController;
     private List<ScoreEntry> scoreEntries;
 
@@ -41,7 +41,8 @@ public class LeaderboardActivity extends Activity {
             TableRow currRow;
             TableLayout scoresTable = (TableLayout)findViewById(R.id.leaderboard_table);
 
-            int maxRows = (scoreEntries.size() < MAX_NUM_OF_ROWS) ? scoreEntries.size() : MAX_NUM_OF_ROWS;
+            int maxRows = (scoreEntries.size() <  ILeaderboardPersistence.MAX_ROWS)
+                    ? scoreEntries.size() :  ILeaderboardPersistence.MAX_ROWS;
 
             for(int i = 0; i < maxRows; i++){
                 currScoreEntry = scoreEntries.get(i);
@@ -64,6 +65,7 @@ public class LeaderboardActivity extends Activity {
 
         // create textView for the name in this row
         TextView rowName = new TextView(this);
+        rowName.setTextSize(30);
         rowName.setText(name);
         rowName.setLayoutParams(new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
@@ -71,6 +73,7 @@ public class LeaderboardActivity extends Activity {
 
         // create textView for the score in this row
         TextView rowScore = new TextView(this);
+        rowScore.setTextSize(30);
         rowScore.setText(score);
         rowScore.setLayoutParams(new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
@@ -104,5 +107,9 @@ public class LeaderboardActivity extends Activity {
                 LeaderboardActivity.this.startActivity(exitIntent);
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        // Ensure it does nothing...
     }
 }

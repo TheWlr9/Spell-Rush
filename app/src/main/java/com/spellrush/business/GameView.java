@@ -3,6 +3,7 @@ package com.spellrush.business;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.os.Build;
@@ -12,12 +13,17 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.spellrush.audio.AudioManager;
+import com.spellrush.audio.AudioManagerError;
+import com.spellrush.audio.SoundEvent;
+import com.spellrush.business.LevelManager.LevelManager;
 import com.spellrush.objects.GameObject;
 import com.spellrush.objects.IGameObject;
+import com.spellrush.presentation.BackgroundImage;
+import com.spellrush.presentation.GameActivity;
 import com.spellrush.presentation.GameOverActivity;
 import com.spellrush.presentation.UI.FingerPathLayer;
 import com.spellrush.presentation.UI.GameHUD;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +42,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
 {
 
     private static final int MAX_BULLETS = 100;
+    private static final int ONE_SECOND = 1000;
+    private static final int LEVEL_COMPLETE_DISPLAY_TIME = 3;
 
     // Follow Singleton design pattern
     private static GameView instance;
@@ -46,6 +54,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
     private GameThread thread;
     private FingerPathLayer fingerPathLayer;
     private ShapeRecognition drawingAI;
+    private boolean paused;
 
 
     // Temporary lists to avoid concurrent GameObject array access
@@ -94,6 +103,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
         objectsToAdd = new LinkedList<>();
 
         instance = this;
+        paused = false;
     } // end init()
 
     public static GameView getInstance(){
@@ -102,8 +112,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
 
     @TargetApi(Build.VERSION_CODES.ECLAIR)
     private void setupView(){
+        this.setZOrderOnTop(true);
         getHolder().addCallback(this); // This allows the view to process changes and events
         getHolder().setFormat(PixelFormat.TRANSPARENT);
+
         setZOrderMediaOverlay(true);
         setFocusable(true);
     }
@@ -117,6 +129,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
         fingerPathLayer = new FingerPathLayer();
         drawingAI = new ShapeRecognition(fingerPathLayer);
 
+        newObjects.add(new BackgroundImage());
         newObjects.add(player);
         newObjects.add(fingerPathLayer);
         newObjects.add(levelManager);
@@ -146,14 +159,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
     }
 
     public void update(){
-        // Update each of the GameViewLayer objects.
-        for (GameObject object : gameObjects) {
-            object.update();
+        if(!paused) {
+            // Update each of the GameViewLayer objects.
+            for (GameObject object : gameObjects) {
+                object.update();
+            }
+            drawingAI.hasValidDrawnEvent();
+            deleteObjects();
+            addObjects();
         }
-        drawingAI.hasValidDrawnEvent();
-        deleteObjects();
-        addObjects();
-
     } // end update()
 
     // Delete all objects added to Object Deleting Queue in this Update Frame
@@ -173,9 +187,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
 
     @Override
     public void draw(Canvas canvas){
+        canvas.setDensity(Bitmap.DENSITY_NONE);
         if(canvas != null) {
             super.draw(canvas);
-            // Draw each of the GameViewLayer objects.
+            // Draw each of the GameViewLayer objects.a
             for (GameObject object : gameObjects) {
                 object.draw(canvas);
             }
@@ -220,15 +235,44 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IGa
             e.printStackTrace();
         }
 
-        player.reset();
-        levelManager.reset();
     } // end surfaceDestroyed()
+
+    public void triggerNextLevel(int addScore) {
+        thread.setRunning(false);
+        try {
+            GameActivity.displayLevelComplete(this.getContext(), LEVEL_COMPLETE_DISPLAY_TIME);
+            Thread.sleep(LEVEL_COMPLETE_DISPLAY_TIME * ONE_SECOND);
+            GameActivity.displayStartLevel(this.getContext(), LEVEL_COMPLETE_DISPLAY_TIME);
+            Thread.sleep(LEVEL_COMPLETE_DISPLAY_TIME * ONE_SECOND);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // reset player health and and the current fingerpath
+        player.resetHP();
+        player.addScore(addScore);
+        fingerPathLayer.resetPath();
+
+        thread.setRunning(true);
+
+        try{
+            AudioManager.play(SoundEvent.BATTLE_MUSIC, false);
+        }
+        catch(AudioManagerError ame){
+            System.err.println("Error, BATTLE_MUSIC unlinked from file");
+        }
+    }
 
     public void triggerGameOver(){
         thread.setRunning(false);
         Intent gameOverIntent = new Intent(this.getContext(), GameOverActivity.class);
         gameOverIntent.putExtra("score",player.getScore());
         this.getContext().startActivity(gameOverIntent);
+        player.reset();
+        levelManager.reset();
+    }
+
+    public void setPaused(boolean val){
+        paused = val;
     }
 
 }
