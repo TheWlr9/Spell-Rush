@@ -12,12 +12,21 @@ import com.spellrush.business.LevelManager.LevelManager;
  */
 public class AttackFactory {
 
-    public static final int ATTACK_SPEED = 25;
-    public static final int ATTACK_DAMAGE = 10;
-    /**
-     * @param isPlayerAttack The attack's allegiance (and direction of movement).
-     * @param laneIndex The lane the attack will start in.
-     */
+    public enum AttackType {FIRE, GROUND, WATER}
+    private static final int ATTACK_SPEED = 25;
+    private static final int ATTACK_DAMAGE = 10;
+
+
+    public static AttackType[] getAttacks(){return AttackType.values();}
+
+    public static void createAttack(AttackType attack, boolean isPlayerAttack, int laneIndex){
+        switch (attack){
+            case FIRE: createFireAttack(isPlayerAttack, laneIndex); break;
+            case GROUND: createGroundAttack(isPlayerAttack,laneIndex); break;
+            case WATER: createWaterAttack(isPlayerAttack, laneIndex);
+        }
+    }
+
     public static void createFireAttack(boolean isPlayerAttack, int laneIndex){
         GameBoard board = LevelManager.getInstance().getGameBoard();
         int startPos = isPlayerAttack? board.getLaneBottomPosition() : board.getLaneTopPosition();

@@ -2,12 +2,13 @@ package com.spellrush.business.LevelManager;
 
 import com.spellrush.business.IEnemyAI;
 import com.spellrush.objects.BasicEnemyAI;
+import com.spellrush.objects.HardEnemyAI;
 import com.spellrush.objects.MediumEnemyAI;
 
 public enum Level {
     LEVEL_1("LEVEL 1", 100, new BasicEnemyAI()),
-    LEVEL_2("LEVEL 2", 200, new BasicEnemyAI()),
-    LEVEL_3("LEVEL 3", 300, new MediumEnemyAI());
+    LEVEL_2("LEVEL 2", 200, new MediumEnemyAI()),
+    LEVEL_3("LEVEL 3", 300, new HardEnemyAI());
 
     private String name;
     private int score;

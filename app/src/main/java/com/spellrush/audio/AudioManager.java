@@ -17,10 +17,9 @@ import java.util.EnumMap;
  */
 public abstract class AudioManager {
     final public static float MAX_VOLUME = 30.0f;
-    final public static float DEFAULT_VOLUME = 15.0f;
     final private static String NOT_INIT_ERROR_MSG = "The audio manager was not yet initialized " +
             "before calling: ";
-    public static float sfxVolume;
+
     private static EnumMap<SoundEvent, MediaPlayer> soundMap;
     private static Context context;
     private static boolean initialized = false;
@@ -28,7 +27,6 @@ public abstract class AudioManager {
     public static void init(Context context){
         if(!initialized) {
             soundMap = new EnumMap<SoundEvent, MediaPlayer>(SoundEvent.class);
-            sfxVolume = DEFAULT_VOLUME;
             AudioManager.context = context;
             initialized = true;
         }
@@ -154,27 +152,25 @@ public abstract class AudioManager {
         if(!initialized) {
             throw new AudioManagerError(NOT_INIT_ERROR_MSG + "stop");
         }
-        if(soundMap.get(type) != null) {
-            soundMap.get(type).seekTo(0);
 
-            if (soundMap.get(type).isPlaying()) {
-                soundMap.get(type).pause();
-            }
+        try {
+            soundMap.get(type).seekTo(0);
+        }
+        catch (Exception e) {
+            throw new AudioManagerError("Could not perform seek on " + type +":" + e.toString());
+        }
+
+        if(soundMap.get(type).isPlaying()) {
+            soundMap.get(type).pause();
         }
     }
 
     public static void setVolume(SoundEvent type, float newVolume) throws AudioManagerError {
-        float calcVolume;
         if(!initialized){
             throw new AudioManagerError(NOT_INIT_ERROR_MSG + "setVolume");
         }
 
-        if (newVolume == 0) {
-            calcVolume = 0;
-        }
-        else {
-            calcVolume = (float) (Math.log(newVolume) / Math.log(MAX_VOLUME));
-        }
+        float calcVolume = (float) (Math.log(newVolume) / Math.log(MAX_VOLUME));
 
         soundMap.get(type).setVolume(calcVolume, calcVolume);
     }
