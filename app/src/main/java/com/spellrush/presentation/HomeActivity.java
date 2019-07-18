@@ -27,7 +27,19 @@ public class HomeActivity extends Activity {
         createStartButton();
         createSettingsButton();
         createLeaderboardButton();
+        createTutorialButton();
         DBHelper.copyDatabaseToDevice(getApplicationContext());
+    }
+
+    private void createTutorialButton() {
+        Button tutButton = (Button) findViewById(R.id.tutBtn);
+        tutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent tutorialIntent = new Intent(HomeActivity.this, TutorialActivity.class);
+                HomeActivity.this.startActivity((tutorialIntent));
+            }
+        });
     }
 
     private void setupMyAudio(){

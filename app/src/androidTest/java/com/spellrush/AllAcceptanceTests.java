@@ -19,8 +19,8 @@ import org.junit.runners.Suite;
         MainMenuTest.class,
         FingerPathLayerTest.class,
         GameOverTest.class,
-        SettingsActivityTest.class,
-        CombatSysTest.class
+        CombatSysTest.class,
+        SettingsActivityTest.class
 })
 
 /**
