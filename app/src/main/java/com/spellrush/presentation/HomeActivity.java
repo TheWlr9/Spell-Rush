@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.spellrush.R;
 import com.spellrush.audio.AudioManager;
@@ -25,7 +24,7 @@ public class HomeActivity extends Activity {
 
         setupMyAudio();
         createStartButton();
-        //createSettingsButton();
+        createSettingsButton();
         createLeaderboardButton();
         DBHelper.copyDatabaseToDevice(getApplicationContext());
     }
@@ -72,7 +71,8 @@ public class HomeActivity extends Activity {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Settings Button clicked", Toast.LENGTH_SHORT).show();
+                Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
+                HomeActivity.this.startActivity((settingsIntent));
             }
         });
     }
