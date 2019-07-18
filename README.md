@@ -13,7 +13,7 @@ The purpose is to create an innovative action game with a focus on an innovative
 
 # Vision.md
 
-[Vision.md Link](VISION.md)
+[Vision.md](VISION.md)
 
 # Architecture.md
 
@@ -23,5 +23,5 @@ The purpose is to create an innovative action game with a focus on an innovative
 
 https://chadhillary.com/Projects/spellrush/
 
-[Website Project](/website/index.hmtl)
+[Website Project](/website/index.html)
 
