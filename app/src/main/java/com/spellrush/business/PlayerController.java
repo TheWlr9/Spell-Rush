@@ -15,7 +15,7 @@ public class PlayerController extends HealthObject {
     // Follow Singleton design pattern
     private static final PlayerController instance = new PlayerController();
 
-    public static final int MAX_HP = 100;
+    public static final int MAX_HP = 30;
     private int score;
 
     private PlayerController() {
@@ -29,8 +29,8 @@ public class PlayerController extends HealthObject {
 
     @Override
     protected void onDestroyed() {
-       GameView.getInstance().triggerGameOver();
-       return;
+        GameView.getInstance().triggerGameOver();
+        return;
     }
 
     public int getScore(){

@@ -2,9 +2,9 @@ package com.spellrush.objects.attacks;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 
-import com.spellrush.business.GameView;
+import com.spellrush.presentation.ISpriteDrawer;
+import com.spellrush.presentation.SpriteDrawer;
 
 /**
  * Back end to track information about individual attacks.
@@ -13,16 +13,10 @@ import com.spellrush.business.GameView;
 
 public abstract class AttackObject {
 
-    /* Used to tell the addAttack what type of attack it should create*/
-    public enum AttackType{
-        Fire, Water, Ground
-    }
-
     protected final int ATTACK_WIDTH = 128;
     protected final int ATTACK_HEIGHT = 128;
 
     protected AttackInformation attackInfo;
-    protected AttackType type;
 
     //public so accessible, final so cannot be changed.
     protected int yPos; //this attack's position within its lane.
@@ -32,37 +26,32 @@ public abstract class AttackObject {
     /**
      * Kept so current tests aren't broken.
      */
-    public AttackObject(boolean isPlayerAttack, int lane, int speed,
-                           int laneStart, int laneEnd, int damage, AttackType type){
-        this.attackInfo = new AttackInformation(isPlayerAttack, lane, speed, laneStart, laneEnd, damage);
-        this.type = type;
-        this.yPos = isPlayerAttack ? attackInfo.laneEnd : attackInfo.laneStart;
-        this.xPos = calculateCanvasXPosition(attackInfo.lane);
+    AttackObject(boolean isPlayerAttack, int lane, int speed, int damage, int y){
+        this.attackInfo = new AttackInformation(isPlayerAttack, lane, speed, damage);
+        this.yPos = y;
     }
 
     /**
      * Constructor
      *
      * @param attackInfo information about the attack.
-     * @param type What type of attack is it?
+     * @param y Starting Y Position of the object on the screen
      */
-    protected AttackObject(AttackInformation attackInfo, AttackType type) {
+    protected AttackObject(AttackInformation attackInfo, int y) {
         this.attackInfo = attackInfo;
-        this.type = type;
-        this.yPos = attackInfo.laneStart;
-        this.xPos = calculateCanvasXPosition(attackInfo.lane);
+        this.yPos = y;
     }
 
-    boolean reachedEnd(){
-        return isPlayerAttack() ? getYPosition() < getLaneEnd() : getYPosition() > getLaneEnd();
+    public boolean isPlayerAttack(){
+        return attackInfo.isPlayerAttack;
+    }
+
+    boolean reachedEnd(GameBoard board){
+        return isPlayerAttack() ? yPos < board.getLaneTopPosition() : yPos > board.getLaneBottomPosition();
     }
 
     boolean hasSameAllegiance(AttackObject attackToCheck){
         return isPlayerAttack() == attackToCheck.isPlayerAttack();
-    }
-
-    boolean isPlayerAttack(){
-        return attackInfo.isPlayerAttack;
     }
 
     /**
@@ -81,11 +70,7 @@ public abstract class AttackObject {
         return attackInfo.damage;
     }
 
-    AttackType getType() { return type; }
-
-    int getLaneEnd(){
-        return attackInfo.laneEnd;
-    }
+    int getLane() { return attackInfo.lane; }
 
     /**
      * @return whether this attack has collided with another attack
@@ -105,28 +90,14 @@ public abstract class AttackObject {
         yPos += attackInfo.speed;
     }
 
-
-    /**
-     * This will tell us where to draw in the X-axis based on the width of the canvas and the lane
-     * of the attack.
-     *
-     * @param lane
-     * @return
-     */
-    private int calculateCanvasXPosition(int lane){
-        // TODO: dummy value for now, update this if we're doing lanes.
-        if(attackInfo.isPlayerAttack)
-            return 600;
-        else
-            return 620;
-    }
-
     public void update() {
-        updatePosition();
+        if(!this.wasDestroyed()) {
+            updatePosition();
+        }
     }
 
+    // The draw method called by the GameBoard / Attack object manager
     public abstract void draw(Canvas canvas);
-
 
     /**
      * Draws an attack object, after being told what to draw.
@@ -137,9 +108,9 @@ public abstract class AttackObject {
      * @param enemySprite sprite to draw if enemy
      */
     protected void draw(Canvas canvas, int playerSprite, int enemySprite) {
-        Resources r = GameView.getInstance().getContext().getResources();
-        Drawable sprite = (attackInfo.isPlayerAttack) ? r.getDrawable(playerSprite) : r.getDrawable(enemySprite);
-        sprite.setBounds(xPos, yPos, xPos + ATTACK_WIDTH, yPos + ATTACK_HEIGHT);
-        sprite.draw(canvas);
+        ISpriteDrawer drawer = SpriteDrawer.getInstance();
+        int xPos = (Resources.getSystem().getDisplayMetrics().widthPixels  / 2) - (ATTACK_WIDTH / 2);
+        int spriteIndex = (attackInfo.isPlayerAttack) ? playerSprite : enemySprite;
+        drawer.drawSprite(canvas, spriteIndex, xPos, yPos, ATTACK_WIDTH, ATTACK_HEIGHT);
     }
 }

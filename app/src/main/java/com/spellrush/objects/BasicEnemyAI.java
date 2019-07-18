@@ -13,14 +13,17 @@ public class BasicEnemyAI implements IEnemyAI {
     private int frameCount=0;
     private int wait=30; //default wait between attacks in frames
 
+    private AttackFactory.AttackType[] attacks;
+
+    public BasicEnemyAI(){
+        attacks = AttackFactory.getAttacks();
+    }
+
+
     @Override
     public void doAttack() {
-        int chooseAttack= (new Random()).nextInt(3);
-        switch(chooseAttack ){
-            case 0:AttackFactory.createFireAttack(false,0);break;
-            case 1:AttackFactory.createWaterAttack(false,0);break;
-            case 2:AttackFactory.createGroundAttack(false,0);break;
-        }
+        int chooseAttack= (new Random()).nextInt(attacks.length);
+        AttackFactory.createAttack(attacks[chooseAttack],false,1);
     }
 
     @Override
@@ -33,7 +36,7 @@ public class BasicEnemyAI implements IEnemyAI {
         }
     }
 
-    public void newWait(){
+    private void newWait(){
         wait = (new Random()).nextInt(MAX_WAIT-MIN_WAIT+1)+MIN_WAIT;
     }
 

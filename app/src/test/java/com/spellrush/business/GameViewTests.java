@@ -1,5 +1,6 @@
 package com.spellrush.business;
 
+import android.content.Context;
 import android.graphics.Canvas;
 
 import com.spellrush.business.TestDoubles.FakeContext;
@@ -9,6 +10,7 @@ import com.spellrush.presentation.UI.FingerPathLayer;
 import junit.framework.TestCase;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -186,6 +188,26 @@ public class GameViewTests extends TestCase {
         assertTrue(o2.updated);
 
         System.out.println(strPrintFinish + "test_GameView_update_shouldUpdateObjects");
+    }
+
+    @Test
+    public void test_GameView_update_shouldNotUpdateObjectsOnPaused() {
+        System.out.println(strPrintStart + "test_GameView_update_shouldNotUpdateObjectsOnPaused");
+
+        ArrayList<GameObject> fakeList = Mockito.mock(ArrayList.class);
+        Queue<GameObject> fakeQueue = Mockito.mock(Queue.class);
+        GameView newGameView = new GameView(Mockito.mock(Context.class), fakeList, fakeQueue, fakeQueue, Mockito.mock(ShapeRecognition.class));
+        GameObject mockObj = Mockito.mock(GameObject.class);
+
+        newGameView.setPaused(true);
+
+        newGameView.addObject(mockObj);
+        newGameView.update();
+        newGameView.update();
+
+        Mockito.verify(mockObj, Mockito.never()).update();
+
+        System.out.println(strPrintFinish + "test_GameView_update_shouldNotUpdateObjectsOnPaused");
     }
 
 }
