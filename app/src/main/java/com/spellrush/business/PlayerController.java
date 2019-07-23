@@ -15,9 +15,9 @@ import com.spellrush.objects.HealthObject;
  * *****************************************/
 public class PlayerController extends HealthObject {
 
-    public static final int Y_POSITION = 1650;
     public static final int SPRITE_WIDTH = 360;
     public static final int SPRITE_HEIGHT = 328;
+    public static final int Y_POSITION = Resources.getSystem().getDisplayMetrics().heightPixels - SPRITE_HEIGHT;
 
     private static final int ANIMATION_SPEED = GameThread.FRAMES_PER_SECOND / 2;
 
