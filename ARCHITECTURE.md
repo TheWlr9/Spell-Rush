@@ -13,3 +13,6 @@
 
 ![Architecture Diagram](architecture_diagram.png)
 
+## Additions
+* FireAttack, WaterAttack, and GroundAttack (objects/attacks) all need to be linked to GameThread (business)
+* PlayerController (business) needs to be linked to GameThread (business) and GameView (business)

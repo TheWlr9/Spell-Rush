@@ -21,7 +21,7 @@ public class BackgroundImage extends GameObject {
 
     private void initSprite(){
         Resources r = GameView.getInstance().getContext().getResources();
-        bg = BitmapFactory.decodeResource(r, R.drawable.path_bg);
+        bg = BitmapFactory.decodeResource(r, R.drawable.spellrush_bg_hq);
 
         // Scale to screen efficiently
         int dW = Resources.getSystem().getDisplayMetrics().widthPixels;
