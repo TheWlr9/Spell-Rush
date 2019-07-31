@@ -26,15 +26,15 @@ public class ShapeRecognition {
             if(points.size() >= 2) {
                 if (FireRecognition.hasDrawnWith(points)) {
                     //SEND EVENT
-                    System.out.println("Fire event!");
+                    //System.out.println("Fire event!");
                     AttackFactory.createFireAttack(true, 0);
                 } else if (WaterRecognition.hasDrawnWith(points)) {
                     //SEND EVENT
-                    System.out.println("Water event!");
+                    //System.out.println("Water event!");
                     AttackFactory.createWaterAttack(true, 0);
                 } else if (GroundRecognition.hasDrawnWith(points)) {
                     //SEND EVENT
-                    System.out.println("Ground event!");
+                    //System.out.println("Ground event!");
                     AttackFactory.createGroundAttack(true, 0);
                 }
             }
