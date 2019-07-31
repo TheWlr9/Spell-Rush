@@ -33,6 +33,8 @@ public class SpriteDrawer implements ISpriteDrawer {
         sprite.draw(canvas);
     }
 
+    //Possible time save here... This is getting called MANY times per frame.
+    //For example, see the Attacks. They are just sending the index values rather than the drawables.
     private Drawable getSpriteByIndex(int spriteIndex){
         Resources r = GameView.getInstance().getContext().getResources();
         return r.getDrawable(spriteIndex);
