@@ -17,7 +17,6 @@ public class PlayerController extends HealthObject {
 
     public static final int SPRITE_WIDTH = 360;
     public static final int SPRITE_HEIGHT = 328;
-    public static final int Y_POSITION = Resources.getSystem().getDisplayMetrics().heightPixels - SPRITE_HEIGHT;
 
     private static final int ANIMATION_SPEED = GameThread.FRAMES_PER_SECOND / 2;
 
@@ -67,8 +66,9 @@ public class PlayerController extends HealthObject {
         spriteFrame1 = r.getDrawable(R.drawable.player2);
         spriteFrame2 = r.getDrawable(R.drawable.player1);
         int spriteX = Resources.getSystem().getDisplayMetrics().widthPixels / 2;
-        spriteFrame1.setBounds(spriteX - (SPRITE_WIDTH / 2), Y_POSITION - (SPRITE_HEIGHT / 2),
-                spriteX + (SPRITE_WIDTH / 2), Y_POSITION + (SPRITE_HEIGHT / 2));
+        int spriteY = Resources.getSystem().getDisplayMetrics().heightPixels - SPRITE_HEIGHT;
+        spriteFrame1.setBounds(spriteX - (SPRITE_WIDTH / 2), spriteY - (SPRITE_HEIGHT / 2),
+                spriteX + (SPRITE_WIDTH / 2), spriteY + (SPRITE_HEIGHT / 2));
         spriteFrame2.setBounds(spriteFrame1.getBounds());
         currSprite = spriteFrame1;
     }

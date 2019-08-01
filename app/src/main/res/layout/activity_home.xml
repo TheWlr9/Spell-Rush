@@ -170,6 +170,18 @@
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/repo_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:labelFor="@id/repo_link"
+            android:text="@string/repo_link"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
     </LinearLayout>
 
 

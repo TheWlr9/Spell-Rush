@@ -14,6 +14,7 @@
     <string name="Mike_Winkler">Mike Winkler</string>
     <string name="Trevor_Lentz">Special thanks to Trevor Lentz for the menu music :D</string>
     <string name="Avgvst">And to Avgvst for the game over music!</string>
+    <string name="repo_link">https://github.com/TheWlr9/Spell-Rush</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="leaderboard_back">Go Back</string>
     <string name="leaderboard_header_name">Player Name</string>

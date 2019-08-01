@@ -29,7 +29,7 @@ public class DBHelper {
 
             Services.setDBPathName(dataDirectory.toString() + "/" + Services.getDBPathName());
 
-            System.out.println("Database Path: " + Services.getDBPathName());
+            //System.out.println("Database Path: " + Services.getDBPathName());
 
         } catch (final IOException ioe) {
             throw new RuntimeException(ioe);

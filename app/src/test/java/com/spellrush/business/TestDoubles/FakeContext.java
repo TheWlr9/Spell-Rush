@@ -107,6 +107,16 @@ public class FakeContext extends Context{
     }
 
     @Override
+    public boolean moveSharedPreferencesFrom(Context context, String s) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteSharedPreferences(String s) {
+        return false;
+    }
+
+    @Override
     public FileInputStream openFileInput(String s) throws FileNotFoundException {
         return null;
     }
@@ -123,6 +133,11 @@ public class FakeContext extends Context{
 
     @Override
     public File getFileStreamPath(String s) {
+        return null;
+    }
+
+    @Override
+    public File getDataDir() {
         return null;
     }
 
@@ -201,6 +216,11 @@ public class FakeContext extends Context{
     @Override
     public SQLiteDatabase openOrCreateDatabase(String s, int i, SQLiteDatabase.CursorFactory cursorFactory, @Nullable DatabaseErrorHandler databaseErrorHandler) {
         return null;
+    }
+
+    @Override
+    public boolean moveDatabaseFrom(Context context, String s) {
+        return false;
     }
 
     @Override
@@ -356,7 +376,19 @@ public class FakeContext extends Context{
 
     @Nullable
     @Override
+    public Intent registerReceiver(@Nullable BroadcastReceiver broadcastReceiver, IntentFilter intentFilter, int i) {
+        return null;
+    }
+
+    @Nullable
+    @Override
     public Intent registerReceiver(BroadcastReceiver broadcastReceiver, IntentFilter intentFilter, @Nullable String s, @Nullable Handler handler) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public Intent registerReceiver(BroadcastReceiver broadcastReceiver, IntentFilter intentFilter, @Nullable String s, @Nullable Handler handler, int i) {
         return null;
     }
 
@@ -368,6 +400,12 @@ public class FakeContext extends Context{
     @Nullable
     @Override
     public ComponentName startService(Intent intent) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public ComponentName startForegroundService(Intent intent) {
         return null;
     }
 
@@ -449,6 +487,11 @@ public class FakeContext extends Context{
     }
 
     @Override
+    public void revokeUriPermission(String s, Uri uri, int i) {
+
+    }
+
+    @Override
     public int checkUriPermission(Uri uri, int i, int i1, int i2) {
         return 0;
     }
@@ -494,6 +537,11 @@ public class FakeContext extends Context{
     }
 
     @Override
+    public Context createContextForSplit(String s) throws PackageManager.NameNotFoundException {
+        return null;
+    }
+
+    @Override
     public Context createConfigurationContext(@NonNull Configuration configuration) {
         return null;
     }
@@ -501,5 +549,15 @@ public class FakeContext extends Context{
     @Override
     public Context createDisplayContext(@NonNull Display display) {
         return null;
+    }
+
+    @Override
+    public Context createDeviceProtectedStorageContext() {
+        return null;
+    }
+
+    @Override
+    public boolean isDeviceProtectedStorage() {
+        return false;
     }
 }
