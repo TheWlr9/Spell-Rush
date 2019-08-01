@@ -1,7 +1,6 @@
 package com.spellrush;
 
 import android.app.Application;
-import android.test.ApplicationTestCase;
 
 import com.spellrush.presentation.CombatSysTest;
 import com.spellrush.presentation.GameOverTest;
@@ -26,8 +25,8 @@ import org.junit.runners.Suite;
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
-public class AllAcceptanceTests extends ApplicationTestCase<Application> {
+public class AllAcceptanceTests extends Application {
     public AllAcceptanceTests() {
-        super(Application.class);
+        super();
     }
 }
