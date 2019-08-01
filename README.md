@@ -25,3 +25,7 @@ https://chadhillary.com/Projects/spellrush/
 
 [Website Project](/website/index.html)
 
+# Privacy policy
+
+http://thewhirlwind.net/Spell-Rush/pp.html
+
