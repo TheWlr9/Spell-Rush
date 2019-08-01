@@ -2,9 +2,7 @@ package com.spellrush.business;
 
 import android.graphics.PointF;
 
-import junit.framework.TestCase;
-
-public class ShapeRecognitionTests extends TestCase {
+public class ShapeRecognitionTests {
     public static class StubPointF extends PointF {
         StubPointF(float x, float y) {
             this.x = x;
