@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.spellrush.R;
 import com.spellrush.application.ScoreEntry;
@@ -78,10 +79,20 @@ public class GameOverActivity extends Activity {
             public void onClick(View v) {
                 EditText inputText = (EditText) findViewById(R.id.name);
                 playerName= inputText.getText().toString();
-                leaderboardController.insertScore(new ScoreEntry(playerName, playerScore));
 
-                Intent leaderBoardIntent = new Intent(GameOverActivity.this, LeaderboardActivity.class);
-                GameOverActivity.this.startActivity(leaderBoardIntent);
+                if(!playerName.isEmpty()) {
+                    leaderboardController.insertScore(new ScoreEntry(playerName, playerScore));
+
+                    Intent leaderBoardIntent = new Intent(GameOverActivity.this, LeaderboardActivity.class);
+                    GameOverActivity.this.startActivity(leaderBoardIntent);
+                }
+                else{
+                    CharSequence text = "Please enter a name";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                    toast.show();
+                }
             }
         });
     }
